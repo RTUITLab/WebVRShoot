@@ -84,7 +84,7 @@ for (i = 0; i < divs.length; ++i) {
           cam.sceneEl.removeChild(divs[i]);
          decoys[j].setAttribute('state','down')
           decoys[j].emit('down');
-          score+=1
+          score+=10
           setTimeout(function call()
              {worker=decoys[Math.floor(Math.random() * (5 - 0 + 1)) + 0]
              if (worker.getAttribute('state')=='down')
