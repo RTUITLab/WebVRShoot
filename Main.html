@@ -11,9 +11,10 @@
     <a-assets>
       <a-asset-item id="obj" src="models/test.obj"></a-asset-item>
       <a-asset-item id="mtl" src="models/test.mtl"></a-asset-item>
-      <a-asset-item id="kobj" src="models/KUS.obj">  </a-asset-item>
+      <a-asset-item id="kobj" src="models/KUS.obj"></a-asset-item>
       <a-asset-item id="kmtl" src="models/KUS.mtl"></a-asset-item>
     </a-assets>
+    <a-entity id="cam" windows-motion-controls="hand: right"></a-entity>
     <a-entity id="tch">
       <a-box position='4 1 -4' rotation='0 315 0' color='grey' scale='1 0.5 0.5'>
         <a-text id="timer" align='center' position="0 0 0.6" value='Time: 15'></a-text>
@@ -21,7 +22,7 @@
       <a-box position='-4 1 -4' rotation='0 45 0' color='grey' scale='1 0.5 0.5'>
         <a-text id="score" align='center' position="0 0 0.6" value='Score: 0'></a-text>
       </a-box>
-      <a-box id='playerbutton' position='0 2 -4' color='grey' scale='1 0.5 0.5'>
+      <a-box id='playbutton' position='0 2 -4' color='grey' scale='1 0.5 0.5'>
         <a-text value='Start' align='center' position='0 0 0.6'></a-text>
       </a-box>
       <a-entity obj-model="obj: #obj;mtl: #mtl" scale="4 3 4" rotation='0 90 0'></a-entity>
@@ -54,11 +55,10 @@
       </a-entity>
     </a-entity>
     <a-entity position="0 0 0">
-      <a-camera collision id="cam" wasd-controls-enabled="true" fps-look-controls="user-height: 0" look-controls-enabled="false">
+      <a-camera collision id="necam" wasd-controls-enabled="false" fps-look-controls="user-height: 0" look-controls-enabled="false">
         <a-light id="artem" type="point" position="0.3 -0.38 -1.72" color="yellow" distance=10> </a-light>
-        <a-cursor></a-cursor>
       </a-camera>
-      <a-cylinder follower id="gun" follower position="0 1 0" color="#ff0000" radius="0.09" height="3.5" rotation="90 0 0"></a-cylinder>
+      <a-cylinder id="gun" position="0 1 0" color="#ff0000" radius="0.09" height="3.5" rotation="90 0 0"></a-cylinder>
     </a-entity>
     <script> 
       AFRAME.registerComponent('follower', {
@@ -99,6 +99,11 @@
               }
 
             }
+            for (i = 0; i < divs.length; ++i)
+            if ( (divs[i].object3D.position.x-divs[i].getAttribute('radius') <= playbutton.object3D.position.x+0.5 &&divs[i].object3D.position.x+parseInt(divs[i].getAttribute('radius')) >=  playbutton.object3D.position.x-0.5) &&
+         (divs[i].object3D.position.y-divs[i].getAttribute('radius') <=  playbutton.object3D.position.y+0.5 && divs[i].object3D.position.y+parseInt(divs[i].getAttribute('radius'))>=  playbutton.object3D.position.y-0.5) &&
+         (divs[i].object3D.position.z-divs[i].getAttribute('radius') <= playbutton.object3D.position.z+0.5 && divs[i].object3D.position.z+parseInt(divs[i].getAttribute('radius')) >=  playbutton.object3D.position.z-0.5))
+         document.querySelector('#playbutton').emit('collide')
         }
       }); 
     </script>
@@ -106,9 +111,9 @@
       function destr(idd) {
         cam.sceneEl.removeChild(idd);
       }
-      var frame = document.querySelector('#tch');
+      var frame = document.querySelector('#cam');
       artem.setAttribute('intensity', 0);
-      frame.addEventListener('click', function () {
+      frame.addEventListener('triggerdown', function () {
         artem.setAttribute('intensity', 0.2);
         var shoot = document.createElement('a-sphere');
         shoot.setAttribute('id', "shooot");
@@ -122,7 +127,7 @@
         kus.setAttribute('easing', 'linear')
         kus.setAttribute('to', (cam.object3D.position.x - Math.sin(cam.object3D.rotation.y) * 40 * Math.cos(cam.object3D.rotation.x)).toString() + ' ' + (cam.object3D.position.y + Math.sin(cam.object3D.rotation.x) * 40).toString() + ' ' + (cam.object3D.position.z - Math.cos(cam.object3D.rotation.y) * 40 * Math.cos(cam.object3D.rotation.x)).toString())
         shoot.appendChild(kus);
-        shoot.setAttribute('position', document.querySelector('#gun').getAttribute('position'))
+        kus.setAttribute('position', document.querySelector('#cam').getAttribute('position'))
         setTimeout(destr, 300, shoot);
         setTimeout(function () { artem.setAttribute('intensity', 0); }, 100)
       });
@@ -140,11 +145,11 @@
         if (worker.getAttribute('state') == 'up')
           call()
       }
-      let time = 15;
+      let time = 1500;
       let score = 0;
       let unt = true
-      let but = document.querySelector('#playerbutton')
-      but.addEventListener('click', function (event) {
+      let but = document.querySelector('#playbutton')
+      but.addEventListener('collide', function (event) {
         if (unt) {
           call();
           setTimeout(call, 1000);
