@@ -1,0 +1,34 @@
+<html>  
+<head>
+        <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+<title>Camera Movement</title>
+</head>
+<body>
+<script type="text/javascript">
+	AFRAME.registerComponent("listener", {
+		schema : 
+		{
+			stepFactor : {
+				type : "number",
+				default : 0.05
+			}
+		},
+		tick : function()
+		{	
+            this.el.components.camera.camera.parent.position.add(this.el.components.camera.camera.getWorldDirection().multiplyScalar(this.data.stepFactor));
+		}
+	});
+</script>
+<a-scene>
+  <a-camera  listener="stepFactor:1" position="0 0 30">
+    <a-entity id="cursor" cursor="fuse: true;fuseTimeout:500"
+    	material="color:black"
+    	geometry="primitive:ring"
+    	position="0 0 -1"
+    	scale="0.01 0.01 0.01"
+    ></a-entity>
+  </a-camera>
+  <a-grid></a-grid>
+<a-box position="0 1 -2" color="blue" move eve></a-box>
+</body>
+</html>
