@@ -14,7 +14,8 @@
       <a-asset-item id="kobj" src="models/KUS.obj"></a-asset-item>
       <a-asset-item id="kmtl" src="models/KUS.mtl"></a-asset-item>
     </a-assets>
-    <a-entity id="cam" windows-motion-controls="hand: right"></a-entity>
+    <a-entity id="cam" windows-motion-controls="hand: right" visible="false"></a-entity>
+    <a-entity guncostil id="realgun" obj-model="obj: #kobj;mtl: #kmtl" rotation='0 0 0' scale="0.1 0.1 0.1"></a-entity>
     <a-entity id="tch">
       <a-box position='4 1 -4' rotation='0 315 0' color='grey' scale='1 0.5 0.5'>
         <a-text id="timer" align='center' position="0 0 0.6" value='Time: 15'></a-text>
@@ -58,9 +59,17 @@
       <a-camera collision id="necam" wasd-controls-enabled="false" fps-look-controls="user-height: 0" look-controls-enabled="false">
         <a-light id="artem" type="point" position="0.3 -0.38 -1.72" color="yellow" distance=10> </a-light>
       </a-camera>
-      <a-cylinder id="gun" position="0 1 0" color="#ff0000" radius="0.09" height="3.5" rotation="90 0 0"></a-cylinder>
+
     </a-entity>
     <script> 
+     AFRAME.registerComponent('guncostil', {
+        tick: function () {
+         var gun=document.querySelector("#realgun");
+         var contr=document.querySelector("#cam") ;
+         gun.setAttribute("position",contr.getAttribute("position"));
+         gun.setAttribute("rotation",contr.getAttribute("rotation"))
+        }
+      });
       AFRAME.registerComponent('follower', {
         tick: function () {
           gun.object3D.position.x = cam.object3D.position.x + Math.cos(cam.object3D.rotation.y) * 0.5;
@@ -85,6 +94,22 @@
                   decoys[j].setAttribute('state', 'down')
                   decoys[j].emit('down');
                   score += 1
+                  var tscore = document.createElement('a-text');
+ tscore.setAttribute('value','+1');
+ tscore.setAttribute('rotation','0 0 0');
+tscore.setAttribute('scale','5 5 5')
+tscore.setAttribute('align','center')
+tscore.setAttribute('color','red')
+tscore.setAttribute('position',decoys[j].getAttribute('position'))
+var tanim = document.createElement('a-animation');
+tanim.setAttribute('attribute', 'position')
+tanim.setAttribute('dur', '2000')
+tanim.setAttribute('fill', 'forwards')
+tanim.setAttribute('easing', 'linear')
+tanim.setAttribute('to', decoys[j].object3D.position.x+' '+decoys[j].object3D.position.y+4+' '+decoys[j].object3D.position.z)
+tscore.appendChild(tanim)
+cam.sceneEl.appendChild(tscore);
+setTimeout(function (idd) {cam.sceneEl.removeChild(idd);},2000,tscore);
                   setTimeout(function call() {
                     worker = decoys[Math.floor(Math.random() * (5 - 0 + 1)) + 0]
                     if (worker.getAttribute('state') == 'down') {
@@ -126,8 +151,8 @@
         kus.setAttribute('fill', 'forwards')
         kus.setAttribute('easing', 'linear')
         kus.setAttribute('to', (cam.object3D.position.x - Math.sin(cam.object3D.rotation.y) * 40 * Math.cos(cam.object3D.rotation.x)).toString() + ' ' + (cam.object3D.position.y + Math.sin(cam.object3D.rotation.x) * 40).toString() + ' ' + (cam.object3D.position.z - Math.cos(cam.object3D.rotation.y) * 40 * Math.cos(cam.object3D.rotation.x)).toString())
-        shoot.appendChild(kus);
-        kus.setAttribute('position', document.querySelector('#cam').getAttribute('position'))
+      shoot.appendChild(kus);
+        shoot.setAttribute('position', document.querySelector('#cam').getAttribute('position'))
         setTimeout(destr, 300, shoot);
         setTimeout(function () { artem.setAttribute('intensity', 0); }, 100)
       });
@@ -135,7 +160,13 @@
     <script>
       var decoys = document.querySelectorAll('#target'), j;
       for (j = 0; j < decoys.length; ++j)
+      {
         decoys[j].setAttribute('state', 'down')
+        decoys[j].addEventListener('up', function()
+        {
+         setTimeout( function swap(ob) {call() ;setTimeout(function (){ob.setAttribute("state","down")},1000);ob.emit("down") },7000, this) 
+        })
+      }
       function call() {
         worker = decoys[Math.floor(Math.random() * (5 - 0 + 1)) + 0]
         if (worker.getAttribute('state') == 'down') {
@@ -150,11 +181,8 @@
       let unt = true
       let but = document.querySelector('#playbutton')
       but.addEventListener('collide', function (event) {
-        if (unt) {
+       if (unt) {
           call();
-          setTimeout(call, 1000);
-          setTimeout(call, 5000);
-          setTimeout(call, 10000);
           console.log('start timer')
           unt = false;
           let score = 0;
