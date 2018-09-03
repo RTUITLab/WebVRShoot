@@ -3,38 +3,37 @@
 <head>
   <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
   <script src="https://unpkg.com/aframe-fps-look-controls-component/dist/aframe-fps-look-controls-component.min.js"></script>
-  <script src="https://rawgit.com/chenzlabs/auto-detect-controllers/master/dist/aframe-auto-detect-controllers-component.min.js"></script>
+  <script src="scripts/collides.js"></script>
 </head>
 
 <body>
   <a-scene id="scene" stats>
     <a-assets>
-      <a-asset-item id="obj" src="models/test.obj"></a-asset-item>
-      <a-asset-item id="mtl" src="models/test.mtl"></a-asset-item>
+      <a-asset-item id="obj" src="models/terrain.obj"></a-asset-item>
+      <a-asset-item id="mtl" src="models/terrain.mtl"></a-asset-item>
       <a-asset-item id="sobj" src="models/sun.obj"></a-asset-item>
       <a-asset-item id="smtl" src="models/sun.mtl"></a-asset-item>
       <a-asset-item id="gobj" src="models/gun.obj"></a-asset-item>
       <a-asset-item id="gmtl" src="models/gun.mtl"></a-asset-item>
-      <a-asset-item id="kobj" src="models/KUS.obj"></a-asset-item>
-      <a-asset-item id="kmtl" src="models/KUS.mtl"></a-asset-item>
+      <a-asset-item id="kobj" src="models/targets.obj"></a-asset-item>
+      <a-asset-item id="kmtl" src="models/targets.mtl"></a-asset-item>
     </a-assets>
-    <a-sky color="#270d2c"></a-sky>
-    <a-entity light="type: ambient; color: #333"></a-entity>
-<a-entity light="type: directional; color: #AAA; intensity: 0.7" position="24 24 -24"></a-entity>
-    <a-entity guncostil id="cam" windows-motion-controls="model: false"></a-entity>
-    <a-entity id="realgun">
-      <a-entity  rotation="-45 0 0" obj-model="obj: #gobj;mtl: #gmtl" scale="0.05 0.05 0.05"></a-entity>
+    <a-sky rotation="17.5 -63 -0.37 " src="models/try.png"></a-sky>
+    <a-entity light="type: hemisphere; intensity: 3.5 ;color: #ffffff; groundColor:#959595"></a-entity>
+    <a-entity light="type: directional; color: #ffffff; intensity: 1.5; groundColor: #2a2a2a" position="24 24 -24"></a-entity>
+    <a-entity id="controller" windows-motion-controls="model: false">
+      <a-entity rotation="-45 0 0" obj-model="obj: #gobj;mtl: #gmtl" scale="0.05 0.05 0.05"></a-entity>
     </a-entity>
     <a-entity obj-model="obj: #sobj;mtl: #smtl" position='25 25 -25' scale="1 1 1"></a-entity>
-    
+
     <a-entity id="tch">
-      <a-box position='4 1 -4' rotation='0 315 0' color='grey' scale='1 0.5 0.5'>
+      <a-box position='4 1 -4' shader="flat" rotation='0 315 0' color='grey' scale='1 0.5 0.5'>
         <a-text id="timer" align='center' position="0 0 0.6" value='Time: 150'></a-text>
       </a-box>
-      <a-box position='-4 1 -4' rotation='0 45 0' color='grey' scale='1 0.5 0.5'>
+      <a-box position='-4 1 -4' shader="flat" rotation='0 45 0' color='grey' scale='1 0.5 0.5'>
         <a-text id="score" align='center' position="0 0 0.6" value='Score: 0'></a-text>
       </a-box>
-      <a-box id='playbutton' position='0 2 -4' color='grey' scale='1 0.5 0.5'>
+      <a-box id='playbutton' shader="flat" position='0 2 -4' color='grey' scale='1 0.5 0.5'>
         <a-text value='Start' align='center' position='0 0 0.6'></a-text>
       </a-box>
       <a-entity obj-model="obj: #obj;mtl: #mtl" scale="4 3 4" rotation='0 90 0'></a-entity>
@@ -50,7 +49,7 @@
         <a-animation attribur='rotation' begin='down' to='-90 0 0' from="0 0 0"></a-animation>
         <a-animation attribur='rotation' begin='up' to='0 0 0' from="-90 0 0"></a-animation>
       </a-entity>
-     <a-entity state="down" id="target" obj-model="obj: #kobj;mtl: #kmtl" rotation='-90 0 0' scale="1 1 1" position='-8.6 0.6 -32.4'>
+      <a-entity state="down" id="target" obj-model="obj: #kobj;mtl: #kmtl" rotation='-90 0 0' scale="1 1 1" position='-8.6 0.6 -32.4'>
         <a-animation attribur='rotation' begin='down' to='-90 0 0' from="0 0 0"></a-animation>
         <a-animation attribur='rotation' begin='up' to='0 0 0' from="-90 0 0"></a-animation>
       </a-entity>
@@ -66,175 +65,12 @@
       </a-entity>
     </a-entity>
     <a-entity position="0 0 0">
-      <a-camera collision id="necam" wasd-controls-enabled="false" fps-look-controls="user-height: 0" look-controls-enabled="false">
-        <a-light id="artem" type="point" position="0.3 -0.38 -1.72" color="yellow" distance=10> </a-light>
+      <a-camera collision id="cam" wasd-controls-enabled="false" fps-look-controls="user-height: 0" look-controls-enabled="false">
+        <a-light id="flash" type="point" position="0.3 -0.38 -1.72" color="yellow" distance=10> </a-light>
       </a-camera>
-
     </a-entity>
-    <script> 
-      AFRAME.registerComponent('guncostil', {
-        tick: function () {
-          var gun = document.querySelector("#realgun");
-          var contr = document.querySelector("#cam");
-          var controllerWorldRotation=contr.object3D.getWorldRotation()
-          gun.setAttribute("position", contr.getAttribute("position"));
-       gun.object3D.rotation.set(contr.object3D.rotation.x,contr.object3D.rotation.y,contr.object3D.rotation.z)
-        }
-      });
-      AFRAME.registerComponent('collision', {
-        tick: function () {
-          var divs = document.querySelectorAll('#shooot'), i;
-          var decoys = document.querySelectorAll('#target'), j;
-          for (j = 0; j < decoys.length; ++j)
-            for (i = 0; i < divs.length; ++i) {
-              if ( (divs[i].object3D.getWorldPosition().x-divs[i].getAttribute('radius') <=decoys[j].object3D.getWorldPosition().x+2 &&divs[i].object3D.getWorldPosition().x+parseInt(divs[i].getAttribute('radius')) >= decoys[j].object3D.getWorldPosition().x-2) &&
-         (divs[i].object3D.getWorldPosition().y-divs[i].getAttribute('radius') <= decoys[j].object3D.getWorldPosition().y+2 && divs[i].object3D.getWorldPosition().y+parseInt(divs[i].getAttribute('radius'))>= decoys[j].object3D.getWorldPosition().y) &&
-         (divs[i].object3D.getWorldPosition().z-divs[i].getAttribute('radius') <=decoys[j].object3D.getWorldPosition().z+2 && divs[i].object3D.getWorldPosition().z+parseInt(divs[i].getAttribute('radius')) >= decoys[j].object3D.getWorldPosition().z-2)){
-                if (decoys[j].getAttribute('state') == 'up') {
-                  decoys[j].setAttribute('state', 'sw')
-                  setTimeout(function (kuss) { kuss.setAttribute('state', 'down') }, 1000, decoys[j])
-                  decoys[j].emit('down');
-                  score += 1;
-                  var tscore = document.createElement('a-text');
-                  tscore.setAttribute('value', '+1');
-                  tscore.setAttribute('rotation', '0 0 0');
-                  tscore.setAttribute('scale', '5 5 5')
-                  tscore.setAttribute('align', 'center')
-                  tscore.setAttribute('color', 'red')
-                  tscore.setAttribute('position', decoys[j].getAttribute('position'))
-                  var tanim = document.createElement('a-animation');
-                  tanim.setAttribute('attribute', 'position')
-                  tanim.setAttribute('dur', '2000')
-                  tanim.setAttribute('fill', 'forwards')
-                  tanim.setAttribute('easing', 'linear')
-                  tanim.setAttribute('to', decoys[j].object3D.position.x + ' ' + (decoys[j].object3D.position.y + 4) + ' ' + decoys[j].object3D.position.z)
-                  tscore.appendChild(tanim)
-                  scene.appendChild(tscore);
-                  setTimeout(function (idd) { cam.sceneEl.removeChild(idd); }, 2000, tscore);
-                  function call() {
-                    worker = decoys[Math.floor(Math.random() * (5 - 0 + 1)) + 0]
-                    if (worker.getAttribute('state') == 'up'||worker.getAttribute('state') == 'sw')
-                      call()
-                    if (worker.getAttribute('state') == 'down') {
-                      worker.emit('up')
-                      worker.setAttribute('state','sw');
-                      setTimeout(function (kuss) { kuss.setAttribute('state', 'up') }, 1000, worker)
-                    }
-                  }
-                  document.querySelector('#score').setAttribute('value', 'Score: ' + score);
-                }
-              }
-
-            }
-          for (i = 0; i < divs.length; ++i)
-          if ((divs[i].object3D.getWorldPosition().x - divs[i].getAttribute('radius') <= playbutton.object3D.getWorldPosition().x + 0.5 && divs[i].object3D.getWorldPosition().x + parseInt(divs[i].getAttribute('radius')) >= playbutton.object3D.getWorldPosition().x - 0.5) &&
-              (divs[i].object3D.getWorldPosition().y - divs[i].getAttribute('radius') <= playbutton.object3D.getWorldPosition().y + 0.5 && divs[i].object3D.getWorldPosition().y + parseInt(divs[i].getAttribute('radius')) >= playbutton.object3D.getWorldPosition().y - 0.5) &&
-              (divs[i].object3D.getWorldPosition().z - divs[i].getAttribute('radius') <= playbutton.object3D.getWorldPosition().z + 0.5 && divs[i].object3D.getWorldPosition().z + parseInt(divs[i].getAttribute('radius')) >= playbutton.object3D.getWorldPosition().z - 0.5))
-              document.querySelector('#playbutton').emit('collide')
-        }
-      }); 
-    </script>
-    <script>
-      function destr(idd) {
-        scene.removeChild(idd);
-      }
-      var contr = document.querySelector("#cam");
-      artem.setAttribute('intensity', 0);
-      contr.addEventListener('triggerdown', function () {
-        artem.setAttribute('intensity', 0.2);
-        var pointer= document.createElement('a-entity');
-        var mark=document.createElement('a-entity');
-       pointer.object3D.rotation.set(contr.object3D.rotation.x,contr.object3D.rotation.y,contr.object3D.rotation.z)
-        mark.setAttribute('rotation','-45 0 0')
-        var shoot = document.createElement('a-sphere');
-        shoot.setAttribute('id', "shooot");
-        shoot.setAttribute('color', "yellow");
-        shoot.setAttribute('radius', "0.04");
-        shoot.setAttribute('position','0 0 -50')
-        cam.sceneEl.appendChild(pointer);
-        pointer.appendChild(mark);
-        mark.appendChild(shoot);
-        pointer.setAttribute('position', document.querySelector('#cam').getAttribute('position'))
-        var kus = document.createElement('a-animation')
-        kus.setAttribute('attribute', 'position')
-        kus.setAttribute('dur', '1000')
-        kus.setAttribute('fill', 'backwards')
-        kus.setAttribute('direction', 'reverse')
-        kus.setAttribute('easing', 'linear')
-        kus.setAttribute('to', '0 0 0')
-        shoot.appendChild(kus);
-        setTimeout(destr, 1000, pointer);
-        setTimeout(function () { artem.setAttribute('intensity', 0); }, 100)
-      });
-    </script>
-    <script>
-      var decoys = document.querySelectorAll('#target'), j;
-      for (j = 0; j < decoys.length; ++j) {
-        decoys[j].setAttribute('state', 'down')
-        decoys[j].addEventListener('up', function () {
-         let waitor= setTimeout(function swap(ob) { call(); 
-         if (ob.getAttribute('state')=='up')
-         {
-         setTimeout(function () { ob.setAttribute("state", "down") }, 1000);
-         ob.setAttribute("state", "sw")
-          ob.emit("down") 
-         }
-          }, 7000, this)
-         decoys[j].setAttribute('wait', waitor)
-         clearTimeout(decoys[j].getAttribute('wait'))
-        })
-      }
-      function call() {
-        worker = decoys[Math.floor(Math.random() * (5 - 0 + 1)) + 0]
-        if (worker.getAttribute('state') == 'up'||worker.getAttribute('state') == 'sw')
-          call()
-        if (worker.getAttribute('state') == 'down') {
-          worker.emit('up')
-          worker.setAttribute('state','sw')
-          setTimeout(function (kuss) { kuss.setAttribute('state', 'up') }, 1000, worker)
-        }
-      }
-      let time = 150;
-      let score = 0;
-      let unt = true
-      let but = document.querySelector('#playbutton')
-      but.addEventListener('collide', function (event) {
-        if (unt) {
-          var decoys = document.querySelectorAll('#target'), j;
-          for (j = 0; j < decoys.length; ++j) {
-            decoys[j].setAttribute('state', 'down')
-          }
-           time = 150;
-          call();
-          setTimeout(call, 5000)
-         setTimeout(call, 15000)
-          setTimeout(call ,25000)
-          console.log('start timer')
-          unt = false;
-          score = 0;
-          document.querySelector('#score').setAttribute('value', 'Score: ' + score);
-          but.setAttribute('visible', 'false')
-          setTimeout(countdown_timer, 1);
-        }
-
-      })
-      function countdown_timer() {
-        time--;
-        if (time > 0) {
-          setTimeout(countdown_timer, 1000);
-        }
-        else {
-          var decoys = document.querySelectorAll('#target'), j;
-          for (j = 0; j < decoys.length; ++j) {
-            decoys[j].setAttribute('state', 'off')
-            decoys[j].emit('down')
-          }
-          unt=true
-          but.setAttribute('visible', 'true')
-        }
-        document.querySelector('#timer').setAttribute('value', 'Time: ' + time);
-      }
-    </script>
+    <script src="scripts/shooting.js"></script>
+    <script src="scripts/gamelogic.js"></script>
   </a-scene>
   </script>
 </body>
