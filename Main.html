@@ -2,7 +2,6 @@
 
 <head>
   <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
-  <script src="https://unpkg.com/aframe-fps-look-controls-component/dist/aframe-fps-look-controls-component.min.js"></script>
   <script src="scripts/collides.js"></script>
 </head>
 
@@ -22,11 +21,11 @@
     <a-entity light="type: hemisphere; intensity: 3.5 ;color: #ffffff; groundColor:#959595"></a-entity>
     <a-entity light="type: directional; color: #ffffff; intensity: 1.5; groundColor: #2a2a2a" position="24 24 -24"></a-entity>
     <a-entity id="controller" windows-motion-controls="model: false">
+      <a-light id="flash" type="point" position="0 0.07 -0.3" color="yellow" distance=10> </a-light>
       <a-entity rotation="-45 0 0" obj-model="obj: #gobj;mtl: #gmtl" scale="0.05 0.05 0.05"></a-entity>
     </a-entity>
     <a-entity obj-model="obj: #sobj;mtl: #smtl" position='25 25 -25' scale="1 1 1"></a-entity>
 
-    <a-entity id="tch">
       <a-box position='4 1 -4' shader="flat" rotation='0 315 0' color='grey' scale='1 0.5 0.5'>
         <a-text id="timer" align='center' position="0 0 0.6" value='Time: 150'></a-text>
       </a-box>
@@ -61,14 +60,8 @@
         <a-animation attribur='rotation' begin='down' to='-90 0 0' from="0 0 0"></a-animation>
         <a-animation attribur='rotation' begin='up' to='0 0 0' from="-90 0 0"></a-animation>
       </a-entity>
-      <a-entity>
-      </a-entity>
-    </a-entity>
-    <a-entity position="0 0 0">
-      <a-camera collision id="cam" wasd-controls-enabled="false" fps-look-controls="user-height: 0" look-controls-enabled="false">
-        <a-light id="flash" type="point" position="0.3 -0.38 -1.72" color="yellow" distance=10> </a-light>
+      <a-camera collision id="cam" wasd-controls-enabled="false" fps-look-controls="user-height: 0">
       </a-camera>
-    </a-entity>
     <script src="scripts/shooting.js"></script>
     <script src="scripts/gamelogic.js"></script>
   </a-scene>

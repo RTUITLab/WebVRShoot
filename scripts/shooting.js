@@ -1,4 +1,3 @@
-console.log("called");
 function destr(idd) {
   scene.removeChild(idd);
 }
@@ -26,7 +25,7 @@ contr.addEventListener('triggerdown', function () {
   anim.setAttribute('fill', 'backwards')
   anim.setAttribute('direction', 'reverse')
   anim.setAttribute('easing', 'linear')
-  anim.setAttribute('to', '0 0 0')
+  anim.setAttribute('to', '0 0.07 -0.3')
   shoot.appendChild(anim);
   setTimeout(destr, 1000, pointer);
   setTimeout(function () { vflash.setAttribute('intensity', 0); }, 100)
