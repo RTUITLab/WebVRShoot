@@ -13,7 +13,7 @@ contr.addEventListener('triggerdown', function () {
   var shoot = document.createElement('a-sphere');
   shoot.setAttribute('id', "shooot");
   shoot.setAttribute('color', "yellow");
-  shoot.setAttribute('radius', "0.04");
+  shoot.setAttribute('radius', "0.007");
   shoot.setAttribute('position', '0 0 -50')
   contr.sceneEl.appendChild(pointer);
   pointer.appendChild(mark);
@@ -25,7 +25,7 @@ contr.addEventListener('triggerdown', function () {
   anim.setAttribute('fill', 'backwards')
   anim.setAttribute('direction', 'reverse')
   anim.setAttribute('easing', 'linear')
-  anim.setAttribute('to', '0 0.07 -0.3')
+  anim.setAttribute('to', '0 0.05 -0.2')
   shoot.appendChild(anim);
   setTimeout(destr, 1000, pointer);
   setTimeout(function () { vflash.setAttribute('intensity', 0); }, 100)
