@@ -22,7 +22,8 @@ function call() {
     setTimeout(function (ob) { ob.setAttribute('state', 'up') }, 1000, worker)
   }
 }
-let time = 150;
+let record = 0;
+let time = 50;
 let score = 0;
 let unt = true
 let but = document.querySelector('#playbutton')
@@ -31,7 +32,7 @@ but.addEventListener('collide', function (event) {
     for (j = 0; j < decoys.length; ++j) {
       decoys[j].setAttribute('state', 'down')
     }
-    time = 150;
+    time = 50;
     call();
     setTimeout(call, 5000)
     setTimeout(call, 15000)
@@ -54,6 +55,11 @@ function countdown_timer() {
     for (j = 0; j < decoys.length; ++j) {
       decoys[j].setAttribute('state', 'off')
       decoys[j].emit('down')
+    }
+    if (score>record)
+    {
+      record=score;
+      document.querySelector('#rec').setAttribute('value', 'Highscore:\n' + record);
     }
     unt = true
     but.setAttribute('visible', 'true')

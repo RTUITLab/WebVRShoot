@@ -26,10 +26,13 @@
     </a-entity>
     <a-entity obj-model="obj: #sobj;mtl: #smtl" position='25 25 -25' scale="1 1 1"></a-entity>
 
-      <a-box position='4 1 -4' shader="flat" rotation='0 315 0' color='grey' scale='1 0.5 0.5'>
-        <a-text id="timer" align='center' position="0 0 0.6" value='Time: 150'></a-text>
+      <a-box position='4 2 -4' shader="flat" rotation='0 315 0' color='grey' scale='1 0.5 0.5'>
+        <a-text id="timer" align='center' position="0 0 0.6" value='Time: 50'></a-text>
       </a-box>
       <a-box position='-4 1 -4' shader="flat" rotation='0 45 0' color='grey' scale='1 0.5 0.5'>
+        <a-text id="rec" align='center' position="0 0 0.6" value='Highscore:\n0'></a-text>
+      </a-box>
+      <a-box position='4 1 -4' shader="flat" rotation='0 315 0' color='grey' scale='1 0.5 0.5'>
         <a-text id="score" align='center' position="0 0 0.6" value='Score: 0'></a-text>
       </a-box>
       <a-box id='playbutton' shader="flat" position='0 2 -4' color='grey' scale='1 0.5 0.5'>
