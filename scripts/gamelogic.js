@@ -2,14 +2,17 @@ var decoys = document.querySelectorAll('#target'), j;
 for (j = 0; j < decoys.length; ++j) {
   decoys[j].setAttribute('state', 'down')
   decoys[j].addEventListener('up', function () {
-    setTimeout(function swap(ob) {
+    setTimeout(function swap(ob, gm) {
+      if (game==gm)
+      {
       call();
       if (ob.getAttribute('state') == 'up') {
         setTimeout(function () { ob.setAttribute("state", "down") }, 1000);
         ob.setAttribute("state", "sw")
         ob.emit("down")
       }
-    }, 7000, this)
+      }
+    }, 7000, this, game)
   })
 }
 function call() {
@@ -29,6 +32,7 @@ function callm() {
   setTimeout(function(){ mt.setAttribute('visible','false')},5000)
 }
 let mt= document.querySelector('#mtar')
+let game=0
 let record = 0;
 let gunnow= 1;
 let time = 50;
@@ -41,6 +45,7 @@ but.addEventListener('collide', function (event) {
     for (j = 0; j < decoys.length; ++j) {
       decoys[j].setAttribute('state', 'down')
     }
+    game+=1;
     time = 50;
     call();
     setTimeout(call, 5000)

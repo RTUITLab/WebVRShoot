@@ -6,7 +6,7 @@ AFRAME.registerComponent('collision', {
     for (i = 0; i < divs.length; ++i) {
       if ((divs[i].object3D.getWorldPosition().x - divs[i].getAttribute('radius') <= decoys[j].object3D.getWorldPosition().x + 0.5 && divs[i].object3D.getWorldPosition().x + parseInt(divs[i].getAttribute('radius')) >= decoys[j].object3D.getWorldPosition().x - 0.5) &&
         (divs[i].object3D.getWorldPosition().y - divs[i].getAttribute('radius') <= decoys[j].object3D.getWorldPosition().y + 2 && divs[i].object3D.getWorldPosition().y + parseInt(divs[i].getAttribute('radius')) >= decoys[j].object3D.getWorldPosition().y+0.8) &&
-        (divs[i].object3D.getWorldPosition().z - divs[i].getAttribute('radius') <= decoys[j].object3D.getWorldPosition().z + 0.5 && divs[i].object3D.getWorldPosition().z + parseInt(divs[i].getAttribute('radius')) >= decoys[j].object3D.getWorldPosition().z - 0.5)) {
+        (divs[i].object3D.getWorldPosition().z - divs[i].getAttribute('radius') <= decoys[j].object3D.getWorldPosition().z + 1.1 && divs[i].object3D.getWorldPosition().z + parseInt(divs[i].getAttribute('radius')) >= decoys[j].object3D.getWorldPosition().z - 1.1)) {
         if (decoys[j].getAttribute('state') == 'up') {
           decoys[j].setAttribute('state', 'sw')
           setTimeout(function (ob) { ob.setAttribute('state', 'down') }, 1000, decoys[j])
@@ -66,13 +66,13 @@ AFRAME.registerComponent('collision', {
       let mtargetc=document.querySelector('#mtar')
       for (i = 0; i < divs.length; ++i) {
         if (mtargetc.getAttribute('visible')==true)
-        if ((divs[i].object3D.getWorldPosition().x - divs[i].getAttribute('radius') <= mtargetc.object3D.getWorldPosition().x + 0.5 && divs[i].object3D.getWorldPosition().x + parseInt(divs[i].getAttribute('radius')) >= mtargetc.object3D.getWorldPosition().x - 0.5) &&
-          (divs[i].object3D.getWorldPosition().y - divs[i].getAttribute('radius') <= mtargetc.object3D.getWorldPosition().y + 2 && divs[i].object3D.getWorldPosition().y + parseInt(divs[i].getAttribute('radius')) >= mtargetc.object3D.getWorldPosition().y+0.8) &&
-          (divs[i].object3D.getWorldPosition().z - divs[i].getAttribute('radius') <= mtargetc.object3D.getWorldPosition().z + 0.5 && divs[i].object3D.getWorldPosition().z + parseInt(divs[i].getAttribute('radius')) >= mtargetc.object3D.getWorldPosition().z - 0.5)) {
+        if ((divs[i].object3D.getWorldPosition().x - divs[i].getAttribute('radius') <= mtargetc.object3D.getWorldPosition().x + 1 && divs[i].object3D.getWorldPosition().x + parseInt(divs[i].getAttribute('radius')) >= mtargetc.object3D.getWorldPosition().x - 1) &&
+          (divs[i].object3D.getWorldPosition().y - divs[i].getAttribute('radius') <= mtargetc.object3D.getWorldPosition().y + 2.2 && divs[i].object3D.getWorldPosition().y + parseInt(divs[i].getAttribute('radius')) >= mtargetc.object3D.getWorldPosition().y) &&
+          (divs[i].object3D.getWorldPosition().z - divs[i].getAttribute('radius') <= mtargetc.object3D.getWorldPosition().z + 1 && divs[i].object3D.getWorldPosition().z + parseInt(divs[i].getAttribute('radius')) >= mtargetc.object3D.getWorldPosition().z - 1)) {
             score += 5;
             mtargetc.setAttribute('visible','false')
             var tscore = document.createElement('a-text');
-            tscore.setAttribute('value', '+3');
+            tscore.setAttribute('value', '+5');
             tscore.setAttribute('rotation', '0 0 0');
             tscore.setAttribute('scale', '5 5 5')
             tscore.setAttribute('align', 'center')
