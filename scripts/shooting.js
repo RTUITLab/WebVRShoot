@@ -1,10 +1,11 @@
 function destr(idd) {
   scene.removeChild(idd);
 }
+let shootr=0;
 var contr = document.querySelector("#controller");
 var vflash = document.querySelector("#flash");
 vflash.setAttribute('intensity', 0);
-contr.addEventListener('triggerdown', function () {
+function makeshoot(){
   vflash.setAttribute('intensity', 0.2);
   var pointer = document.createElement('a-entity');
   var mark = document.createElement('a-entity');
@@ -27,6 +28,17 @@ contr.addEventListener('triggerdown', function () {
   anim.setAttribute('easing', 'linear')
   anim.setAttribute('to', '0 0.05 -0.2')
   shoot.appendChild(anim);
+  if (shootr==1&&gunnow==2)
+  {
+    setTimeout(makeshoot,100)
+  }
   setTimeout(destr, 1000, pointer);
   setTimeout(function () { vflash.setAttribute('intensity', 0); }, 100)
+  }
+contr.addEventListener('triggerdown', function () {
+  shootr=1;
+  makeshoot();
+});
+contr.addEventListener('triggerup', function () {
+    shootr=0;
 });

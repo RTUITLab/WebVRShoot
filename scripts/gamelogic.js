@@ -22,11 +22,20 @@ function call() {
     setTimeout(function (ob) { ob.setAttribute('state', 'up') }, 1000, worker)
   }
 }
+function callm() {
+  let randx=-15+Math.random()*30
+  mt.setAttribute('position',{x:randx ,y:15,z:-16})
+  mt.setAttribute('visible','true')
+  setTimeout(function(){ mt.setAttribute('visible','false')},5000)
+}
+let mt= document.querySelector('#mtar')
 let record = 0;
+let gunnow= 1;
 let time = 50;
 let score = 0;
 let unt = true
 let but = document.querySelector('#playbutton')
+console.log( gun1b.object3D.getWorldPosition().x)
 but.addEventListener('collide', function (event) {
   if (unt) {
     for (j = 0; j < decoys.length; ++j) {
@@ -35,8 +44,9 @@ but.addEventListener('collide', function (event) {
     time = 50;
     call();
     setTimeout(call, 5000)
-    setTimeout(call, 15000)
+    setTimeout(callm, 15000)
     setTimeout(call, 25000)
+    setTimeout(callm, 35000)
     console.log('start timer')
     unt = false;
     score = 0;
