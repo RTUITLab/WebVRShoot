@@ -96,6 +96,7 @@ AFRAME.registerComponent('collision', {
         (divs[i].object3D.getWorldPosition().z - divs[i].getAttribute('radius') <= playbutton.object3D.getWorldPosition().z + 0.5 && divs[i].object3D.getWorldPosition().z + parseInt(divs[i].getAttribute('radius')) >= playbutton.object3D.getWorldPosition().z - 0.5))
         document.querySelector('#playbutton').emit('collide')
         for (i = 0; i < divs.length; ++i)
+        if (document.querySelector('#gun2b').getAttribute('visible')==true)
         if ((divs[i].object3D.getWorldPosition().x - divs[i].getAttribute('radius') <= gun2b.object3D.getWorldPosition().x + 0.2 && divs[i].object3D.getWorldPosition().x + parseInt(divs[i].getAttribute('radius')) >= gun2b.object3D.getWorldPosition().x - 0.2) &&
             (divs[i].object3D.getWorldPosition().y - divs[i].getAttribute('radius') <= gun2b.object3D.getWorldPosition().y + 0.5 && divs[i].object3D.getWorldPosition().y + parseInt(divs[i].getAttribute('radius')) >= gun2b.object3D.getWorldPosition().y - 0.5) &&
             (divs[i].object3D.getWorldPosition().z - divs[i].getAttribute('radius') <= gun2b.object3D.getWorldPosition().z + 0.2 && divs[i].object3D.getWorldPosition().z + parseInt(divs[i].getAttribute('radius')) >= gun2b.object3D.getWorldPosition().z - 0.2))
@@ -104,6 +105,7 @@ AFRAME.registerComponent('collision', {
     gunnow=2;
             }
     for (i = 0; i < divs.length; ++i)
+    if (document.querySelector('#gun1b').getAttribute('visible')==true)
         if ((divs[i].object3D.getWorldPosition().x - divs[i].getAttribute('radius') <= gun1b.object3D.getWorldPosition().x + 0.2 && divs[i].object3D.getWorldPosition().x + parseInt(divs[i].getAttribute('radius')) >= gun1b.object3D.getWorldPosition().x - 0.2) &&
             (divs[i].object3D.getWorldPosition().y - divs[i].getAttribute('radius') <= gun1b.object3D.getWorldPosition().y + 0.5 && divs[i].object3D.getWorldPosition().y + parseInt(divs[i].getAttribute('radius')) >= gun1b.object3D.getWorldPosition().y - 0.5) &&
             (divs[i].object3D.getWorldPosition().z - divs[i].getAttribute('radius') <= gun1b.object3D.getWorldPosition().z + 0.2 && divs[i].object3D.getWorldPosition().z + parseInt(divs[i].getAttribute('radius')) >= gun1b.object3D.getWorldPosition().z - 0.2))

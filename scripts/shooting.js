@@ -14,7 +14,7 @@ function makeshoot(){
   var shoot = document.createElement('a-sphere');
   shoot.setAttribute('id', "shooot");
   shoot.setAttribute('color', "yellow");
-  shoot.setAttribute('radius', "0.007");
+  shoot.setAttribute('radius', "0.05");
   shoot.setAttribute('position', '0 0 -50')
   contr.sceneEl.appendChild(pointer);
   pointer.appendChild(mark);

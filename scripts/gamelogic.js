@@ -26,9 +26,21 @@ function call() {
   }
 }
 function callm() {
+  let xto
   let randx=-15+Math.random()*30
-  mt.setAttribute('position',{x:randx ,y:15,z:-16})
+  if (randx>0)
+  xto=randx-15
+  else
+  xto=randx+15
+  mt.setAttribute('position',{x:randx ,y:10,z:-16})
   mt.setAttribute('visible','true')
+  var anim = document.createElement('a-animation')
+  anim.setAttribute('attribute', 'position')
+  anim.setAttribute('dur', '5000')
+  anim.setAttribute('fill', 'forwards')
+  anim.setAttribute('easing', 'linear')
+  anim.setAttribute('to', xto.toString()+' 10 -16')
+  mt.appendChild(anim);
   setTimeout(function(){ mt.setAttribute('visible','false')},5000)
 }
 let mt= document.querySelector('#mtar')
@@ -56,6 +68,8 @@ but.addEventListener('collide', function (event) {
     unt = false;
     score = 0;
     document.querySelector('#score').setAttribute('value', 'Score: ' + score);
+    document.querySelector('#gun2b').setAttribute('visible', 'false')
+    document.querySelector('#gun1b').setAttribute('visible', 'false')
     but.setAttribute('visible', 'false')
     setTimeout(countdown_timer, 1);
   }
@@ -78,6 +92,8 @@ function countdown_timer() {
     }
     unt = true
     but.setAttribute('visible', 'true')
+    document.querySelector('#gun2b').setAttribute('visible', 'true')
+    document.querySelector('#gun1b').setAttribute('visible', 'true')
   }
   document.querySelector('#timer').setAttribute('value', 'Time: ' + time);
 }

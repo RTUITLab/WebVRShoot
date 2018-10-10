@@ -27,24 +27,24 @@
 
     <a-entity light="type: hemisphere; intensity: 3.5 ;color: #ffffff; groundColor:#959595"></a-entity>
     <a-entity light="type: directional; color: #ffffff; intensity: 1.5; groundColor: #2a2a2a" position="24 24 -24"></a-entity>
-    <a-entity id="controller" windows-motion-controls="hand:left ;model: false">
+    <a-entity id="controller" windows-motion-controls="hand:right ;model: false">
       <a-light id="flash" type="point" position="0 0.07 -0.3" color="yellow" distance=10> </a-light>
       <a-entity id = "gunmodel" rotation="-45 0 0" obj-model="obj: #gobj;mtl: #gmtl" scale="0.03 0.03 0.03"></a-entity>
     </a-entity>
     <a-entity obj-model="obj: #sobj;mtl: #smtl" position='25 25 -25' scale="1 1 1"></a-entity>
-      <a-box position='4 2 -4' shader="flat" rotation='0 315 0' color='grey' scale='1 0.5 0.5'>
+      <a-box position='5 2 -4' shader="flat" rotation='0 315 0' color='grey' scale='1 0.5 0.5'>
         <a-text id="timer" align='center' position="0 0 0.6" value='Time: 50'></a-text>
       </a-box>
-      <a-box position='-4 1 -4' shader="flat" rotation='0 45 0' color='grey' scale='1 0.5 0.5'>
+      <a-box position='-5 1 -4' shader="flat" rotation='0 45 0' color='grey' scale='1 0.5 0.5'>
         <a-text id="rec" align='center' position="0 0 0.6" value='Highscore:\n0'></a-text>
       </a-box>
-      <a-box id="gun2b" position='-4.07 2 -3.72' shader="flat" rotation='0 45 0' color='grey' scale='0.4 0.5 0.5'>
+      <a-box id="gun2b" position='-5.07 2 -3.72' shader="flat" rotation='0 45 0' color='grey' scale='0.4 0.5 0.5'>
         <a-text id="rec" align='center' position="0 0 0.6" value='gun 2'></a-text>
       </a-box>
-      <a-box id="gun1b" position='-3.61 2 -3.98' shader="flat" rotation='0 45 0' color='grey' scale='0.4 0.5 0.5'>
+      <a-box id="gun1b" position='-4.61 2 -3.98' shader="flat" rotation='0 45 0' color='grey' scale='0.4 0.5 0.5'>
         <a-text id="rec" align='center' position="0 0 0.6" value='gun 1'></a-text>
       </a-box>
-      <a-box position='4 1 -4' shader="flat" rotation='0 315 0' color='grey' scale='1 0.5 0.5'>
+      <a-box position='5 1 -4' shader="flat" rotation='0 315 0' color='grey' scale='1 0.5 0.5'>
         <a-text id="score" align='center' position="0 0 0.6" value='Score: 0'></a-text>
       </a-box>
       <a-box id='playbutton' shader="flat" position='0 2 -4' color='grey' scale='1 0.5 0.5'>
