@@ -1,0 +1,42 @@
+<html>
+
+<head>
+        <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+        <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
+        <script src="scripts/collisions.js"></script>
+</head>
+
+<body>
+        <a-scene id="scene" stats>
+                <a-assets>
+                        <img id="skyTexture" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/sechelt.jpg">
+                        <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg">
+                        <a-asset-item id="g2obj" src="models/ump.obj"></a-asset-item>
+                        <a-asset-item id="g2mtl" src="models/ump.mtl"></a-asset-item>
+                        <a-asset-item id="boxobj" src="models/box.obj"></a-asset-item>
+                        <a-asset-item id="boxmtl" src="models/box.mtl"></a-asset-item>
+                </a-assets>
+                <a-box id="bax" position="0 2 -5" rotation="0 45 45" scale="2 2 2">
+                        <a-animation attribute="position" to="0 2.2 -5" direction="alternate" dur="2000" repeat="indefinite"></a-animation>
+                </a-box>
+                <a-sky src="#skyTexture"></a-sky>
+                <a-plane src="#groundTexture" rotation="-90 0 0" width="30" height="30" repeat="10 10"></a-plane>
+                <a-light type="ambient" color="#445451"></a-light>
+                <a-light type="point" intensity="2" position="2 4 4"></a-light>
+                <a-entity id="bunny" position="0 2 -2" obj-model="obj: #boxobj;mtl: #boxmtl" scale="0.5 0.5 0.5"></a-entity>
+                <a-entity id="Cam">
+                        <a-camera collision id="Head" camera wasd-controls-enabled="true">
+                                <a-cursor id="Curs"></a-cursor>
+                        </a-camera>
+                        <a-entity id="left-hand" teleport-controls="cameraRig: #Cam; teleportOrigin: #Head;" windows-motion-controls="hand:left "></a-entity>
+                        <a-entity id="controller" windows-motion-controls="hand:right;model:false" visible="false">
+                                <a-entity id="gunmodel" rotation="-45 0 0" obj-model="obj: #g2obj;mtl: #g2mtl" scale="0.03 0.03 0.03"></a-entity>
+                        </a-entity>
+                </a-entity>
+                <script src="scripts/shooting.js"></script>
+                <script src="scripts/gamelogic.js"></script>
+        </a-scene>
+        </script>
+</body>
+
+</html>

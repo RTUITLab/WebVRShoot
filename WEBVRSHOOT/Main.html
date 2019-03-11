@@ -1,0 +1,86 @@
+<html>
+
+<head>
+  <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+  <script src="scripts/collides.js"></script>
+</head>
+
+<body>
+  <a-scene id="scene" stats>
+    <a-assets>
+      <a-asset-item id="obj" src="models/terrain.obj"></a-asset-item>
+      <a-asset-item id="mtl" src="models/terrain.mtl"></a-asset-item>
+      <a-asset-item id="sobj" src="models/sun.obj"></a-asset-item>
+      <a-asset-item id="smtl" src="models/sun.mtl"></a-asset-item>
+      <a-asset-item id="gobj" src="models/gun.obj"></a-asset-item>
+      <a-asset-item id="gmtl" src="models/gun.mtl"></a-asset-item>
+      <a-asset-item id="g2obj" src="models/ump.obj"></a-asset-item>
+      <a-asset-item id="g2mtl" src="models/ump.mtl"></a-asset-item>
+      <a-asset-item id="kobj" src="models/targets.obj"></a-asset-item>
+      <a-asset-item id="kmtl" src="models/targets.mtl"></a-asset-item>
+      <a-asset-item id="tmobj" src="models/targetsmove.obj"></a-asset-item>
+      <a-asset-item id="tmmtl" src="models/targetsmove.mtl"></a-asset-item>
+    </a-assets>
+    <a-sky rotation="17.5 -63 -0.37 " src="models/try.png"></a-sky>
+
+    <a-entity id='mtar' mtarget visible='false' obj-model="obj: #tmobj;mtl: #tmmtl"></a-entity>
+
+    <a-entity light="type: hemisphere; intensity: 3.5 ;color: #ffffff; groundColor:#959595"></a-entity>
+    <a-entity light="type: directional; color: #ffffff; intensity: 1.5; groundColor: #2a2a2a" position="24 24 -24"></a-entity>
+    <a-entity id="controller" windows-motion-controls="hand:right ;model: false">
+      <a-light id="flash" type="point" position="0 0.07 -0.3" color="yellow" distance=10> </a-light>
+      <a-entity id="gunmodel" rotation="-45 0 0" obj-model="obj: #gobj;mtl: #gmtl" scale="0.03 0.03 0.03"></a-entity>
+    </a-entity>
+    <a-entity obj-model="obj: #sobj;mtl: #smtl" position='25 25 -25' scale="1 1 1"></a-entity>
+    <a-box position='5 2 -4' shader="flat" rotation='0 315 0' color='grey' scale='1 0.5 0.5'>
+      <a-text id="timer" align='center' position="0 0 0.6" value='Time: 50'></a-text>
+    </a-box>
+    <a-box position='-5 1 -4' shader="flat" rotation='0 45 0' color='grey' scale='1 0.5 0.5'>
+      <a-text id="rec" align='center' position="0 0 0.6" value='Highscore:\n0'></a-text>
+    </a-box>
+    <a-box id="gun2b" position='-5.07 2 -3.72' shader="flat" rotation='0 45 0' color='grey' scale='0.4 0.5 0.5'>
+      <a-text id="rec" align='center' position="0 0 0.6" value='gun 2'></a-text>
+    </a-box>
+    <a-box id="gun1b" position='-4.61 2 -3.98' shader="flat" rotation='0 45 0' color='grey' scale='0.4 0.5 0.5'>
+      <a-text id="rec" align='center' position="0 0 0.6" value='gun 1'></a-text>
+    </a-box>
+    <a-box position='5 1 -4' shader="flat" rotation='0 315 0' color='grey' scale='1 0.5 0.5'>
+      <a-text id="score" align='center' position="0 0 0.6" value='Score: 0'></a-text>
+    </a-box>
+    <a-box id='playbutton' shader="flat" position='0 2 -4' color='grey' scale='1 0.5 0.5'>
+      <a-text value='Start' align='center' position='0 0 0.6'></a-text>
+    </a-box>
+    <a-entity obj-model="obj: #obj;mtl: #mtl" scale="4 3 4" rotation='0 90 0'></a-entity>
+    <a-entity state="down" id="target" obj-model="obj: #kobj;mtl: #kmtl" rotation='-90 0 0' scale="1 1 1" position='0 -0.23 -17.2'>
+      <a-animation attribute='rotation' begin='down' to='-90 0 0' from="0 0 0"></a-animation>
+      <a-animation attribute='rotation' begin='up' to='0 0 0' from="-90 0 0"></a-animation>
+    </a-entity>
+    <a-entity state="down" id="target" obj-model="obj: #kobj;mtl: #kmtl" rotation='-90 0 0' scale="1 1 1" position='-10.3 0.21 -15.6'>
+      <a-animation attribute='rotation' begin='down' to='-90 0 0' from="0 0 0"></a-animation>
+      <a-animation attribute='rotation' begin='up' to='0 0 0' from="-90 0 0"></a-animation>
+    </a-entity>
+    <a-entity state="down" id="target" obj-model="obj: #kobj;mtl: #kmtl" rotation='-90 0 0' scale="1 1 1" position='17.48 1.66 -25.5'>
+      <a-animation attribute='rotation' begin='down' to='-90 0 0' from="0 0 0"></a-animation>
+      <a-animation attribute='rotation' begin='up' to='0 0 0' from="-90 0 0"></a-animation>
+    </a-entity>
+    <a-entity state="down" id="target" obj-model="obj: #kobj;mtl: #kmtl" rotation='-90 0 0' scale="1 1 1" position='-8.6 0.6 -32.4'>
+      <a-animation attribute='rotation' begin='down' to='-90 0 0' from="0 0 0"></a-animation>
+      <a-animation attribute='rotation' begin='up' to='0 0 0' from="-90 0 0"></a-animation>
+    </a-entity>
+    <a-entity state="down" id="target" obj-model="obj: #kobj;mtl: #kmtl" rotation='-90 0 0' scale="1 1 1" position='-21.8 0.49 -28.2'>
+      <a-animation attribur='rotation' begin='down' to='-90 0 0' from="0 0 0"></a-animation>
+      <a-animation attribute='rotation' begin='up' to='0 0 0' from="-90 0 0"></a-animation>
+    </a-entity>
+    <a-entity state="down" id="target" obj-model="obj: #kobj;mtl: #kmtl" rotation='-90 0 0' scale="1 1 1" position='6.96 1 -34.3'>
+      <a-animation attribute='rotation' begin='down' to='-90 0 0' from="0 0 0"></a-animation>
+      <a-animation attribute='rotation' begin='up' to='0 0 0' from="-90 0 0"></a-animation>
+    </a-entity>
+    <a-camera collision id="cam" wasd-controls-enabled="false" fps-look-controls="user-height: 0">
+    </a-camera>
+    <script src="scripts/shooting.js"></script>
+    <script src="scripts/gamelogic.js"></script>
+  </a-scene>
+  </script>
+</body>
+
+</html>

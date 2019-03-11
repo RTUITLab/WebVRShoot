@@ -3,14 +3,13 @@ for (j = 0; j < decoys.length; ++j) {
   decoys[j].setAttribute('state', 'down')
   decoys[j].addEventListener('up', function () {
     setTimeout(function swap(ob, gm) {
-      if (game==gm)
-      {
-      call();
-      if (ob.getAttribute('state') == 'up') {
-        setTimeout(function () { ob.setAttribute("state", "down") }, 1000);
-        ob.setAttribute("state", "sw")
-        ob.emit("down")
-      }
+      if (game == gm) {
+        call();
+        if (ob.getAttribute('state') == 'up') {
+          setTimeout(function () { ob.setAttribute("state", "down") }, 1000);
+          ob.setAttribute("state", "sw")
+          ob.emit("down")
+        }
       }
     }, 7000, this, game)
   })
@@ -27,37 +26,36 @@ function call() {
 }
 function callm() {
   let xto
-  let randx=-15+Math.random()*30
-  if (randx>0)
-  xto=randx-15
+  let randx = -15 + Math.random() * 30
+  if (randx > 0)
+    xto = randx - 15
   else
-  xto=randx+15
-  mt.setAttribute('position',{x:randx ,y:10,z:-16})
-  mt.setAttribute('visible','true')
+    xto = randx + 15
+  mt.setAttribute('position', { x: randx, y: 10, z: -16 })
+  mt.setAttribute('visible', 'true')
   var anim = document.createElement('a-animation')
   anim.setAttribute('attribute', 'position')
   anim.setAttribute('dur', '5000')
   anim.setAttribute('fill', 'forwards')
   anim.setAttribute('easing', 'linear')
-  anim.setAttribute('to', xto.toString()+' 10 -16')
+  anim.setAttribute('to', xto.toString() + ' 10 -16')
   mt.appendChild(anim);
-  setTimeout(function(){ mt.setAttribute('visible','false')},5000)
+  setTimeout(function () { mt.setAttribute('visible', 'false') }, 5000)
 }
-let mt= document.querySelector('#mtar')
-let game=0
+let mt = document.querySelector('#mtar')
+let game = 0
 let record = 0;
-let gunnow= 1;
+let gunnow = 1;
 let time = 50;
 let score = 0;
 let unt = true
 let but = document.querySelector('#playbutton')
-console.log( gun1b.object3D.getWorldPosition().x)
 but.addEventListener('collide', function (event) {
   if (unt) {
     for (j = 0; j < decoys.length; ++j) {
       decoys[j].setAttribute('state', 'down')
     }
-    game+=1;
+    game += 1;
     time = 50;
     call();
     setTimeout(call, 5000)
@@ -85,9 +83,8 @@ function countdown_timer() {
       decoys[j].setAttribute('state', 'off')
       decoys[j].emit('down')
     }
-    if (score>record)
-    {
-      record=score;
+    if (score > record) {
+      record = score;
       document.querySelector('#rec').setAttribute('value', 'Highscore:\n' + record);
     }
     unt = true

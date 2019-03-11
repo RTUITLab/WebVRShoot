@@ -1,0 +1,43 @@
+let curs = document.querySelector("#Curs");
+bun.addEventListener('collide', function (event) {
+    console.log("3")
+    bun.setAttribute('visible', "false")
+    setTimeout(function(id){bun.setAttribute('visible', "true")},1000,bun)
+});
+contr.addEventListener('controllerdisconnected', function () {
+    head.setAttribute('wasd-controls-enabled', "true")
+    contr.setAttribute('visible', 'false')
+    curs.setAttribute('visible', 'false')
+    bun.setAttribute('visible', 'false')
+});
+contr.addEventListener('controllerconnected', function () {
+    head.setAttribute('wasd-controls-enabled', "false")
+    contr.setAttribute('visible', 'true')
+    curs.setAttribute('visible', 'true')
+    bun.setAttribute('visible', 'true')
+});
+function makeshoot2() {
+    var pointer = document.createElement('a-entity');
+    var mark = document.createElement('a-entity');
+    pointer.object3D.rotation.set(head.object3D.rotation.x, head.object3D.rotation.y, head.object3D.rotation.z)
+    mark.setAttribute('rotation', '0 0 0')
+    var shoot = document.createElement('a-sphere');
+    shoot.setAttribute('id', "shooot");
+    shoot.setAttribute('color', "yellow");
+    shoot.setAttribute('radius', "0.05");
+    shoot.setAttribute('position', '0 0 -50')
+    contr.sceneEl.appendChild(pointer);
+    pointer.appendChild(mark);
+    mark.appendChild(shoot);
+    pointer.setAttribute('position', (head.object3D.position.x) + ' ' + (head.object3D.position.y) + ' ' + (head.object3D.position.z))
+    var anim = document.createElement('a-animation')
+    anim.setAttribute('attribute', 'position')
+    anim.setAttribute('dur', '1000')
+    anim.setAttribute('fill', 'backwards')
+    anim.setAttribute('direction', 'reverse')
+    anim.setAttribute('easing', 'linear')
+    anim.setAttribute('to', '0 0.05 -0.2')
+    shoot.appendChild(anim);
+    setTimeout(destr, 1000, pointer);
+}
+bun.addEventListener('click', function () { makeshoot2() });
