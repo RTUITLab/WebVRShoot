@@ -15,14 +15,16 @@
                         <a-asset-item id="g2mtl" src="models/ump.mtl"></a-asset-item>
                         <a-asset-item id="boxobj" src="models/box.obj"></a-asset-item>
                         <a-asset-item id="boxmtl" src="models/box.mtl"></a-asset-item>
+                        <a-asset-item id="terobj" src="models/terrain.obj"></a-asset-item>
+                        <a-asset-item id="termtl" src="models/terrain.mtl"></a-asset-item>
                 </a-assets>
                 <a-box id="bax" position="0 2 -5" rotation="0 45 45" scale="2 2 2">
                         <a-animation attribute="position" to="0 2.2 -5" direction="alternate" dur="2000" repeat="indefinite"></a-animation>
                 </a-box>
                 <a-sky src="#skyTexture"></a-sky>
-                <a-plane src="#groundTexture" rotation="-90 0 0" width="30" height="30" repeat="10 10"></a-plane>
                 <a-light type="ambient" color="#445451"></a-light>
                 <a-light type="point" intensity="2" position="2 4 4"></a-light>
+                <a-entity id="terr" position="0 0 0" obj-model="obj: #terobj;mtl: #termtl" scale="1 1 1"></a-entity>
                 <a-entity id="bunny" position="0 2 -2" obj-model="obj: #boxobj;mtl: #boxmtl" scale="0.5 0.5 0.5"></a-entity>
                 <a-entity id="Cam">
                         <a-camera collision id="Head" camera wasd-controls-enabled="true">

@@ -19,7 +19,7 @@ contr.addEventListener('controllerconnected', function () {
 function makeshoot2() {
     var pointer = document.createElement('a-entity');
     var mark = document.createElement('a-entity');
-    pointer.object3D.rotation.set(head.object3D.rotation.x, head.object3D.rotation.y, head.object3D.rotation.z)
+    pointer.setAttribute('rotation',head.getAttribute('rotation'))
     mark.setAttribute('rotation', '0 0 0')
     var shoot = document.createElement('a-sphere');
     shoot.setAttribute('id', "shooot");
