@@ -1,6 +1,5 @@
 let curs = document.querySelector("#Curs");
 bun.addEventListener('collide', function (event) {
-    console.log("3")
     bun.setAttribute('visible', "false")
     setTimeout(function(id){bun.setAttribute('visible', "true")},1000,bun)
 });

@@ -4,6 +4,8 @@
         <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
         <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
         <script src="scripts/collisions.js"></script>
+        <script src="scripts/beasts.js"></script>
+        <script src="scripts/raycastgun.js"></script>
 </head>
 
 <body>
@@ -18,16 +20,19 @@
                         <a-asset-item id="terobj" src="models/terrain.obj"></a-asset-item>
                         <a-asset-item id="termtl" src="models/terrain.mtl"></a-asset-item>
                 </a-assets>
-                <a-box id="bax" position="0 2 -5" rotation="0 45 45" scale="2 2 2">
+                <a-box id="bax" color='green' position="0 2 -5" rotation="0 45 45" scale="2 2 2">
                         <a-animation attribute="position" to="0 2.2 -5" direction="alternate" dur="2000" repeat="indefinite"></a-animation>
                 </a-box>
                 <a-sky src="#skyTexture"></a-sky>
                 <a-light type="ambient" color="#445451"></a-light>
                 <a-light type="point" intensity="2" position="2 4 4"></a-light>
-                <a-entity id="terr" position="0 0 0" obj-model="obj: #terobj;mtl: #termtl" scale="1 1 1"></a-entity>
-                <a-entity id="bunny" position="0 2 -2" obj-model="obj: #boxobj;mtl: #boxmtl" scale="0.5 0.5 0.5"></a-entity>
-                <a-entity id="Cam">
-                        <a-camera collision id="Head" camera wasd-controls-enabled="true">
+                <a-plane src="#groundTexture" rotation="-90 0 0" width="30" height="30" repeat="10 10"></a-plane>
+                <a-entity id="terr" position="0 -4 0" obj-model="obj: #terobj;mtl: #termtl" scale="1 1 1"></a-entity>
+                <a-entity id="bunny" beast="zone:8;speed:20" position="0 0.3 -2" scale="0.5 0.5 0.5">
+                        <a-entity id="model" obj-model="obj: #boxobj;mtl: #boxmtl"></a-entity>
+                </a-entity>
+                <a-entity id="Cam" wasd-controls-enabled="true">
+                        <a-camera collision id="Head" camera raygun="[]">
                                 <a-cursor id="Curs"></a-cursor>
                         </a-camera>
                         <a-entity id="left-hand" teleport-controls="cameraRig: #Cam; teleportOrigin: #Head;" windows-motion-controls="hand:left "></a-entity>
