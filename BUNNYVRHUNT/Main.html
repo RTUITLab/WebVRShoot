@@ -5,9 +5,8 @@
         <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
         <script src="scripts/collisions.js"></script>
         <script src="scripts/beasts.js"></script>
-        <script src="scripts/raycastgun.js"></script>
+        <script src="scripts/raycollider.js"></script>
 </head>
-
 <body>
         <a-scene id="scene" stats>
                 <a-assets>
@@ -31,9 +30,12 @@
                 <a-entity id="bunny" beast="zone:8;speed:20" position="0 0.3 -2" scale="0.5 0.5 0.5">
                         <a-entity id="model" obj-model="obj: #boxobj;mtl: #boxmtl"></a-entity>
                 </a-entity>
+<a-entity class="clickable" id="cube" collider-check geometry="primitive: box" position="1 0 0"></a-entity>
+<a-entity class="not-clickable" collider-check geometry="primitive: sphere" position="-1 0 0"></a-entity>
                 <a-entity id="Cam" wasd-controls-enabled="true">
-                        <a-camera collision id="Head" camera raygun="[]">
-                                <a-cursor id="Curs"></a-cursor>
+                        <a-camera collision id="Head" camera>
+                                        <a-entity id="raycaster" raycaster="objects: .clickable" cursor></a-entity>
+                                        <a-cursor id="Curs"></a-cursor>
                         </a-camera>
                         <a-entity id="left-hand" teleport-controls="cameraRig: #Cam; teleportOrigin: #Head;" windows-motion-controls="hand:left "></a-entity>
                         <a-entity id="controller" windows-motion-controls="hand:right;model:false" visible="false">
