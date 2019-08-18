@@ -9,7 +9,7 @@ AFRAME.registerComponent('beast',{
        this.maxX=this.el.object3D.position.x+this.data.zone/2;
        this.minZ=this.el.object3D.position.z-this.data.zone/2;
        this.maxZ=this.el.object3D.position.z+this.data.zone/2;
-       randomwalk(this);
+     //  randomwalk(this);
        trace(this);
     },
     tick: function () {
@@ -20,7 +20,7 @@ function randomwalk(me){
     let walkz=Math.random()*(me.maxZ-me.minZ)+me.minZ;
     me.nowspeed=Math.random()*5+(me.data.speed-5);
     me.dirto=Math.atan2(walkz-me.el.object3D.position.z,walkx-me.el.object3D.position.x)*180/3.14*(-1)
-    me.el.children[0].setAttribute('rotation', "0 "+me.dirto.toString()+" 0")
+    me.el.children[1].setAttribute('rotation', "0 "+me.dirto.toString()+" 0")
     var anim = document.createElement('a-animation')
     anim.setAttribute('name','walker')
     anim.setAttribute('attribute', 'position')

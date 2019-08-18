@@ -17,5 +17,7 @@ AFRAME.registerComponent('collider-check', {
         if (!intersection) { return; }
         intersection.object.el.setAttribute('material','color','green');
         console.log(intersection.object.el.id);
+        document.querySelector('#raycaster').removeAttribute('raycaster')
+        this.raycaster=null;
     }
   });
