@@ -1,7 +1,8 @@
 AFRAME.registerComponent('beast',{
     shema:{
     speed:{type: 'int',default: 20},
-    zone:{type:'int', default: 4}
+    zone:{type:'int', default: 4},
+    hp:{type:'int',default: 100}
     },
     init: function() {
     this.state="walking";
@@ -13,6 +14,8 @@ AFRAME.registerComponent('beast',{
        trace(this);
     },
     tick: function () {
+        this.el.setAttribute('beast','hp',50)
+        //console.log(this.hp)
     }
 });
 function randomwalk(me){
