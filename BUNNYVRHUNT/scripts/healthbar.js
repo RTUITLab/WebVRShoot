@@ -1,10 +1,10 @@
-AFRAME.registerComponent('facecam', {
+AFRAME.registerComponent('healthbar', {
+  dependencies: ['beast'],
     schema: {
         
     },
 
     init: function () {
-        console.log(this);
     },
 
     update: function () {
@@ -19,7 +19,7 @@ AFRAME.registerComponent('facecam', {
       hd=document.querySelector('#Head')
       var dir = 90-Math.atan2(hd.getAttribute('position').z-this.el.parentEl.getAttribute('position').z,hd.getAttribute('position').x-this.el.parentEl.getAttribute('position').x)*180/Math.PI
     //  Math.atan2(this.el)
-    console.log(dir)
+   // console.log(dir)
     this.el.setAttribute('rotation', "0 "+dir.toString()+" 0")
     }
 });

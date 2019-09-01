@@ -11,7 +11,7 @@ AFRAME.registerComponent('collider-check', {
     },
     tick: function()
     {
-        if (!this.raycaster) { return; }  // Not intersecting.
+        if (!this.raycaster) { return; } 
 
         let intersection = this.raycaster.components.raycaster.getIntersection(this.el);
         if (!intersection) { return; }

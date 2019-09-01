@@ -1,4 +1,4 @@
-function destr(idd) {
+/*function destr(idd) {
   scene.removeChild(idd);
 }
 let shootr = 0;
@@ -36,4 +36,4 @@ contr.addEventListener('triggerdown', function () {
 });
 contr.addEventListener('triggerup', function () {
   shootr = 0;
-});
+});*/

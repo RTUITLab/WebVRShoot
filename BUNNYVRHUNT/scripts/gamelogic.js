@@ -1,6 +1,13 @@
 let curs = document.querySelector("#Curs");
+var contr = document.querySelector("#controller");
+var cam = document.querySelector("#Cam");
+var bun = document.querySelector("#bunny");
+var head = document.querySelector("#Head");
 bun.addEventListener('collide', function (event) {
     bun.setAttribute('visible', "false")
+    console.log(bun.getAttribute('beast'))
+    var nowhp=bun.getAttribute('beast').hp
+    bun.setAttribute('beast','hp',nowhp-50)
     setTimeout(function(id){bun.setAttribute('visible', "true")},1000,bun)
 });
 contr.addEventListener('controllerdisconnected', function () {
@@ -15,7 +22,7 @@ contr.addEventListener('controllerconnected', function () {
     curs.setAttribute('visible', 'true')
     bun.setAttribute('visible', 'true')
 });
-function makeshoot2() {
+/*function makeshoot2() {
     var pointer = document.createElement('a-entity');
     var mark = document.createElement('a-entity');
     pointer.setAttribute('rotation',head.getAttribute('rotation'))
@@ -39,4 +46,4 @@ function makeshoot2() {
     shoot.appendChild(anim);
     setTimeout(destr, 1000, pointer);
 }
-bun.addEventListener('click', function () { makeshoot2() });
+document.querySelector('#scene').addEventListener('click', function () { makeshoot2() });*/

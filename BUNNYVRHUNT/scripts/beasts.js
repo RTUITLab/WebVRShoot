@@ -1,8 +1,8 @@
 AFRAME.registerComponent('beast',{
-    shema:{
+    schema:{
     speed:{type: 'int',default: 20},
     zone:{type:'int', default: 4},
-    hp:{type:'int',default: 100}
+    hp: {type:'int',default: 100}
     },
     init: function() {
     this.state="walking";
@@ -11,11 +11,19 @@ AFRAME.registerComponent('beast',{
        this.minZ=this.el.object3D.position.z-this.data.zone/2;
        this.maxZ=this.el.object3D.position.z+this.data.zone/2;
      //  randomwalk(this);
-       trace(this);
+     //  trace(this);
     },
-    tick: function () {
-        this.el.setAttribute('beast','hp',50)
-        //console.log(this.hp)
+    update: function(){
+        if (this.el.children[0].children[0])
+        {
+       this.el.children[0].children[0].setAttribute('scale',{x:this.data.hp/100, y:0.2, z:1})
+       this.el.children[0].children[0].setAttribute('color',getColorForPercentage(this.data.hp/100))
+      console.log(getColorForPercentage(this.data.hp/100))
+        }
+        if (this.el.children[0].children[1])
+        {
+       this.el.children[0].children[1].setAttribute('scale',{x:this.data.hp/100+0.1, y:0.3, z:1})
+        }
     }
 });
 function randomwalk(me){
@@ -41,3 +49,27 @@ function trace(me){
     me.el.sceneEl.appendChild(otrace);
     setTimeout(trace,me.nowspeed*10,me)
 }
+var percentColors = [
+    { pct: 0.0, color: { r: 0xff, g: 0x00, b: 0 } },
+    { pct: 0.5, color: { r: 0xff, g: 0xff, b: 0 } },
+    { pct: 1.0, color: { r: 0x00, g: 0xff, b: 0 } } ];
+
+var getColorForPercentage = function(pct) {
+    for (var i = 1; i < percentColors.length - 1; i++) {
+        if (pct < percentColors[i].pct) {
+            break;
+        }
+    }
+    var lower = percentColors[i - 1];
+    var upper = percentColors[i];
+    var range = upper.pct - lower.pct;
+    var rangePct = (pct - lower.pct) / range;
+    var pctLower = 1 - rangePct;
+    var pctUpper = rangePct;
+    var color = {
+        r: Math.floor(lower.color.r * pctLower + upper.color.r * pctUpper),
+        g: Math.floor(lower.color.g * pctLower + upper.color.g * pctUpper),
+        b: Math.floor(lower.color.b * pctLower + upper.color.b * pctUpper)
+    };
+    return 'rgb(' + [color.r, color.g, color.b].join(',') + ')';
+}  
