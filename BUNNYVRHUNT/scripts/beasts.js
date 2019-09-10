@@ -18,7 +18,6 @@ AFRAME.registerComponent('beast',{
         {
        this.el.children[0].children[0].setAttribute('scale',{x:this.data.hp/100, y:0.2, z:1})
        this.el.children[0].children[0].setAttribute('color',getColorForPercentage(this.data.hp/100))
-      console.log(getColorForPercentage(this.data.hp/100))
         }
         if (this.el.children[0].children[1])
         {

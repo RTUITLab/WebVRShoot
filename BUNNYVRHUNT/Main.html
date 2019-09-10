@@ -2,7 +2,6 @@
 
 <head>
         <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
-        <script src="https://rawgit.com/fernandojsg/aframe-teleport-controls/master/dist/aframe-teleport-controls.min.js"></script>
         <script src="scripts/collisions.js"></script>
         <script src="scripts/beasts.js"></script>
         <script src="scripts/healthbar.js"></script>
@@ -11,8 +10,8 @@
 <body>
         <a-scene id="scene" stats>
                 <a-assets>
-                        <img id="skyTexture" src="https://cdn.aframe.io/360-image-gallery-boilerplate/img/sechelt.jpg">
-                        <img id="groundTexture" src="https://cdn.aframe.io/a-painter/images/floor.jpg">
+                        <a-asset-item id="sobj" src="models/sun.obj"></a-asset-item>
+                        <a-asset-item id="smtl" src="models/sun.mtl"></a-asset-item>
                         <a-asset-item id="g2obj" src="models/ump.obj"></a-asset-item>
                         <a-asset-item id="g2mtl" src="models/ump.mtl"></a-asset-item>
                         <a-asset-item id="boxobj" src="models/box.obj"></a-asset-item>
@@ -22,33 +21,30 @@
                         <a-asset-item id="terobj" src="models/terrain.obj"></a-asset-item>
                         <a-asset-item id="termtl" src="models/terrain.mtl"></a-asset-item>
                 </a-assets>
+                <a-sky rotation="17.5 -63 -0.37 " src="models/sky.png"></a-sky>
+                <a-entity obj-model="obj: #sobj;mtl: #smtl" position='25 25 -25' scale="1 1 1"></a-entity>
                 <a-box id="bax" color='green' position="0 2 -5" rotation="0 45 45" scale="2 2 2">
                         <a-animation attribute="position" to="0 2.2 -5" direction="alternate" dur="2000" repeat="indefinite"></a-animation>
                 </a-box>
-                <a-sky src="#skyTexture"></a-sky>
-                <a-light type="ambient" color="#445451"></a-light>
-                <a-light type="point" intensity="2" position="2 4 4"></a-light>
-                <a-plane src="#groundTexture" rotation="-90 0 0" width="30" height="30" repeat="10 10"></a-plane>
-                <a-entity id="terr" position="0 -4 0" obj-model="obj: #terobj;mtl: #termtl" scale="1 1 1"></a-entity>
-                <a-entity id="bunny" beast position="0 0.3 -2" scale="0.5 0.5 0.5">
+                <a-entity light="type: hemisphere; intensity: 3.5 ;color: #ffffff; groundColor:#959595"></a-entity>
+                <a-entity light="type: directional; color: #ffffff; intensity: 1.5; groundColor: #2a2a2a" position="24 24 -24"></a-entity>
+                <a-entity id="terr" obj-model="obj: #terobj;mtl: #termtl" scale="4 3 4" rotation='0 90 0'></a-entity>
+                <a-entity id="bunny" beast position="0 1d -2" scale="0.5 0.5 0.5">
                         <a-entity position="0 1 0" healthbar>
                                 <a-plane scale="1 0.2 1" color="#550000"> </a-plane>
                                 <a-plane position="0 0 -0.01" scale="1.1 0.3 1" color="#545454"></a-plane>
                         </a-entity>
+                        <a-box id="bunnyhitbox" class="clickable" collider-check visible="false"></a-box>
                         <a-entity id="model" obj-model="obj: #boxobj;mtl: #boxmtl"></a-entity>
                 </a-entity>
-<a-entity class="clickable" id="cube" collider-check geometry="primitive: box" position="1 0 0"></a-entity>
-<a-entity class="clickable" collider-check geometry="primitive: sphere" position="-1 0 0"></a-entity>
                 <a-entity id="Cam" wasd-controls-enabled="true">
-                        <a-camera collision id="Head" camera>
-                                        <a-entity id="raycaster" raycaster="objects: .clickable"></a-entity>
-                        </a-camera>
-                        <a-entity id="left-hand" teleport-controls="cameraRig: #Cam; teleportOrigin: #Head;" windows-motion-controls="hand:left "></a-entity>
+                        <a-camera collision id="Head" camera></a-camera>
+                        <a-entity id="left-hand" windows-motion-controls="hand:left "></a-entity>
                         <a-entity id="controller" windows-motion-controls="hand:right;model:false" visible="false">
                                 <a-entity id="gunmodel" rotation="-45 0 0" obj-model="obj: #gunobj;mtl: #gunmtl" color='red' scale="0.03 0.03 0.03"></a-entity>
+                                <a-entity id="raycaster" rotation="-45 0 0" raycaster="objects: .clickable;showLine: true"></a-entity>
                         </a-entity>
                 </a-entity>
-               <!-- <script src="scripts/shooting.js"></script> -->
                 <script src="scripts/gamelogic.js"></script>
         </a-scene>
         </script>
