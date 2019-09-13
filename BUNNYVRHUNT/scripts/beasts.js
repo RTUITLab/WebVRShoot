@@ -1,6 +1,6 @@
 AFRAME.registerComponent('beast',{
     schema:{
-    speed:{type: 'int',default: 20},
+    speed:{type: 'int',default: 30},
     zone:{type:'int', default: 4},
     hp: {type:'int',default: 100}
     },
@@ -10,7 +10,7 @@ AFRAME.registerComponent('beast',{
        this.maxX=this.el.object3D.position.x+this.data.zone/2;
        this.minZ=this.el.object3D.position.z-this.data.zone/2;
        this.maxZ=this.el.object3D.position.z+this.data.zone/2;
-     //  randomwalk(this);
+       randomwalk(this);
      //  trace(this);
     },
     update: function(){
@@ -23,14 +23,21 @@ AFRAME.registerComponent('beast',{
         {
        this.el.children[0].children[1].setAttribute('scale',{x:this.data.hp/100+0.1, y:0.3, z:1})
         }
+        if (this.data.hp<=0)
+        {
+            scene.removeChild(this.el)
+        }
     }
 });
 function randomwalk(me){
-    let walkx=Math.random()*(me.maxX-me.minX)+me.minX;
-    let walkz=Math.random()*(me.maxZ-me.minZ)+me.minZ;
+    var targ = nearestcarrot(me)
+    if (targ)
+    {
+    var walkx = targ.object3D.getWorldPosition().x
+    var walkz = targ.object3D.getWorldPosition().z
     me.nowspeed=Math.random()*5+(me.data.speed-5);
     me.dirto=Math.atan2(walkz-me.el.object3D.position.z,walkx-me.el.object3D.position.x)*180/3.14*(-1)
-    me.el.children[1].setAttribute('rotation', "0 "+me.dirto.toString()+" 0")
+    me.el.children[2].setAttribute('rotation', "0 "+(me.dirto-90).toString()+" 0")
     var anim = document.createElement('a-animation')
     anim.setAttribute('name','walker')
     anim.setAttribute('attribute', 'position')
@@ -38,8 +45,55 @@ function randomwalk(me){
     anim.setAttribute('easing', 'linear')
     anim.setAttribute('to', walkx.toString()+" "+me.el.object3D.position.y.toString()+" "+walkz.toString() )
     me.el.appendChild(anim);
-    setTimeout(randomwalk,((Math.sqrt(Math.pow(walkx-me.el.object3D.position.x,2)+Math.pow(walkz-me.el.object3D.position.y,2)))/me.data.speed*10000)+Math.random()*2000, me);
+    setTimeout(function(me,targ){
+        if (me.data.hp>0)
+        if (targ.parentEl)
+        setTimeout(function(me,targ){if (me.data.hp>0)
+            { 
+                if (targ.parentEl)
+                {
+                targ.parentEl.removeChild(targ);
+                var divs = document.querySelectorAll('#carrot'), i;
+                if (divs.length==0)
+                {
+                    gamestate="menu"
+                    var divs = document.querySelectorAll('#bunny'), i;
+                    for (i = 0; i < divs.length; ++i)
+                    scene.removeChild(divs[i])
+                    var divs = document.querySelectorAll('#garden'), i;
+                    for (i = 0; i < divs.length; ++i)
+                    {
+                        console.log(divs[i].getAttribute('cholder'))
+                    replant(divs[i])
+                    }
+                    document.querySelector('#playb').setAttribute('visible','true')
+                    socument.querySelector('#playb').setAttribute('class','clickable')
+                }
+                }
+
+                randomwalk(me)
+            }
+             ;},1000,me,targ)
+             else 
+             randomwalk(me);} , Math.sqrt(Math.pow(walkx-me.el.object3D.position.x,2)+Math.pow(walkz-me.el.object3D.position.z,2))/me.nowspeed*10000, me,targ)
+        }
 };
+function nearestcarrot(me)
+{
+    var nearest = null
+    var mindist = 99999
+    var dist
+    var divs = document.querySelectorAll('#carrot'), i;
+    for (i = 0; i < divs.length; ++i) {
+        dist = Math.sqrt(Math.pow(me.el.object3D.getWorldPosition().x-divs[i].object3D.getWorldPosition().x,2)+Math.pow(me.el.object3D.getWorldPosition().z-divs[i].object3D.getWorldPosition().z,2))
+        if (dist<mindist)
+        {
+            mindist=dist
+            nearest = divs[i]
+        }
+    }
+    return nearest
+}
 function trace(me){
     var otrace = document.createElement('a-plane');
     otrace.setAttribute('scale', "0.1 0.1 0.1");

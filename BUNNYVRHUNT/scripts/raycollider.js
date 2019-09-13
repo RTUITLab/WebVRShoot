@@ -1,5 +1,4 @@
 AFRAME.registerComponent('collider-check', {
-    dependencies: ['raycaster'],
   
     init: function () {
         this.el.addEventListener('raycaster-intersected', evt => {
@@ -12,13 +11,12 @@ AFRAME.registerComponent('collider-check', {
     tick: function()
     {
         if (!this.raycaster) { return; } 
-
         let intersection = this.raycaster.components.raycaster.getIntersection(this.el);
         if (!intersection) { return; }
-        intersection.object.el.setAttribute('material','color','green');
+        if (this.raycaster.getAttribute('raycaster').enabled)
+        {
         intersection.object.el.emit("collide")
-        console.log(intersection.object.el.id);
-        document.querySelector('#raycaster').removeAttribute('raycaster')
-        this.raycaster=null;
+        document.querySelector('#raycaster').setAttribute('raycaster','enabled',false)
+        }
     }
   });
