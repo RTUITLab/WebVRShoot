@@ -11,6 +11,7 @@
         <a-scene id="scene" stats>
                 <a-assets>
                         <audio id="shoot" src="sounds/shoot.mp3"></audio>
+                        <a-asset-item id="test" src="models/anvel.glb"></a-asset-item>
                         <a-asset-item id="rhobj" src="models/rhole.obj"></a-asset-item>
                         <a-asset-item id="rhmtl" src="models/rhole.mtl"></a-asset-item>
                         <a-asset-item id="cobj" src="models/carrot.obj"></a-asset-item>
@@ -47,7 +48,7 @@
                 </a-plane>
                 <a-entity id="Cam" wasd-controls-enabled="true">
                         <a-camera collision id="Head" camera>
-                                <a-entity id="raycaster" sound="poolSize:3;src: #shoot; on:poof" raycaster="objects: .clickable;showLine: false;enabled: false"></a-entity>
+                                <a-entity position="0 -0.2 0" id="raycaster" sound="poolSize:3;src: #shoot; on:poof" raycaster="objects: .clickable;showLine: true;enabled: false"></a-entity>
                         </a-camera>
                         <a-entity id="left-hand" windows-motion-controls="hand:left "></a-entity>
                         <a-entity id="controller" windows-motion-controls="hand:right;model:false" visible="false">

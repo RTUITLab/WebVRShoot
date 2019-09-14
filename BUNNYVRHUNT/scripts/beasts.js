@@ -26,6 +26,11 @@ AFRAME.registerComponent('beast',{
         if (this.data.hp<=0)
         {
             scene.removeChild(this.el)
+            var divs = document.querySelectorAll('#bunny'), i;
+            if (divs.length==0)
+            {
+               openmenu()
+            }
         }
     }
 });
@@ -48,7 +53,8 @@ function randomwalk(me){
     setTimeout(function(me,targ){
         if (me.data.hp>0)
         if (targ.parentEl)
-        setTimeout(function(me,targ){if (me.data.hp>0)
+        setTimeout(function(me,targ){
+            if (me.data.hp>0)
             { 
                 if (targ.parentEl)
                 {
@@ -56,18 +62,7 @@ function randomwalk(me){
                 var divs = document.querySelectorAll('#carrot'), i;
                 if (divs.length==0)
                 {
-                    gamestate="menu"
-                    var divs = document.querySelectorAll('#bunny'), i;
-                    for (i = 0; i < divs.length; ++i)
-                    scene.removeChild(divs[i])
-                    var divs = document.querySelectorAll('#garden'), i;
-                    for (i = 0; i < divs.length; ++i)
-                    {
-                        console.log(divs[i].getAttribute('cholder'))
-                    replant(divs[i])
-                    }
-                    document.querySelector('#playb').setAttribute('visible','true')
-                    socument.querySelector('#playb').setAttribute('class','clickable')
+                   openmenu()
                 }
                 }
 
@@ -125,4 +120,17 @@ var getColorForPercentage = function(pct) {
         b: Math.floor(lower.color.b * pctLower + upper.color.b * pctUpper)
     };
     return 'rgb(' + [color.r, color.g, color.b].join(',') + ')';
-}  
+}
+function openmenu() {
+    gamestate="menu"
+    var divs = document.querySelectorAll('#bunny'), i;
+    for (i = 0; i < divs.length; ++i)
+    divs[i].setAttribute('beast','hp',0)
+    var divs = document.querySelectorAll('#garden'), i;
+    for (i = 0; i < divs.length; ++i)
+    {
+    replant(divs[i].getAttribute('cholder'),divs[i])
+    }
+    document.querySelector('#playb').setAttribute('visible','true')
+    document.querySelector('#playb').setAttribute('class','clickable')
+}

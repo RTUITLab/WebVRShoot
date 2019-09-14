@@ -32,7 +32,6 @@ var divs = document.querySelectorAll('#hole'), i;
     {
 divs[i].addEventListener('spawnbunny', function (event)
 {
-    console.log(event)
     var bunyy = document.createElement('a-entity');
     bunyy.setAttribute('id', "bunny");
     bunyy.setAttribute('beast',"")
@@ -88,8 +87,7 @@ document.querySelector('#scene').addEventListener('click', function () {
     {
         document.querySelector('#raycaster').emit("poof")
         document.querySelector('#raycaster').setAttribute('raycaster','enabled',true)
-        document.querySelector('#raycaster').setAttribute('raycaster','showLine',true)
-        setTimeout(function(){document.querySelector('#raycaster').setAttribute('raycaster','showLine',false);document.querySelector('#raycaster').setAttribute('raycaster','enabled',false);},50)
+        setTimeout(function(){document.querySelector('#raycaster').setAttribute('raycaster','enabled',false);},50)
     }
     else
     if (shootr)
@@ -97,7 +95,7 @@ document.querySelector('#scene').addEventListener('click', function () {
         document.querySelector('#raycaster').emit("poof")
         shootr=0;
     document.querySelector('#raycaster').setAttribute('raycaster','enabled',true)
-    setTimeout(function(){document.querySelector('#raycaster').setAttribute('raycaster','showLine',false);document.querySelector('#raycaster').setAttribute('raycaster','enabled',false);},50)
+    setTimeout(function(){document.querySelector('#raycaster').setAttribute('raycaster','enabled',false);},50)
     setTimeout(function(){shootr=1},1000)
     }
   });

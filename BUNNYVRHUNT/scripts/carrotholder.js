@@ -5,7 +5,7 @@ AFRAME.registerComponent('cholder',{
     hh:{type:'int',default: 3}
     },
     init: function() {
-    replant(this)},
+    replant(this.data,this.el)},
     update: function(){
         
     }
@@ -17,25 +17,25 @@ function plantcarrot(a,b,c)
     carrot.setAttribute('position',a.toString() + " 0 " + b.toString())
     carrot.setAttribute('scale',"0.25 0.25 0.25")
     carrot.setAttribute('obj-model',{obj:"#cobj", mtl:"#cmtl"})
-    c.el.appendChild(carrot)
+    c.appendChild(carrot)
 }
-function replant(me)
+function replant(me,obj)
 {
     {
         var planted=0;
         var x=-5;
         var y=-5;
-        for (var i=0;i<me.data.wh;i++)
+        for (var i=0;i<me.wh;i++)
         {
-        for (var j=0;j<me.data.hh;j++)
+        for (var j=0;j<me.hh;j++)
         {
-        if (planted<=me.data.carrots)
+        if (planted<=me.carrots)
         {
-        plantcarrot(x,y,me)
+        plantcarrot(x,y,obj)
         }
-        y+=5/(me.data.hh-1)*2
+        y+=5/(me.hh-1)*2
         }
-        x+=5/(me.data.wh-1)*2
+        x+=5/(me.wh-1)*2
        y=-5
     }
         }
