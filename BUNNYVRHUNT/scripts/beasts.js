@@ -1,6 +1,6 @@
 AFRAME.registerComponent('beast',{
     schema:{
-    speed:{type: 'int',default: 30},
+    speed:{type: 'int',default: 40},
     zone:{type:'int', default: 4},
     hp: {type:'int',default: 100}
     },
@@ -29,10 +29,16 @@ AFRAME.registerComponent('beast',{
             var divs = document.querySelectorAll('#bunny'), i;
             if (divs.length==0)
             {
-               openmenu()
+                var divs = document.querySelectorAll('#carrot'), i;
+                if (divs.length>1)
+               textplane("Well done!!!\n You saved\n "+ divs.length+" carrots.")
+               if (divs.length==1)
+               textplane("Well done!!!\n You saved\n "+ divs.length+" carrot.")
+               if (divs.length==0)
+               textplane("You lost!\nAll the carrots\n were eaten.")
             }
         }
-    }
+    },
 });
 function randomwalk(me){
     var targ = nearestcarrot(me)
@@ -40,37 +46,19 @@ function randomwalk(me){
     {
     var walkx = targ.object3D.getWorldPosition().x
     var walkz = targ.object3D.getWorldPosition().z
-    me.nowspeed=Math.random()*5+(me.data.speed-5);
-    me.dirto=Math.atan2(walkz-me.el.object3D.position.z,walkx-me.el.object3D.position.x)*180/3.14*(-1)
-    me.el.children[2].setAttribute('rotation', "0 "+(me.dirto-90).toString()+" 0")
+    var nowspeed=Math.random()*5+(me.data.speed-5);
+    var dirto=Math.atan2(walkz-me.el.object3D.position.z,walkx-me.el.object3D.position.x)*180/3.14*(-1)
+    me.el.children[2].setAttribute('rotation', "0 "+(dirto-90).toString()+" 0")
     var anim = document.createElement('a-animation')
     anim.setAttribute('name','walker')
     anim.setAttribute('attribute', 'position')
-    anim.setAttribute('dur', ((Math.sqrt(Math.pow(walkx-me.el.object3D.position.x,2)+Math.pow(walkz-me.el.object3D.position.z,2)))/me.nowspeed*10000).toString())
+    anim.setAttribute('dur', ((Math.sqrt(Math.pow(walkx-me.el.object3D.position.x,2)+Math.pow(walkz-me.el.object3D.position.z,2)))/nowspeed*10000).toString())
     anim.setAttribute('easing', 'linear')
-    anim.setAttribute('to', walkx.toString()+" "+me.el.object3D.position.y.toString()+" "+walkz.toString() )
+    anim.setAttribute('to', (walkx+Math.sin((dirto-90)/180*3.14)*0.6).toString()+" "+me.el.object3D.position.y.toString()+" "+(walkz+Math.cos((dirto-90)/180*3.14)*0.6).toString() )
     me.el.appendChild(anim);
     setTimeout(function(me,targ){
-        if (me.data.hp>0)
-        if (targ.parentEl)
-        setTimeout(function(me,targ){
-            if (me.data.hp>0)
-            { 
-                if (targ.parentEl)
-                {
-                targ.parentEl.removeChild(targ);
-                var divs = document.querySelectorAll('#carrot'), i;
-                if (divs.length==0)
-                {
-                   openmenu()
-                }
-                }
-
-                randomwalk(me)
-            }
-             ;},1000,me,targ)
-             else 
-             randomwalk(me);} , Math.sqrt(Math.pow(walkx-me.el.object3D.position.x,2)+Math.pow(walkz-me.el.object3D.position.z,2))/me.nowspeed*10000, me,targ)
+      {getcarrot(me,targ)}
+    } , Math.sqrt(Math.pow(walkx-me.el.object3D.position.x,2)+Math.pow(walkz-me.el.object3D.position.z,2))/nowspeed*10000, me,targ)
         }
 };
 function nearestcarrot(me)
@@ -123,14 +111,43 @@ var getColorForPercentage = function(pct) {
 }
 function openmenu() {
     gamestate="menu"
-    var divs = document.querySelectorAll('#bunny'), i;
-    for (i = 0; i < divs.length; ++i)
-    divs[i].setAttribute('beast','hp',0)
-    var divs = document.querySelectorAll('#garden'), i;
-    for (i = 0; i < divs.length; ++i)
-    {
-    replant(divs[i].getAttribute('cholder'),divs[i])
-    }
-    document.querySelector('#playb').setAttribute('visible','true')
-    document.querySelector('#playb').setAttribute('class','clickable')
+    tp.setAttribute('visible','false')
+    tp.setAttribute('class','nc')
+    real.setAttribute('visible','true')
+    real.setAttribute('class','clickable')
+    cas.setAttribute('visible','true')
+    cas.setAttribute('class','clickable')
+    hard.setAttribute('visible','true')
+    hard.setAttribute('class','clickable')
+    med.setAttribute('visible','true')
+    med.setAttribute('class','clickable')
+    ez.setAttribute('visible','true')
+    ez.setAttribute('class','clickable')
+    play.setAttribute('visible','true')
+   play.setAttribute('class','clickable')
+}
+function getcarrot(me,targ){
+    if (me.data.hp>0)
+            { 
+                if (targ.parentEl)
+                {
+                    if (targ.getAttribute('position').y<=2)
+                    {
+                    targ.setAttribute('position',targ.getAttribute('position').x.toString()+" "+(targ.getAttribute('position').y+0.025).toString()+" "+targ.getAttribute('position').z.toString())
+                    setTimeout(function(me,targ){getcarrot(me,targ)},10,me,targ)
+                    }
+                    else
+                    {
+                    targ.parentEl.removeChild(targ);
+                    var divs = document.querySelectorAll('#carrot'), i;
+                    if (divs.length==0)
+                    {
+                        textplane("All the carrots\n were eaten")
+                    }
+                    randomwalk(me);
+                    }
+                }
+                else 
+                randomwalk(me);
+            }
 }
