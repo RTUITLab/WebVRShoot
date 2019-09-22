@@ -16,7 +16,7 @@ AFRAME.registerComponent('collider-check', {
         if (this.raycaster.getAttribute('raycaster').enabled)
         {
         intersection.object.el.emit("collide")
-        document.querySelector('#raycaster').setAttribute('raycaster','enabled',false)
+        aim.setAttribute('raycaster','enabled',false)
         }
     }
   });

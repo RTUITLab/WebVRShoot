@@ -1,7 +1,5 @@
-let curs = document.querySelector("#Curs");
 var contr = document.querySelector("#controller");
 var cam = document.querySelector("#Cam");
-var bun = document.querySelector("#bunny");
 var head = document.querySelector("#Head");
 var play = document.querySelector("#playb")
 var ez = document.querySelector("#easy")
@@ -11,27 +9,36 @@ var cas = document.querySelector("#casual")
 var real = document.querySelector("#realistic")
 var aim = document.querySelector('#raycaster')
 var tp = document.querySelector('#textpl')
+var gm = document.querySelector('#gamemusik')
+var wm = document.querySelector('#winmusik')
+var lm = document.querySelector('#losemusik')
+var pm = document.querySelector('#pressmusik')
 var shootr = 1;
+var ending=false;
 var gamestate = "menu";
 var difficulty = "easy";
 tp.addEventListener('collide',function(event)
 {
     openmenu()
+    pm.emit("press")
 })
 cas.addEventListener('collide',function(event)
 {
+    pm.emit("press")
     aim.setAttribute('raycaster','showLine',true)
     cas.children[1].setAttribute('color','white')
     real.children[1].setAttribute('color','black')
 })
 real.addEventListener('collide',function(event)
 {
+    pm.emit("press")
     aim.setAttribute('raycaster','showLine',false)
     cas.children[1].setAttribute('color','black')
     real.children[1].setAttribute('color','white')
 })
 ez.addEventListener('collide',function(event)
 {
+    pm.emit("press")
     difficulty = "easy"
     ez.children[1].setAttribute('color','white')
     med.children[1].setAttribute('color','black')
@@ -39,6 +46,7 @@ ez.addEventListener('collide',function(event)
 })
 med.addEventListener('collide',function(event)
 {
+    pm.emit("press")
     difficulty = "medium"
     ez.children[1].setAttribute('color','black')
     med.children[1].setAttribute('color','white')
@@ -46,12 +54,14 @@ med.addEventListener('collide',function(event)
 })
 hard.addEventListener('collide',function(event)
 {
+    pm.emit("press")
     difficulty = "hard"
     ez.children[1].setAttribute('color','black')
     med.children[1].setAttribute('color','black')
     hard.children[1].setAttribute('color','white')
 })
 play.addEventListener('collide',function(event){
+pm.emit("press")
 startgame()
 })
 function spwaner(id)
@@ -189,18 +199,18 @@ divs[i].addEventListener('spawnbunny3', function (event)
     });
 });
     }
-contr.addEventListener('controllerdisconnected', function () {
+/*contr.addEventListener('controllerdisconnected', function () {
     head.setAttribute('wasd-controls-enabled', "true")
     contr.setAttribute('visible', 'false')
 });
 contr.addEventListener('controllerconnected', function () {
     head.setAttribute('wasd-controls-enabled', "false")
     contr.setAttribute('visible', 'true')
-});
+});*/
 document.querySelector('#scene').addEventListener('click', function () {
     if (gamestate=="menu")
     {
-       aim.emit("poof")
+    //   aim.emit("poof")
        aim.setAttribute('raycaster','enabled',true)
         setTimeout(function(){aim.setAttribute('raycaster','enabled',false);},50)
     }
@@ -215,11 +225,26 @@ document.querySelector('#scene').addEventListener('click', function () {
     }
   });
 /*contr.addEventListener('triggerdown', function () {
-    document.querySelector('#raycaster').setAttribute('raycaster',{objects: '.clickable', showLine: true})
-    setTimeout(function(){document.querySelector('#raycaster').setAttribute('raycaster','showLine',false);document.querySelector('#raycaster')..removeAttribute('raycaster');console.log('wtf')},1)
-  });*/
+    if (gamestate=="menu")
+    {
+    //   aim.emit("poof")
+       aim.setAttribute('raycaster','enabled',true)
+        setTimeout(function(){aim.setAttribute('raycaster','enabled',false);},50)
+    }
+    else
+    if (shootr)
+    {
+        aim.emit("poof")
+        shootr=0;
+    aim.setAttribute('raycaster','enabled',true)
+    setTimeout(function(){aim.setAttribute('raycaster','enabled',false);},50)
+    setTimeout(function(){shootr=1},1000)
+    }
+ });*/
   function textplane(text)
   {
+    gm.components.sound.stopSound();
+    //  cam.emit("menu")
       gamestate="info"
     tp.setAttribute('visible','true')
     tp.setAttribute('class','clickable')
@@ -240,6 +265,7 @@ document.querySelector('#scene').addEventListener('click', function () {
   }
   function startgame()
   {
+   gm.emit("game")
     gamestate="game"
     real.setAttribute('visible','false')
     real.setAttribute('class','nc')
@@ -262,7 +288,7 @@ document.querySelector('#scene').addEventListener('click', function () {
     setTimeout(function(){spwaner(1)},8000)
     setTimeout(function(){spwaner(1)},13000)
     setTimeout(function(){spwaner(1)},14000)
-    setTimeout(function(){spwaner(1)},15000)
+    setTimeout(function(){spwaner(1);ending=true;},15000)
     }
     if (difficulty=="medium")
     {
@@ -273,7 +299,7 @@ document.querySelector('#scene').addEventListener('click', function () {
         setTimeout(function(){spwaner(2)},8000)
         setTimeout(function(){spwaner(1)},13000)
         setTimeout(function(){spwaner(2)},14000)
-        setTimeout(function(){spwaner(2)},15000)
+        setTimeout(function(){spwaner(2);ending=true;},15000)
     }
     if (difficulty=="hard")
     {
@@ -284,6 +310,6 @@ document.querySelector('#scene').addEventListener('click', function () {
         setTimeout(function(){spwaner(2)},8000)
         setTimeout(function(){spwaner(3)},13000)
         setTimeout(function(){spwaner(2)},14000)
-        setTimeout(function(){spwaner(2)},15000)
+        setTimeout(function(){spwaner(2);ending=true;},15000)
     }
   }

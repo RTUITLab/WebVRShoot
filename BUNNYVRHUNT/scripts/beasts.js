@@ -25,17 +25,23 @@ AFRAME.registerComponent('beast',{
         }
         if (this.data.hp<=0)
         {
+            deathanim(this.el,"b")
             scene.removeChild(this.el)
             var divs = document.querySelectorAll('#bunny'), i;
-            if (divs.length==0)
+            if (divs.length==0&&ending)
             {
                 var divs = document.querySelectorAll('#carrot'), i;
+                if (divs.length>0)
+                wm.emit("win")
+                else
+                lm.emit("lose")
                 if (divs.length>1)
                textplane("Well done!!!\n You saved\n "+ divs.length+" carrots.")
                if (divs.length==1)
                textplane("Well done!!!\n You saved\n "+ divs.length+" carrot.")
                if (divs.length==0)
                textplane("You lost!\nAll the carrots\n were eaten.")
+               ending=false;
             }
         }
     },
@@ -134,6 +140,7 @@ function getcarrot(me,targ){
                     if (targ.getAttribute('position').y<=2)
                     {
                     targ.setAttribute('position',targ.getAttribute('position').x.toString()+" "+(targ.getAttribute('position').y+0.025).toString()+" "+targ.getAttribute('position').z.toString())
+                    head.emit('eat')
                     setTimeout(function(me,targ){getcarrot(me,targ)},10,me,targ)
                     }
                     else
@@ -142,6 +149,7 @@ function getcarrot(me,targ){
                     var divs = document.querySelectorAll('#carrot'), i;
                     if (divs.length==0)
                     {
+                        lm.emit("lose")
                         textplane("All the carrots\n were eaten")
                     }
                     randomwalk(me);
@@ -150,4 +158,31 @@ function getcarrot(me,targ){
                 else 
                 randomwalk(me);
             }
+}
+function deathanim(me,id)
+{
+    var bunyy = document.createElement('a-entity');
+    bunyy.setAttribute('scale', "0.5 0.5 0.5");
+    bunyy.setAttribute('position', me.getAttribute("position").x.toString()+" 0.25 "+me.getAttribute("position").z.toString());
+    var dynamic = document.createElement('a-entity');
+    dynamic.setAttribute('id','model')
+    dynamic.setAttribute('scale','0.2 0.2 0.2')
+    dynamic.setAttribute('rotation','0 180 0')
+    dynamic.setAttribute('obj-model',{obj:"#"+id+"obj", mtl:"#"+id+"mtl"})
+    bunyy.appendChild(dynamic)
+    dynamic = document.createElement('a-animation')
+    dynamic.setAttribute('attribute', 'rotation')
+    dynamic.setAttribute('dur', '1000')
+    dynamic.setAttribute('easing', 'linear')
+    dynamic.setAttribute('to', '0 0 90')
+    bunyy.appendChild(dynamic)
+    dynamic = document.createElement('a-animation')
+    dynamic.setAttribute('attribute', 'position')
+    dynamic.setAttribute('dur', '2000')
+    dynamic.setAttribute('easing', 'linear')
+    dynamic.setAttribute('to', '-3 0 0')
+    dynamic.setAttribute('delay','1000')
+    bunyy.children[0].appendChild(dynamic)
+    scene.appendChild(bunyy)
+    setTimeout(function(me){scene.removeChild(me)},3000,bunyy)
 }
