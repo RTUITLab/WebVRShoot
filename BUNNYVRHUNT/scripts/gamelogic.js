@@ -4,6 +4,7 @@ var head = document.querySelector("#Head");
 var play = document.querySelector("#playb")
 var ez = document.querySelector("#easy")
 var med = document.querySelector("#medium")
+var set = document.querySelector("#settings")
 var hard = document.querySelector("#hard")
 var cas = document.querySelector("#casual")
 var real = document.querySelector("#realistic")
@@ -11,12 +12,73 @@ var aim = document.querySelector('#raycaster')
 var tp = document.querySelector('#textpl')
 var gm = document.querySelector('#gamemusik')
 var wm = document.querySelector('#winmusik')
+var bk = document.querySelector('#back')
 var lm = document.querySelector('#losemusik')
 var pm = document.querySelector('#pressmusik')
+var musup = document.querySelector('#musvolumeup')
+var musdown = document.querySelector('#musvolumedown')
+var musvol = document.querySelector('#musvolume')
+var masup = document.querySelector('#masvolumeup')
+var masdown = document.querySelector('#masvolumedown')
+var masvol = document.querySelector('#masvolume')
+var effup = document.querySelector('#effvolumeup')
+var effdown = document.querySelector('#effvolumedown')
+var effvol = document.querySelector('#effvolume')
+var mus = document.querySelector('#MusicVolume')
+var mas = document.querySelector('#MasterVolume')
+var eff = document.querySelector('#EffectVolume')
 var shootr = 1;
 var ending=false;
 var gamestate = "menu";
 var difficulty = "easy";
+effdown.addEventListener('collide',function(event)
+{
+    if (cam.getAttribute('soundcontroller').esound>0)
+    {
+    cam.setAttribute('soundcontroller','esound',Math.round((cam.getAttribute('soundcontroller').esound-0.1)*10)/10)
+    }
+    pm.emit("press")
+})
+effup.addEventListener('collide',function(event)
+{
+    if (cam.getAttribute('soundcontroller').esound<1)
+    {
+    cam.setAttribute('soundcontroller','esound',Math.round((cam.getAttribute('soundcontroller').esound+0.1)*10)/10)
+    }
+    pm.emit("press")
+})
+musdown.addEventListener('collide',function(event)
+{
+    if (cam.getAttribute('soundcontroller').msound>0)
+    {
+    cam.setAttribute('soundcontroller','msound',Math.round((cam.getAttribute('soundcontroller').msound-0.1)*10)/10)
+    }
+    pm.emit("press")
+})
+musup.addEventListener('collide',function(event)
+{
+    if (cam.getAttribute('soundcontroller').msound<1)
+    {
+    cam.setAttribute('soundcontroller','msound',Math.round((cam.getAttribute('soundcontroller').msound+0.1)*10)/10)
+    }
+    pm.emit("press")
+})
+masdown.addEventListener('collide',function(event)
+{
+    if (cam.getAttribute('soundcontroller').massound>0)
+    {
+    cam.setAttribute('soundcontroller','massound',Math.round((cam.getAttribute('soundcontroller').massound-0.1)*10)/10)
+    }
+    pm.emit("press")
+})
+masup.addEventListener('collide',function(event)
+{
+    if (cam.getAttribute('soundcontroller').massound<1)
+    {
+    cam.setAttribute('soundcontroller','massound',Math.round((cam.getAttribute('soundcontroller').massound+0.1)*10)/10)
+    }
+    pm.emit("press")
+})
 tp.addEventListener('collide',function(event)
 {
     openmenu()
@@ -35,6 +97,16 @@ real.addEventListener('collide',function(event)
     aim.setAttribute('raycaster','showLine',false)
     cas.children[1].setAttribute('color','black')
     real.children[1].setAttribute('color','white')
+})
+bk.addEventListener('collide',function(event)
+{
+    closesettings()
+    pm.emit("press")
+})
+set.addEventListener('collide',function(event)
+{
+    opensettings()
+    pm.emit("press")
 })
 ez.addEventListener('collide',function(event)
 {
@@ -263,10 +335,58 @@ document.querySelector('#scene').addEventListener('click', function () {
     replant(divs[i].getAttribute('cholder'),divs[i])
     }
   }
+  function opensettings()
+  {
+    set.setAttribute('visible','false')
+    set.setAttribute('class','nc')
+    real.setAttribute('visible','false')
+    real.setAttribute('class','nc')
+    cas.setAttribute('visible','false')
+    cas.setAttribute('class','nc')
+    hard.setAttribute('visible','false')
+    hard.setAttribute('class','nc')
+    med.setAttribute('visible','false')
+    med.setAttribute('class','nc')
+    ez.setAttribute('visible','false')
+    ez.setAttribute('class','nc')
+    play.setAttribute('visible','false')
+    play.setAttribute('class','nc')
+    mus.setAttribute('visible','true')
+    mus.setAttribute('class','clickable')
+    mas.setAttribute('visible','true')
+    mas.setAttribute('class','clickable')
+    eff.setAttribute('visible','true')
+    eff.setAttribute('class','clickable')
+  }
+  function closesettings()
+  {
+    set.setAttribute('visible','true')
+    set.setAttribute('class','clickable')
+    real.setAttribute('visible','true')
+    real.setAttribute('class','clickable')
+    cas.setAttribute('visible','true')
+    cas.setAttribute('class','clickable')
+    hard.setAttribute('visible','true')
+    hard.setAttribute('class','clickable')
+    med.setAttribute('visible','true')
+    med.setAttribute('class','clickable')
+    ez.setAttribute('visible','true')
+    ez.setAttribute('class','clickable')
+    play.setAttribute('visible','true')
+    play.setAttribute('class','clickable')
+    mus.setAttribute('visible','false')
+    mus.setAttribute('class','nc')
+    mas.setAttribute('visible','false')
+    mas.setAttribute('class','nc')
+    eff.setAttribute('visible','false')
+    eff.setAttribute('class','nc')
+  }
   function startgame()
   {
    gm.emit("game")
     gamestate="game"
+    set.setAttribute('visible','false')
+    set.setAttribute('class','nc')
     real.setAttribute('visible','false')
     real.setAttribute('class','nc')
     cas.setAttribute('visible','false')

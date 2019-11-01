@@ -50,6 +50,7 @@ function randomwalk(me){
     var targ = nearestcarrot(me)
     if (targ)
     {
+    targ.setAttribute('free','false')
     var walkx = targ.object3D.getWorldPosition().x
     var walkz = targ.object3D.getWorldPosition().z
     var nowspeed=Math.random()*5+(me.data.speed-5);
@@ -73,13 +74,17 @@ function nearestcarrot(me)
     var mindist = 99999
     var dist
     var divs = document.querySelectorAll('#carrot'), i;
+    var dv = document.querySelectorAll('#bunny');
     for (i = 0; i < divs.length; ++i) {
+        if (divs[i].getAttribute('free')=='true'|| divs.length <= dv.length )
+        {
         dist = Math.sqrt(Math.pow(me.el.object3D.getWorldPosition().x-divs[i].object3D.getWorldPosition().x,2)+Math.pow(me.el.object3D.getWorldPosition().z-divs[i].object3D.getWorldPosition().z,2))
         if (dist<mindist)
         {
             mindist=dist
             nearest = divs[i]
         }
+    }
     }
     return nearest
 }
@@ -119,6 +124,8 @@ function openmenu() {
     gamestate="menu"
     tp.setAttribute('visible','false')
     tp.setAttribute('class','nc')
+    set.setAttribute('visible','true')
+    set.setAttribute('class','clickable')
     real.setAttribute('visible','true')
     real.setAttribute('class','clickable')
     cas.setAttribute('visible','true')

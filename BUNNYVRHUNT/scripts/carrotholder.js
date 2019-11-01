@@ -17,6 +17,7 @@ function plantcarrot(a,b,c)
     carrot.setAttribute('position',a.toString() + " 0 " + b.toString())
     carrot.setAttribute('scale',"0.25 0.25 0.25")
     carrot.setAttribute('obj-model',{obj:"#cobj", mtl:"#cmtl"})
+    carrot.setAttribute('free','true')
     c.appendChild(carrot)
 }
 function replant(me,obj)
