@@ -1,3 +1,4 @@
+
 AFRAME.registerComponent('collision', {
   tick: function () {
     var divs = document.querySelectorAll('#shooot'), i;

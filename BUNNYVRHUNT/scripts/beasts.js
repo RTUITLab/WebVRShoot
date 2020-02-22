@@ -14,16 +14,16 @@ AFRAME.registerComponent('beast',{
      //  trace(this);
     },
     update: function(){
-        if (this.el.children[0].children[0])
+        if (this.el.children[0].children[0]) // Если есть полоска хп устанавливает ей размер и цвет в зависимости от хп
         {
        this.el.children[0].children[0].setAttribute('scale',{x:this.data.hp/100, y:0.2, z:1})
        this.el.children[0].children[0].setAttribute('color',getColorForPercentage(this.data.hp/100))
         }
-        if (this.el.children[0].children[1])
+        if (this.el.children[0].children[1]) // Если есть бортик полоски подгоняет его под хп бар 
         {
        this.el.children[0].children[1].setAttribute('scale',{x:this.data.hp/100+0.1, y:0.3, z:1})
         }
-        if (this.data.hp<=0)
+        if (this.data.hp<=0) //Если закончились жихни вызывает функцию deathanim, удаляет животное и проверяет не закончились ли зайцы
         {
             deathanim(this.el,"b")
             scene.removeChild(this.el)
@@ -47,15 +47,16 @@ AFRAME.registerComponent('beast',{
     },
 });
 function randomwalk(me){
-    var targ = nearestcarrot(me)
-    if (targ)
+    var targ = nearestcarrot(me) //вызываем функцию nearestcarrot, которая возвращает ближайшую свободную морковку 
+    if (targ) //если такая есть 
     {
-    targ.setAttribute('free','false')
-    var walkx = targ.object3D.getWorldPosition().x
+    targ.setAttribute('free','false') //делаем её занятой и добавляем анимацию движения к ней 
+    var walkx = targ.object3D.getWorldPosition().x 
     var walkz = targ.object3D.getWorldPosition().z
     var nowspeed=Math.random()*5+(me.data.speed-5);
     var dirto=Math.atan2(walkz-me.el.object3D.position.z,walkx-me.el.object3D.position.x)*180/3.14*(-1)
     me.el.children[2].setAttribute('rotation', "0 "+(dirto-90).toString()+" 0")
+    me.el.removeAttribute('a-animation')
     var anim = document.createElement('a-animation')
     anim.setAttribute('name','walker')
     anim.setAttribute('attribute', 'position')
@@ -88,14 +89,15 @@ function nearestcarrot(me)
     }
     return nearest
 }
-function trace(me){
+/*function trace(me){ // составляет следы(выпилено)
     var otrace = document.createElement('a-plane');
     otrace.setAttribute('scale', "0.1 0.1 0.1");
     otrace.setAttribute('position', me.el.object3D.position.x.toString()+" "+0.01+" "+me.el.object3D.position.z.toString())
     otrace.setAttribute('rotation',"-90 "+(me.el.children[0].object3D.rotation.y*180/3.14).toString()+" 0")
     me.el.sceneEl.appendChild(otrace);
     setTimeout(trace,me.nowspeed*10,me)
-}
+}*/
+
 var percentColors = [
     { pct: 0.0, color: { r: 0xff, g: 0x00, b: 0 } },
     { pct: 0.5, color: { r: 0xff, g: 0xff, b: 0 } },
@@ -175,19 +177,14 @@ function deathanim(me,id)
     dynamic.setAttribute('id','model')
     dynamic.setAttribute('scale','0.2 0.2 0.2')
     dynamic.setAttribute('rotation','0 180 0')
-    dynamic.setAttribute('obj-model',{obj:"#"+id+"obj", mtl:"#"+id+"mtl"})
+    dynamic.setAttribute('gltf-model','#bunnygltf')
     bunyy.appendChild(dynamic)
-    dynamic = document.createElement('a-animation')
-    dynamic.setAttribute('attribute', 'rotation')
-    dynamic.setAttribute('dur', '1000')
-    dynamic.setAttribute('easing', 'linear')
-    dynamic.setAttribute('to', '0 0 90')
-    bunyy.appendChild(dynamic)
+    bunyy.setAttribute('animation-mixer',{clip:'death_start',loop:'once'})
     dynamic = document.createElement('a-animation')
     dynamic.setAttribute('attribute', 'position')
     dynamic.setAttribute('dur', '2000')
     dynamic.setAttribute('easing', 'linear')
-    dynamic.setAttribute('to', '-3 0 0')
+    dynamic.setAttribute('to', '0 -3 0')
     dynamic.setAttribute('delay','1000')
     bunyy.children[0].appendChild(dynamic)
     scene.appendChild(bunyy)

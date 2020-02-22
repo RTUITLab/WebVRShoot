@@ -1,3 +1,4 @@
+
 var decoys = document.querySelectorAll('#target'), j;
 for (j = 0; j < decoys.length; ++j) {
   decoys[j].setAttribute('state', 'down')
@@ -14,6 +15,7 @@ for (j = 0; j < decoys.length; ++j) {
     }, 7000, this, game)
   })
 }
+console.log(decoys[0].object3D.getWorldPosition().x)
 function call() {
   worker = decoys[Math.floor(Math.random() * (5 - 0 + 1)) + 0]
   if (worker.getAttribute('state') == 'up' || worker.getAttribute('state') == 'sw')

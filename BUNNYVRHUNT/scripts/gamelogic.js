@@ -31,6 +31,7 @@ var shootr = 1;
 var ending=false;
 var gamestate = "menu";
 var difficulty = "easy";
+console.log(hard.object3D.getWorldPosition().x)
 effdown.addEventListener('collide',function(event)
 {
     if (cam.getAttribute('soundcontroller').esound>0)
@@ -180,12 +181,13 @@ divs[i].addEventListener('spawnbunny', function (event)
     dynamic.setAttribute('collider-check',"")
     dynamic.setAttribute('visible','false')
     bunyy.appendChild(dynamic)
-    var dynamic = document.createElement('a-entity');
-    dynamic.setAttribute('id','model')
-    dynamic.setAttribute('scale','0.2 0.2 0.2')
-    dynamic.setAttribute('rotation','0 180 0')
-    dynamic.setAttribute('obj-model',{obj:"#bobj", mtl:"#bmtl"})
-    bunyy.appendChild(dynamic)
+    var model = document.createElement('a-entity');
+    model.setAttribute('id','model')
+    model.setAttribute('scale','0.2 0.2 0.2')
+    model.setAttribute('rotation','0 180 0')
+    model.setAttribute('gltf-model',"#bunnygltf")
+    model.setAttribute('animation-mixer',{clip:"run"});
+    bunyy.appendChild(model)
     scene.appendChild(bunyy)
     bunyy.addEventListener('collide', function (event) {
         var nowhp=this.getAttribute('beast').hp
@@ -223,7 +225,7 @@ divs[i].addEventListener('spawnbunny2', function (event)
     dynamic.setAttribute('id','model')
     dynamic.setAttribute('scale','0.2 0.2 0.2')
     dynamic.setAttribute('rotation','0 180 0')
-    dynamic.setAttribute('obj-model',{obj:"#bobj", mtl:"#bmtl"})
+    dynamic.setAttribute('gltf-model',"#bunnygltf")
     bunyy.appendChild(dynamic)
     scene.appendChild(bunyy)
     bunyy.addEventListener('collide', function (event) {
@@ -262,7 +264,7 @@ divs[i].addEventListener('spawnbunny3', function (event)
     dynamic.setAttribute('id','model')
     dynamic.setAttribute('scale','0.2 0.2 0.2')
     dynamic.setAttribute('rotation','0 180 0')
-    dynamic.setAttribute('obj-model',{obj:"#bobj", mtl:"#bmtl"})
+    dynamic.setAttribute('gltf-model',"#bunnygltf")
     bunyy.appendChild(dynamic)
     scene.appendChild(bunyy)
     bunyy.addEventListener('collide', function (event) {
@@ -271,14 +273,14 @@ divs[i].addEventListener('spawnbunny3', function (event)
     });
 });
     }
-/*contr.addEventListener('controllerdisconnected', function () {
+contr.addEventListener('controllerdisconnected', function () {
     head.setAttribute('wasd-controls-enabled', "true")
     contr.setAttribute('visible', 'false')
 });
 contr.addEventListener('controllerconnected', function () {
     head.setAttribute('wasd-controls-enabled', "false")
     contr.setAttribute('visible', 'true')
-});*/
+});
 document.querySelector('#scene').addEventListener('click', function () {
     if (gamestate=="menu")
     {
@@ -299,7 +301,7 @@ document.querySelector('#scene').addEventListener('click', function () {
 /*contr.addEventListener('triggerdown', function () {
     if (gamestate=="menu")
     {
-    //   aim.emit("poof")
+       aim.emit("poof")
        aim.setAttribute('raycaster','enabled',true)
         setTimeout(function(){aim.setAttribute('raycaster','enabled',false);},50)
     }

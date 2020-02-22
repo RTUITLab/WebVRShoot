@@ -2,6 +2,7 @@
 <html>
 <head>
 <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+<script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
 <script src="scripts/beasts.js"></script>
 <script src="scripts/healthbar.js"></script>
 <script src="scripts/raycollider.js"></script>
@@ -18,22 +19,26 @@
 <audio id="win" src="sounds/win.mp3"></audio>
 <audio id="lose" src="sounds/lose.mp3"></audio>
 <audio id="press" src="sounds/press.mp3"></audio>
-<a-asset-item id="rhobj" src="models/rhole.obj"></a-asset-item>
-<a-asset-item id="rhmtl" src="models/rhole.mtl"></a-asset-item>
+<a-asset-item id="rhobj" src="models/rabbit_hole.obj"></a-asset-item>
+<a-asset-item id="rhmtl" src="models/rabbit_hole.mtl"></a-asset-item>
 <a-asset-item id="cobj" src="models/carrot.obj"></a-asset-item>
 <a-asset-item id="cmtl" src="models/carrot.mtl"></a-asset-item>
-<a-asset-item id="gobj" src="models/garden.obj"></a-asset-item>
-<a-asset-item id="gmtl" src="models/garden.mtl"></a-asset-item>
+<a-asset-item id="gobj" src="models/graden.obj"></a-asset-item>
+<a-asset-item id="gmtl" src="models/graden.mtl"></a-asset-item>
+<a-asset-item id="bunnygltf" src="models/bunny.glb"></a-asset-item>
 <a-asset-item id="bobj" src="models/bunny.obj"></a-asset-item>
 <a-asset-item id="bmtl" src="models/bunny.mtl"></a-asset-item>
 <a-asset-item id="sobj" src="models/sun.obj"></a-asset-item>
 <a-asset-item id="smtl" src="models/sun.mtl"></a-asset-item>
+<a-asset-item id="testobj" src="models/test.obj"></a-asset-item>
+<a-asset-item id="testmtl" src="models/test.mtl"></a-asset-item>
+<a-asset-item id="testglb" src="models/test.glb"></a-asset-item>
 <a-asset-item id="boxobj" src="models/box.obj"></a-asset-item>
 <a-asset-item id="boxmtl" src="models/box.mtl"></a-asset-item>
 <a-asset-item id="gunobj" src="models/airrifle.obj"></a-asset-item>
 <a-asset-item id="gunmtl" src="models/airrifle.mtl"></a-asset-item>
-<a-asset-item id="terobj" src="models/terrain.obj"></a-asset-item>
-<a-asset-item id="termtl" src="models/terrain.mtl"></a-asset-item>
+<a-asset-item id="terobj" src="models/terrain1.obj"></a-asset-item>
+<a-asset-item id="termtl" src="models/terrain1.mtl"></a-asset-item>
 </a-assets>
 <a-sky rotation="17.5 -63 -0.37 " src="models/sky.png"></a-sky>
 <a-entity obj-model="obj: #sobj;mtl: #smtl" position='25 25 -25' scale="1 1 1"></a-entity>
@@ -139,14 +144,14 @@
 </a-plane>
 <a-entity id="Cam" soundcontroller sound="poolSize:1;src: #menu;loop:true ;on:menu;autoplay:true" wasd-controls-enabled="true">
 <a-camera collision sound="poolSize:5;src: #eat; on:eat" id="Head">
-<a-entity id="raycaster" position="0 -0.1 0" sound="poolSize:3;src: #shoot; on:poof" raycaster="objects: .clickable;showLine: true;enabled: false"></a-entity>
+        <a-entity id="raycaster" position="0 -0.1 0" sound="poolSize:3;src: #shoot; on:poof" raycaster="objects: .clickable;showLine: true;enabled: false"></a-entity>
 </a-camera>
 <a-sound id="gamemusik" src="#game" poolSize="1" on="game"></a-sound>
 <a-sound id="winmusik" src="#win" poolSize="1" on="win"></a-sound>
 <a-sound id="losemusik" src="#lose" poolSize="1" on="lose"></a-sound>
 <a-sound id="pressmusik" src="#press" poolSize="1" on="press"></a-sound>
 </a-entity>
-<a-entity id="left-hand" windows-motion-controls="hand: left"></a-entity>
+<!--<a-entity id="left-hand" windows-motion-controls="hand: left"></a-entity>-->
 <a-entity id="controller" windows-motion-controls="hand:right;model:false" visible="true">
 <a-entity id="gunmodel" rotation="-45 0 0" obj-model="obj: #gunobj;mtl: #gunmtl" color='red' scale="0.03 0.03 0.03"></a-entity>
 </a-entity>
