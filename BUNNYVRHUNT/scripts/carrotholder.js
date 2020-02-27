@@ -1,8 +1,8 @@
 AFRAME.registerComponent('cholder',{
     schema:{
-    carrots:{type: 'int',default: 9},
-    wh:{type:'int',default: 3},
-    hh:{type:'int',default: 3}
+    carrots:{type: 'int',default: 16},
+    wh:{type:'int',default: 4},
+    hh:{type:'int',default: 4}
     },
     init: function() {
     replant(this.data,this.el)},
@@ -14,9 +14,9 @@ function plantcarrot(a,b,c)
 {
     var carrot = document.createElement('a-entity');
     carrot.setAttribute('id', "carrot");
-    carrot.setAttribute('position',a.toString() + " 0 " + b.toString())
+    carrot.setAttribute('position',a.toString() + " 1.5 " + b.toString())
     carrot.setAttribute('scale',"0.25 0.25 0.25")
-    carrot.setAttribute('obj-model',{obj:"#cobj", mtl:"#cmtl"})
+    carrot.setAttribute('gltf-model',"#cobj")
     carrot.setAttribute('free','true')
     c.appendChild(carrot)
 }

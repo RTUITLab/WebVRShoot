@@ -19,12 +19,9 @@
 <audio id="win" src="sounds/win.mp3"></audio>
 <audio id="lose" src="sounds/lose.mp3"></audio>
 <audio id="press" src="sounds/press.mp3"></audio>
-<a-asset-item id="rhobj" src="models/rabbit_hole.obj"></a-asset-item>
-<a-asset-item id="rhmtl" src="models/rabbit_hole.mtl"></a-asset-item>
-<a-asset-item id="cobj" src="models/carrot.obj"></a-asset-item>
-<a-asset-item id="cmtl" src="models/carrot.mtl"></a-asset-item>
-<a-asset-item id="gobj" src="models/graden.obj"></a-asset-item>
-<a-asset-item id="gmtl" src="models/graden.mtl"></a-asset-item>
+<a-asset-item id="rhobj" src="models/rabbit_hole.glb"></a-asset-item>
+<a-asset-item id="cobj" src="models/carrot.glb"></a-asset-item>
+<a-asset-item id="gobj" src="models/graden.glb"></a-asset-item>
 <a-asset-item id="bunnygltf" src="models/bunny.glb"></a-asset-item>
 <a-asset-item id="bobj" src="models/bunny.obj"></a-asset-item>
 <a-asset-item id="bmtl" src="models/bunny.mtl"></a-asset-item>
@@ -37,21 +34,21 @@
 <a-asset-item id="boxmtl" src="models/box.mtl"></a-asset-item>
 <a-asset-item id="gunobj" src="models/airrifle.obj"></a-asset-item>
 <a-asset-item id="gunmtl" src="models/airrifle.mtl"></a-asset-item>
-<a-asset-item id="terobj" src="models/terrain1.obj"></a-asset-item>
-<a-asset-item id="termtl" src="models/terrain1.mtl"></a-asset-item>
+<a-asset-item id="terobj" src="models/terrain1.glb"></a-asset-item>
+<a-asset-item id="test" src="models/untitled.glb"></a-asset-item>
 </a-assets>
 <a-sky rotation="17.5 -63 -0.37 " src="models/sky.png"></a-sky>
 <a-entity obj-model="obj: #sobj;mtl: #smtl" position='25 25 -25' scale="1 1 1"></a-entity>
-<a-entity position="20 20 -20" light="type: hemisphere; intensity: 4 ;color: #b4b4b4; groundColor:#252525"></a-entity>
-<a-entity light="type: directional; color: #ffffff; intensity: 2; groundColor: #2a2a2a" position="24 24 -24"></a-entity>
-<a-entity id="hole" position="-5.1 0.06 -14.1" rotation="0 -45 0" scale="0.3 0.3 0.3" obj-model="obj:#rhobj;mtl:#rhmtl"></a-entity>
-<a-entity id="hole" position="10.3 0.06 -12.3" rotation="0 -132 0" scale="0.3 0.3 0.3" obj-model="obj:#rhobj;mtl:#rhmtl"></a-entity>
-<a-entity id="hole" position="3.95 0.06 -15" rotation="0 -104 0" scale="0.3 0.3 0.3" obj-model="obj:#rhobj;mtl:#rhmtl"></a-entity>
-<a-entity id="hole" position="-12.3 -0.17 -8.6" rotation="-9.4 -90 18" scale="0.3 0.3 0.3" obj-model="obj:#rhobj;mtl:#rhmtl"></a-entity>
-<a-entity id="garden" cholder position="0 0 -6" scale="0.2 0.2 0.2" obj-model="obj:#gobj; mtl:#gmtl"></a-entity>
-<a-entity id="garden" cholder position="5 0 -5" scale="0.2 0.2 0.2" obj-model="obj:#gobj; mtl:#gmtl"></a-entity>
-<a-entity id="garden" cholder position="-5 0 -5" scale="0.2 0.2 0.2" obj-model="obj:#gobj; mtl:#gmtl"></a-entity>
-<a-entity id="terr" obj-model="obj: #terobj;mtl: #termtl" scale="4 3 4" rotation='0 90 0'></a-entity>
+<a-entity position="20 20 -20" light="type: hemisphere; intensity: 4;color: #b4b4b4; groundColor:#252525"></a-entity>
+<a-entity light="type: directional;shadowCameraVisible: false;castShadow: true; color: #ffffff; intensity: 2; groundColor: #2a2a2a" position="24 24 -24"></a-entity>
+<a-entity id="hole" position="-5.1 0.06 -14.1" rotation="0 -45 0" scale="0.3 0.3 0.3" gltf-model="#rhobj"></a-entity>
+<a-entity id="hole" position="10.3 0.06 -12.3" rotation="0 -132 0" scale="0.3 0.3 0.3" gltf-model="#rhobj"></a-entity>
+<a-entity id="hole" position="3.95 0.06 -15" rotation="0 -104 0" scale="0.3 0.3 0.3" gltf-model="#rhobj"></a-entity>
+<a-entity id="hole" position="-12.3 -0.17 -8.6" rotation="-9.4 -90 18" scale="0.3 0.3 0.3" gltf-model="#rhobj"></a-entity>
+<a-entity id="garden" cholder position="0 -0.25 -6" scale="0.2 0.2 0.2" gltf-model="#gobj"></a-entity>
+<a-entity id="garden" cholder position="5 -0.25 -5" scale="0.2 0.2 0.2" gltf-model="#gobj"></a-entity>
+<a-entity id="garden" shadow="cast:true" cholder position="-5 -0.25 -5" scale="0.2 0.2 0.2" gltf-model="#gobj"></a-entity>
+<a-entity id="terr" shadow="receive:true" gltf-model="#terobj" position="0 -0.25 0" scale="4 3 4" rotation='0 90 0'></a-entity>
 <a-entity id="MasterVolume" class="nc" position="0 2 -3" visible="false">
 <a-plane id="Master" collider-check  position="0 0.4 0" scale="1 0.2 1" color="red">
         <a-text color="black" scale="1 5 1" value="Master" align="center"></a-text>
