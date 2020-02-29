@@ -1,7 +1,8 @@
 var contr = document.querySelector("#controller");
 var cam = document.querySelector("#Cam");
 var head = document.querySelector("#Head");
-var play = document.querySelector("#playb")
+var play = document.querySelector("#playb");
+var sun = document.querySelector('#sun')
 var ez = document.querySelector("#easy")
 var med = document.querySelector("#medium")
 var set = document.querySelector("#settings")
@@ -15,6 +16,8 @@ var wm = document.querySelector('#winmusik')
 var bk = document.querySelector('#back')
 var lm = document.querySelector('#losemusik')
 var pm = document.querySelector('#pressmusik')
+var hemi= document.querySelector('#hemi')
+var dir = document.querySelector('#direct')
 var musup = document.querySelector('#musvolumeup')
 var musdown = document.querySelector('#musvolumedown')
 var musvol = document.querySelector('#musvolume')
@@ -27,6 +30,8 @@ var effvol = document.querySelector('#effvolume')
 var mus = document.querySelector('#MusicVolume')
 var mas = document.querySelector('#MasterVolume')
 var eff = document.querySelector('#EffectVolume')
+var sky = document.querySelector('#mysky');
+var light =  true;
 var shootr = 1;
 var ending=false;
 var gamestate = "menu";
@@ -98,6 +103,25 @@ real.addEventListener('collide',function(event)
     aim.setAttribute('raycaster','showLine',false)
     cas.children[1].setAttribute('color','black')
     real.children[1].setAttribute('color','white')
+})
+sun.addEventListener('collide', function(event)
+{
+    if (!light)
+    {
+        hemi.setAttribute("light","intensity",4)
+        direct.setAttribute("light","intensity",2)
+        sky.setAttribute("src","models/day_sky.png")
+        sun.setAttribute("gltf-model","#sunglb")
+        light=!light;
+    }
+    else
+    {
+        hemi.setAttribute("light","intensity",2)
+        direct.setAttribute("light","intensity",1)
+        sky.setAttribute("src","models/night_sky.png")
+        sun.setAttribute("gltf-model","#moonglb")
+        light=!light;
+    }
 })
 bk.addEventListener('collide',function(event)
 {
@@ -281,7 +305,7 @@ contr.addEventListener('controllerconnected', function () {
     head.setAttribute('wasd-controls-enabled', "false")
     contr.setAttribute('visible', 'true')
 });
-document.querySelector('#scene').addEventListener('click', function () {
+/*document.querySelector('#scene').addEventListener('click', function () {
     if (gamestate=="menu")
     {
     //   aim.emit("poof")
@@ -297,8 +321,8 @@ document.querySelector('#scene').addEventListener('click', function () {
     setTimeout(function(){aim.setAttribute('raycaster','enabled',false);},50)
     setTimeout(function(){shootr=1},1000)
     }
-  });
-/*contr.addEventListener('triggerdown', function () {
+  });*/
+contr.addEventListener('triggerdown', function () {
     if (gamestate=="menu")
     {
        aim.emit("poof")
@@ -314,7 +338,7 @@ document.querySelector('#scene').addEventListener('click', function () {
     setTimeout(function(){aim.setAttribute('raycaster','enabled',false);},50)
     setTimeout(function(){shootr=1},1000)
     }
- });*/
+ });
   function textplane(text)
   {
     gm.components.sound.stopSound();

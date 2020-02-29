@@ -11,7 +11,9 @@ AFRAME.registerComponent('beast',{
        this.minZ=this.el.object3D.position.z-this.data.zone/2;
        this.maxZ=this.el.object3D.position.z+this.data.zone/2;
        randomwalk(this);
-     //  trace(this);
+      /* this.el.addEventListener('animation-loop',function(event){ 
+        console.log(event.target.getAttribute('animation-mixer').clip)  
+       })*/
     },
     update: function(){
         if (this.el.children[0].children[0]) // Если есть полоска хп устанавливает ей размер и цвет в зависимости от хп
@@ -89,15 +91,6 @@ function nearestcarrot(me)
     }
     return nearest
 }
-/*function trace(me){ // составляет следы(выпилено)
-    var otrace = document.createElement('a-plane');
-    otrace.setAttribute('scale', "0.1 0.1 0.1");
-    otrace.setAttribute('position', me.el.object3D.position.x.toString()+" "+0.01+" "+me.el.object3D.position.z.toString())
-    otrace.setAttribute('rotation',"-90 "+(me.el.children[0].object3D.rotation.y*180/3.14).toString()+" 0")
-    me.el.sceneEl.appendChild(otrace);
-    setTimeout(trace,me.nowspeed*10,me)
-}*/
-
 var percentColors = [
     { pct: 0.0, color: { r: 0xff, g: 0x00, b: 0 } },
     { pct: 0.5, color: { r: 0xff, g: 0xff, b: 0 } },
@@ -161,6 +154,7 @@ function getcarrot(me,targ){
                         lm.emit("lose")
                         textplane("All the carrots\n were eaten")
                     }
+                 //   me.el.children[2].setAttribute('animation-mixer',{clip:"gather_start"});
                     randomwalk(me);
                     }
                 }

@@ -22,25 +22,18 @@
 <a-asset-item id="rhobj" src="models/rabbit_hole.glb"></a-asset-item>
 <a-asset-item id="cobj" src="models/carrot.glb"></a-asset-item>
 <a-asset-item id="gobj" src="models/graden.glb"></a-asset-item>
+<a-asset-item id="sunglb" src="models/sun.glb"></a-asset-item>
+<a-asset-item id="moonglb" src="models/moon.glb"></a-asset-item>
 <a-asset-item id="bunnygltf" src="models/bunny.glb"></a-asset-item>
-<a-asset-item id="bobj" src="models/bunny.obj"></a-asset-item>
-<a-asset-item id="bmtl" src="models/bunny.mtl"></a-asset-item>
-<a-asset-item id="sobj" src="models/sun.obj"></a-asset-item>
-<a-asset-item id="smtl" src="models/sun.mtl"></a-asset-item>
-<a-asset-item id="testobj" src="models/test.obj"></a-asset-item>
-<a-asset-item id="testmtl" src="models/test.mtl"></a-asset-item>
 <a-asset-item id="testglb" src="models/test.glb"></a-asset-item>
-<a-asset-item id="boxobj" src="models/box.obj"></a-asset-item>
-<a-asset-item id="boxmtl" src="models/box.mtl"></a-asset-item>
-<a-asset-item id="gunobj" src="models/airrifle.obj"></a-asset-item>
-<a-asset-item id="gunmtl" src="models/airrifle.mtl"></a-asset-item>
+<a-asset-item id="gunobj" src="models/rifle.glb"></a-asset-item>
 <a-asset-item id="terobj" src="models/terrain1.glb"></a-asset-item>
 <a-asset-item id="test" src="models/untitled.glb"></a-asset-item>
 </a-assets>
-<a-sky rotation="17.5 -63 -0.37 " src="models/sky.png"></a-sky>
-<a-entity obj-model="obj: #sobj;mtl: #smtl" position='25 25 -25' scale="1 1 1"></a-entity>
-<a-entity position="20 20 -20" light="type: hemisphere; intensity: 4;color: #b4b4b4; groundColor:#252525"></a-entity>
-<a-entity light="type: directional;shadowCameraVisible: false;castShadow: true; color: #ffffff; intensity: 2; groundColor: #2a2a2a" position="24 24 -24"></a-entity>
+<a-sky id="mysky" src="models/day_sky.png"></a-sky>
+<a-entity id="sun" geometry collider-check class="clickable" gltf-model="#sunglb" position='25 25 -25'></a-entity>
+<a-entity id="hemi" position="20 20 -20" light="type: hemisphere; intensity: 4;color: #b4b4b4; groundColor:#252525"></a-entity>
+<a-entity id="direct" light="type: directional;shadowCameraVisible: false;castShadow: true; color: #ffffff; intensity: 2; groundColor: #2a2a2a" position="24 24 -24"></a-entity>
 <a-entity id="hole" position="-5.1 0.06 -14.1" rotation="0 -45 0" scale="0.3 0.3 0.3" gltf-model="#rhobj"></a-entity>
 <a-entity id="hole" position="10.3 0.06 -12.3" rotation="0 -132 0" scale="0.3 0.3 0.3" gltf-model="#rhobj"></a-entity>
 <a-entity id="hole" position="3.95 0.06 -15" rotation="0 -104 0" scale="0.3 0.3 0.3" gltf-model="#rhobj"></a-entity>
@@ -150,7 +143,7 @@
 </a-entity>
 <!--<a-entity id="left-hand" windows-motion-controls="hand: left"></a-entity>-->
 <a-entity id="controller" windows-motion-controls="hand:right;model:false" visible="true">
-<a-entity id="gunmodel" rotation="-45 0 0" obj-model="obj: #gunobj;mtl: #gunmtl" color='red' scale="0.03 0.03 0.03"></a-entity>
+<a-entity id="gunmodel" rotation="-45 0 0" gltf-model="#gunobj" color='red' scale="0.03 0.03 0.03"></a-entity>
 </a-entity>
 <script src="scripts/gamelogic.js"></script>
 </a-scene>
