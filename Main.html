@@ -1,7 +1,7 @@
 <DOCTYPE !html>
 <html>
 <head>
-<script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
 <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
 <script src="scripts/beasts.js"></script>
 <script src="scripts/healthbar.js"></script>
@@ -31,7 +31,7 @@
 <a-asset-item id="test" src="models/untitled.glb"></a-asset-item>
 </a-assets>
 <a-sky id="mysky" src="models/day_sky.png"></a-sky>
-<a-entity id="sun" geometry collider-check class="clickable" gltf-model="#sunglb" position='25 25 -25'></a-entity>
+<a-entity id="sun" geometry collider-check class="clickable" gltf-model="#sunglb" rotation="0 90 45" position='25 25 -25'></a-entity>
 <a-entity id="hemi" position="20 20 -20" light="type: hemisphere; intensity: 4;color: #b4b4b4; groundColor:#252525"></a-entity>
 <a-entity id="direct" light="type: directional;shadowCameraVisible: false;castShadow: true; color: #ffffff; intensity: 2; groundColor: #2a2a2a" position="24 24 -24"></a-entity>
 <a-entity id="hole" position="-5.1 0.06 -14.1" rotation="0 -45 0" scale="0.3 0.3 0.3" gltf-model="#rhobj"></a-entity>
@@ -134,7 +134,6 @@
 </a-plane>
 <a-entity id="Cam" soundcontroller sound="poolSize:1;src: #menu;loop:true ;on:menu;autoplay:true" wasd-controls-enabled="true">
 <a-camera collision sound="poolSize:5;src: #eat; on:eat" id="Head">
-        <a-entity id="raycaster" position="0 -0.1 0" sound="poolSize:3;src: #shoot; on:poof" raycaster="objects: .clickable;showLine: true;enabled: false"></a-entity>
 </a-camera>
 <a-sound id="gamemusik" src="#game" poolSize="1" on="game"></a-sound>
 <a-sound id="winmusik" src="#win" poolSize="1" on="win"></a-sound>
@@ -142,7 +141,9 @@
 <a-sound id="pressmusik" src="#press" poolSize="1" on="press"></a-sound>
 </a-entity>
 <!--<a-entity id="left-hand" windows-motion-controls="hand: left"></a-entity>-->
-<a-entity id="controller" windows-motion-controls="hand:right;model:false" visible="true">
+<a-entity id="controller"windows-motion-controls="hand:right;model:false" visible="true">
+<!--<a-entity id="raycaster" laser-controls  raycaster="objects: .clickable;showLine: true;enabled: false"></a-entity>-->
+<a-entity id="raycaster" rotation="-45 0 0" position="0 -0.1 0" sound="poolSize:3;src: #shoot; on:poof" raycaster="objects: .clickable;showLine: true;enabled: false"></a-entity>
 <a-entity id="gunmodel" rotation="-45 0 0" gltf-model="#gunobj" color='red' scale="0.03 0.03 0.03"></a-entity>
 </a-entity>
 <script src="scripts/gamelogic.js"></script>

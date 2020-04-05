@@ -305,7 +305,7 @@ contr.addEventListener('controllerconnected', function () {
     head.setAttribute('wasd-controls-enabled', "false")
     contr.setAttribute('visible', 'true')
 });
-/*document.querySelector('#scene').addEventListener('click', function () {
+document.querySelector('#scene').addEventListener('click', function () {
     if (gamestate=="menu")
     {
     //   aim.emit("poof")
@@ -321,11 +321,11 @@ contr.addEventListener('controllerconnected', function () {
     setTimeout(function(){aim.setAttribute('raycaster','enabled',false);},50)
     setTimeout(function(){shootr=1},1000)
     }
-  });*/
+  });
 contr.addEventListener('triggerdown', function () {
     if (gamestate=="menu")
     {
-       aim.emit("poof")
+    //   aim.emit("poof")
        aim.setAttribute('raycaster','enabled',true)
         setTimeout(function(){aim.setAttribute('raycaster','enabled',false);},50)
     }
