@@ -1,187 +1,129 @@
-var contr = document.querySelector("#controller");
-var cam = document.querySelector("#Cam");
-var head = document.querySelector("#Head");
-var play = document.querySelector("#playb");
-var sun = document.querySelector('#sun')
-var ez = document.querySelector("#easy")
-var med = document.querySelector("#medium")
-var set = document.querySelector("#settings")
-var hard = document.querySelector("#hard")
-var cas = document.querySelector("#casual")
-var real = document.querySelector("#realistic")
-var aim = document.querySelector('#raycaster')
-var tp = document.querySelector('#textpl')
-var gm = document.querySelector('#gamemusik')
-var wm = document.querySelector('#winmusik')
-var bk = document.querySelector('#back')
-var lm = document.querySelector('#losemusik')
-var pm = document.querySelector('#pressmusik')
-var hemi= document.querySelector('#hemi')
-var dir = document.querySelector('#direct')
-var musup = document.querySelector('#musvolumeup')
-var musdown = document.querySelector('#musvolumedown')
-var musvol = document.querySelector('#musvolume')
-var masup = document.querySelector('#masvolumeup')
-var masdown = document.querySelector('#masvolumedown')
-var masvol = document.querySelector('#masvolume')
-var effup = document.querySelector('#effvolumeup')
-var effdown = document.querySelector('#effvolumedown')
-var effvol = document.querySelector('#effvolume')
-var mus = document.querySelector('#MusicVolume')
-var mas = document.querySelector('#MasterVolume')
-var eff = document.querySelector('#EffectVolume')
-var sky = document.querySelector('#mysky');
+var Sun = document.querySelector('#Sun')
+var Sky_box = document.querySelector('#Sky_box');
+var Hemi= document.querySelector('#Hemi')
+var Direct = document.querySelector('#Direct')
+var Play_b = document.querySelector("#Play_b");
+var Text_p = document.querySelector('#Text_plane')
+var Easy_b = document.querySelector("#Easy_b")
+var Medium_b = document.querySelector("#Medium_b")
+var Settings_b = document.querySelector("#Settings_b")
+var Hard_b = document.querySelector("#Hard_b")
+var Casual_b = document.querySelector("#Casual_b")
+var Realistic_b = document.querySelector("#Realistic_b")
+var Back_b = document.querySelector("#Back_b")
+var Press_mus = document.querySelector('#Press_mus')
+var Game_mus = document.querySelector('#Game_mus')
+var Win_mus = document.querySelector('#Win_mus')
+var Lose_mus = document.querySelector('#Lose_mus')
+var Eat_mus = document.querySelector('#Eat_mus')
+var Right_hand = document.querySelector('#Right_hand')
+var Master_text = document.querySelector("#Master_text")
+var Effect_text = document.querySelector('#Effect_text')
+var Music_text = document.querySelector('#Music_text')
+var Music_up = document.querySelector('#Music_up')
+var Music_down = document.querySelector('#Music_down')
+var Music_volume = document.querySelector('#Music_volume')
+var Master_up = document.querySelector('#Master_up')
+var Master_down = document.querySelector('#Master_down')
+var Master_volume = document.querySelector('#Master_volume')
+var Effect_up = document.querySelector('#Effect_up')
+var Effect_down = document.querySelector('#Effect_down')
+var Effect_volume = document.querySelector('#Effect_volume')
+var Head = document.querySelector('#Head')
+var Cam = document.querySelector('#Cam')
+
+
 var light =  true;
-var shootr = 1;
-var ending=false;
-var gamestate = "menu";
-var difficulty = "easy";
-console.log(hard.object3D.getWorldPosition().x)
-effdown.addEventListener('collide',function(event)
+var gamestate = "Menu";
+var difficulty = "Easy";
+
+function Open_settings()
 {
-    if (cam.getAttribute('soundcontroller').esound>0)
+  Settings_b.setAttribute('visible','false')
+  Settings_b.setAttribute('class','notclickable')
+  Realistic_b.setAttribute('visible','false')
+  Realistic_b.setAttribute('class','notclickable')
+  Casual_b.setAttribute('visible','false')
+  Casual_b.setAttribute('class','notclickable')
+  Hard_b.setAttribute('visible','false')
+  Hard_b.setAttribute('class','notclickable')
+  Medium_b.setAttribute('visible','false')
+  Medium_b.setAttribute('class','notclickable')
+  Easy_b.setAttribute('visible','false')
+  Easy_b.setAttribute('class','notclickable')
+  Play_b.setAttribute('visible','false')
+  Play_b.setAttribute('class','notclickable')
+  Music_volume.setAttribute('visible','true')
+  Music_volume.setAttribute('class','clickable')
+  Master_volume.setAttribute('visible','true')
+  Master_volume.setAttribute('class','clickable')
+  Effect_volume.setAttribute('visible','true')
+  Effect_volume.setAttribute('class','clickable')
+}
+
+function Close_settings()
+{
+  Settings_b.setAttribute('visible','true')
+  Settings_b.setAttribute('class','clickable')
+  Realistic_b.setAttribute('visible','true')
+  Realistic_b.setAttribute('class','clickable')
+  Casual_b.setAttribute('visible','true')
+  Casual_b.setAttribute('class','clickable')
+  Hard_b.setAttribute('visible','true')
+  Hard_b.setAttribute('class','clickable')
+  Medium_b.setAttribute('visible','true')
+  Medium_b.setAttribute('class','clickable')
+  Easy_b.setAttribute('visible','true')
+  Easy_b.setAttribute('class','clickable')
+  Play_b.setAttribute('visible','true')
+  Play_b.setAttribute('class','clickable')
+  Music_volume.setAttribute('visible','false')
+  Music_volume.setAttribute('class','notclickable')
+  Master_volume.setAttribute('visible','false')
+  Master_volume.setAttribute('class','notclickable')
+  Effect_volume.setAttribute('visible','false')
+  Effect_volume.setAttribute('class','notclickable')
+}
+
+function Open_menu() {
+    gamestate="menu"
+    Text_p.setAttribute('visible','false')
+    Text_p.setAttribute('class','nc')
+    Settings_b.setAttribute('visible','true')
+    Settings_b.setAttribute('class','clickable')
+    Realistic_b.setAttribute('visible','true')
+    Realistic_b.setAttribute('class','clickable')
+    Casual_b.setAttribute('visible','true')
+    Casual_b.setAttribute('class','clickable')
+    Hard_b.setAttribute('visible','true')
+    Hard_b.setAttribute('class','clickable')
+    Medium_b.setAttribute('visible','true')
+    Medium_b.setAttribute('class','clickable')
+    Easy_b.setAttribute('visible','true')
+    Easy_b.setAttribute('class','clickable')
+    Play_b.setAttribute('visible','true')
+   Play_b.setAttribute('class','clickable')
+}
+
+Right_hand.setAttribute('windows-motion-controls','model','false')
+
+function spawner(id)
+{
+     if (gamestate=="game")
     {
-    cam.setAttribute('soundcontroller','esound',Math.round((cam.getAttribute('soundcontroller').esound-0.1)*10)/10)
-    }
-    pm.emit("press")
-})
-effup.addEventListener('collide',function(event)
-{
-    if (cam.getAttribute('soundcontroller').esound<1)
-    {
-    cam.setAttribute('soundcontroller','esound',Math.round((cam.getAttribute('soundcontroller').esound+0.1)*10)/10)
-    }
-    pm.emit("press")
-})
-musdown.addEventListener('collide',function(event)
-{
-    if (cam.getAttribute('soundcontroller').msound>0)
-    {
-    cam.setAttribute('soundcontroller','msound',Math.round((cam.getAttribute('soundcontroller').msound-0.1)*10)/10)
-    }
-    pm.emit("press")
-})
-musup.addEventListener('collide',function(event)
-{
-    if (cam.getAttribute('soundcontroller').msound<1)
-    {
-    cam.setAttribute('soundcontroller','msound',Math.round((cam.getAttribute('soundcontroller').msound+0.1)*10)/10)
-    }
-    pm.emit("press")
-})
-masdown.addEventListener('collide',function(event)
-{
-    if (cam.getAttribute('soundcontroller').massound>0)
-    {
-    cam.setAttribute('soundcontroller','massound',Math.round((cam.getAttribute('soundcontroller').massound-0.1)*10)/10)
-    }
-    pm.emit("press")
-})
-masup.addEventListener('collide',function(event)
-{
-    if (cam.getAttribute('soundcontroller').massound<1)
-    {
-    cam.setAttribute('soundcontroller','massound',Math.round((cam.getAttribute('soundcontroller').massound+0.1)*10)/10)
-    }
-    pm.emit("press")
-})
-tp.addEventListener('collide',function(event)
-{
-    openmenu()
-    pm.emit("press")
-})
-cas.addEventListener('collide',function(event)
-{
-    pm.emit("press")
-    aim.setAttribute('raycaster','showLine',true)
-    cas.children[1].setAttribute('color','white')
-    real.children[1].setAttribute('color','black')
-})
-real.addEventListener('collide',function(event)
-{
-    pm.emit("press")
-    aim.setAttribute('raycaster','showLine',false)
-    cas.children[1].setAttribute('color','black')
-    real.children[1].setAttribute('color','white')
-})
-sun.addEventListener('collide', function(event)
-{
-    if (!light)
-    {
-        hemi.setAttribute("light","intensity",4)
-        direct.setAttribute("light","intensity",2)
-        sky.setAttribute("src","models/day_sky.png")
-        sun.setAttribute("gltf-model","#sunglb")
-        light=!light;
-    }
-    else
-    {
-        hemi.setAttribute("light","intensity",2)
-        direct.setAttribute("light","intensity",1)
-        sky.setAttribute("src","models/night_sky.png")
-        sun.setAttribute("gltf-model","#moonglb")
-        light=!light;
-    }
-})
-bk.addEventListener('collide',function(event)
-{
-    closesettings()
-    pm.emit("press")
-})
-set.addEventListener('collide',function(event)
-{
-    opensettings()
-    pm.emit("press")
-})
-ez.addEventListener('collide',function(event)
-{
-    pm.emit("press")
-    difficulty = "easy"
-    ez.children[1].setAttribute('color','white')
-    med.children[1].setAttribute('color','black')
-    hard.children[1].setAttribute('color','black')
-})
-med.addEventListener('collide',function(event)
-{
-    pm.emit("press")
-    difficulty = "medium"
-    ez.children[1].setAttribute('color','black')
-    med.children[1].setAttribute('color','white')
-    hard.children[1].setAttribute('color','black')
-})
-hard.addEventListener('collide',function(event)
-{
-    pm.emit("press")
-    difficulty = "hard"
-    ez.children[1].setAttribute('color','black')
-    med.children[1].setAttribute('color','black')
-    hard.children[1].setAttribute('color','white')
-})
-play.addEventListener('collide',function(event){
-pm.emit("press")
-startgame()
-})
-function spwaner(id)
-{
-    if (gamestate=="game")
-    {
-    var divs = document.querySelectorAll('#hole'), i;
+    var divs = document.querySelectorAll('#Hole'), i;
     var rand = Math.floor(Math.random() * divs.length);
-    if (id==1)
-    divs[rand].emit("spawnbunny")
-    if (id==2)
-    divs[rand].emit("spawnbunny2")
-    if (id==3)
-    divs[rand].emit("spawnbunny3")
+    divs[rand].emit("spawnbunny",id)
     }
 }
-var divs = document.querySelectorAll('#hole'), i;
+var divs = document.querySelectorAll('#Hole'), i;
     for (i = 0; i < divs.length; ++i)
     {
-divs[i].addEventListener('spawnbunny', function (event)
+divs[i].addEventListener('spawnbunny', function (event, id)
 {
+    console.warn(event)
     var bunyy = document.createElement('a-entity');
-    bunyy.setAttribute('id', "bunny");
+    bunyy.setAttribute('id', "Bunny");
     bunyy.setAttribute('beast',"")
     bunyy.setAttribute('scale', "0.5 0.5 0.5");
     bunyy.setAttribute('position', event.currentTarget.getAttribute("position").x.toString()+" 0.25 "+event.currentTarget.getAttribute("position").z.toString());
@@ -209,253 +151,87 @@ divs[i].addEventListener('spawnbunny', function (event)
     model.setAttribute('id','model')
     model.setAttribute('scale','0.2 0.2 0.2')
     model.setAttribute('rotation','0 180 0')
-    model.setAttribute('gltf-model',"#bunnygltf")
+    model.setAttribute('gltf-model',"#Bunny_glb")
     model.setAttribute('animation-mixer',{clip:"run"});
     bunyy.appendChild(model)
     scene.appendChild(bunyy)
-    bunyy.addEventListener('collide', function (event) {
+    bunyy.addEventListener('click', function (event) {
         var nowhp=this.getAttribute('beast').hp
         this.setAttribute('beast','hp',nowhp-50)
     });
 });
-divs[i].addEventListener('spawnbunny2', function (event)
+}
+function textplane(text)
 {
-    var bunyy = document.createElement('a-entity');
-    bunyy.setAttribute('id', "bunny");
-    bunyy.setAttribute('beast',"speed","50")
-    bunyy.setAttribute('scale', "0.5 0.5 0.5");
-    bunyy.setAttribute('position', event.currentTarget.getAttribute("position").x.toString()+" 0.25 "+event.currentTarget.getAttribute("position").z.toString());
-    var hb = document.createElement('a-entity');
-    hb.setAttribute('position','0 1 0')
-    hb.setAttribute('healthbar',"")
-    var dynamic = document.createElement('a-plane');
-    dynamic.setAttribute('scale','1 0.2 1')
-    dynamic.setAttribute('color','#550000')
-    hb.appendChild(dynamic)
-    var dynamic = document.createElement('a-plane');
-    dynamic.setAttribute('position','0 0 -0.05')
-    dynamic.setAttribute('scale','1.1 0.3 1')
-    dynamic.setAttribute('color','#545454')
-    hb.appendChild(dynamic)
-    bunyy.appendChild(hb)
-    var dynamic = document.createElement('a-box');
-    dynamic.setAttribute('id','bunnyhitbox')
-    dynamic.setAttribute('class','clickable')
-    dynamic.setAttribute('scale','2 2 2')
-    dynamic.setAttribute('collider-check',"")
-    dynamic.setAttribute('visible','false')
-    bunyy.appendChild(dynamic)
-    var dynamic = document.createElement('a-entity');
-    dynamic.setAttribute('id','model')
-    dynamic.setAttribute('scale','0.2 0.2 0.2')
-    dynamic.setAttribute('rotation','0 180 0')
-    dynamic.setAttribute('gltf-model',"#bunnygltf")
-    bunyy.appendChild(dynamic)
-    scene.appendChild(bunyy)
-    bunyy.addEventListener('collide', function (event) {
-        var nowhp=this.getAttribute('beast').hp
-        this.setAttribute('beast','hp',nowhp-50)
-    });
-});
-divs[i].addEventListener('spawnbunny3', function (event)
+  Game_mus.components.sound.stopSound();
+    gamestate="info"
+  Text_p.setAttribute('visible','true')
+  Text_p.setAttribute('class','clickable')
+  Text_p.children[0].setAttribute('value',text)
+  var divs = document.querySelectorAll('#Bunny'), i;
+  for (i = 0; i < divs.length; ++i)
+  divs[i].setAttribute('beast','hp',0)
+  var divs = document.querySelectorAll('#carrot'), i;
+  for (i = 0; i < divs.length; ++i)
+  {
+      divs[i].parentEl.removeChild(divs[i])
+  }
+  var divs = document.querySelectorAll('#Garden'), i;
+  for (i = 0; i < divs.length; ++i)
+  {
+  replant(divs[i].getAttribute('carrot-holder'),divs[i])
+  }
+}
+function startgame()
 {
-    var bunyy = document.createElement('a-entity');
-    bunyy.setAttribute('id', "bunny");
-    bunyy.setAttribute('beast',"hp","150")
-    bunyy.setAttribute('scale', "0.5 0.5 0.5");
-    bunyy.setAttribute('position', event.currentTarget.getAttribute("position").x.toString()+" 0.25 "+event.currentTarget.getAttribute("position").z.toString());
-    var hb = document.createElement('a-entity');
-    hb.setAttribute('position','0 1 0')
-    hb.setAttribute('healthbar',"")
-    var dynamic = document.createElement('a-plane');
-    dynamic.setAttribute('scale','1 0.2 1')
-    dynamic.setAttribute('color','#550000')
-    hb.appendChild(dynamic)
-    var dynamic = document.createElement('a-plane');
-    dynamic.setAttribute('position','0 0 -0.05')
-    dynamic.setAttribute('scale','1.1 0.3 1')
-    dynamic.setAttribute('color','#545454')
-    hb.appendChild(dynamic)
-    bunyy.appendChild(hb)
-    var dynamic = document.createElement('a-box');
-    dynamic.setAttribute('id','bunnyhitbox')
-    dynamic.setAttribute('class','clickable')
-    dynamic.setAttribute('scale','2 2 2')
-    dynamic.setAttribute('collider-check',"")
-    dynamic.setAttribute('visible','false')
-    bunyy.appendChild(dynamic)
-    var dynamic = document.createElement('a-entity');
-    dynamic.setAttribute('id','model')
-    dynamic.setAttribute('scale','0.2 0.2 0.2')
-    dynamic.setAttribute('rotation','0 180 0')
-    dynamic.setAttribute('gltf-model',"#bunnygltf")
-    bunyy.appendChild(dynamic)
-    scene.appendChild(bunyy)
-    bunyy.addEventListener('collide', function (event) {
-        var nowhp=this.getAttribute('beast').hp
-        this.setAttribute('beast','hp',nowhp-50)
-    });
-});
-    }
-contr.addEventListener('controllerdisconnected', function () {
-    head.setAttribute('wasd-controls-enabled', "true")
-    contr.setAttribute('visible', 'false')
-});
-contr.addEventListener('controllerconnected', function () {
-    head.setAttribute('wasd-controls-enabled', "false")
-    contr.setAttribute('visible', 'true')
-});
-/*document.querySelector('#scene').addEventListener('click', function () {
-    if (gamestate=="menu")
-    {
-    //   aim.emit("poof")
-       aim.setAttribute('raycaster','enabled',true)
-        setTimeout(function(){aim.setAttribute('raycaster','enabled',false);},50)
-    }
-    else
-    if (shootr)
-    {
-        aim.emit("poof")
-        shootr=0;
-    aim.setAttribute('raycaster','enabled',true)
-    setTimeout(function(){aim.setAttribute('raycaster','enabled',false);},50)
-    setTimeout(function(){shootr=1},1000)
-    }
-  });*/
-contr.addEventListener('triggerdown', function () {
-    if (gamestate=="menu")
-    {
-       aim.emit("poof")
-       aim.setAttribute('raycaster','enabled',true)
-        setTimeout(function(){aim.setAttribute('raycaster','enabled',false);},50)
-    }
-    else
-    if (shootr)
-    {
-        aim.emit("poof")
-        shootr=0;
-    aim.setAttribute('raycaster','enabled',true)
-    setTimeout(function(){aim.setAttribute('raycaster','enabled',false);},50)
-    setTimeout(function(){shootr=1},1000)
-    }
- });
-  function textplane(text)
+    console.log('called')
+Game_mus.emit("Game")
+  gamestate="game"
+  Settings_b.setAttribute('visible','false')
+  Settings_b.setAttribute('class','notclickable')
+  Realistic_b.setAttribute('visible','false')
+  Realistic_b.setAttribute('class','notclickable')
+  Casual_b.setAttribute('visible','false')
+  Casual_b.setAttribute('class','notclickable')
+  Hard_b.setAttribute('visible','false')
+  Hard_b.setAttribute('class','notclickable')
+  Medium_b.setAttribute('visible','false')
+  Medium_b.setAttribute('class','notclickable')
+  Easy_b.setAttribute('visible','false')
+  Easy_b.setAttribute('class','notclickable')
+  Play_b.setAttribute('visible','false')
+  Play_b.setAttribute('class','notclickable')
+  if (difficulty=="Easy")
   {
-    gm.components.sound.stopSound();
-    //  cam.emit("menu")
-      gamestate="info"
-    tp.setAttribute('visible','true')
-    tp.setAttribute('class','clickable')
-    tp.children[0].setAttribute('value',text)
-    var divs = document.querySelectorAll('#bunny'), i;
-    for (i = 0; i < divs.length; ++i)
-    divs[i].setAttribute('beast','hp',0)
-    var divs = document.querySelectorAll('#carrot'), i;
-    for (i = 0; i < divs.length; ++i)
-    {
-        divs[i].parentEl.removeChild(divs[i])
-    }
-    var divs = document.querySelectorAll('#garden'), i;
-    for (i = 0; i < divs.length; ++i)
-    {
-    replant(divs[i].getAttribute('cholder'),divs[i])
-    }
+  setTimeout(function(){spawner(1)},1000)
+  setTimeout(function(){spawner(1)},2000)
+  setTimeout(function(){spawner(1)},6000)
+  setTimeout(function(){spawner(1)},7000)
+  setTimeout(function(){spawner(1)},8000)
+  setTimeout(function(){spawner(1)},13000)
+  setTimeout(function(){spawner(1)},14000)
+  setTimeout(function(){spawner(1);ending=true;},15000)
   }
-  function opensettings()
+  if (difficulty=="Medium")
   {
-    set.setAttribute('visible','false')
-    set.setAttribute('class','nc')
-    real.setAttribute('visible','false')
-    real.setAttribute('class','nc')
-    cas.setAttribute('visible','false')
-    cas.setAttribute('class','nc')
-    hard.setAttribute('visible','false')
-    hard.setAttribute('class','nc')
-    med.setAttribute('visible','false')
-    med.setAttribute('class','nc')
-    ez.setAttribute('visible','false')
-    ez.setAttribute('class','nc')
-    play.setAttribute('visible','false')
-    play.setAttribute('class','nc')
-    mus.setAttribute('visible','true')
-    mus.setAttribute('class','clickable')
-    mas.setAttribute('visible','true')
-    mas.setAttribute('class','clickable')
-    eff.setAttribute('visible','true')
-    eff.setAttribute('class','clickable')
+      setTimeout(function(){spawner(1)},1000)
+      setTimeout(function(){spawner(2)},2000)
+      setTimeout(function(){spawner(1)},6000)
+      setTimeout(function(){spawner(1)},7000)
+      setTimeout(function(){spawner(2)},8000)
+      setTimeout(function(){spawner(1)},13000)
+      setTimeout(function(){spawner(2)},14000)
+      setTimeout(function(){spawner(2);ending=true;},15000)
   }
-  function closesettings()
+  if (difficulty=="Hard")
   {
-    set.setAttribute('visible','true')
-    set.setAttribute('class','clickable')
-    real.setAttribute('visible','true')
-    real.setAttribute('class','clickable')
-    cas.setAttribute('visible','true')
-    cas.setAttribute('class','clickable')
-    hard.setAttribute('visible','true')
-    hard.setAttribute('class','clickable')
-    med.setAttribute('visible','true')
-    med.setAttribute('class','clickable')
-    ez.setAttribute('visible','true')
-    ez.setAttribute('class','clickable')
-    play.setAttribute('visible','true')
-    play.setAttribute('class','clickable')
-    mus.setAttribute('visible','false')
-    mus.setAttribute('class','nc')
-    mas.setAttribute('visible','false')
-    mas.setAttribute('class','nc')
-    eff.setAttribute('visible','false')
-    eff.setAttribute('class','nc')
+      setTimeout(function(){spawner(3)},1000)
+      setTimeout(function(){spawner(2)},2000)
+      setTimeout(function(){spawner(3)},6000)
+      setTimeout(function(){spawner(3)},7000)
+      setTimeout(function(){spawner(2)},8000)
+      setTimeout(function(){spawner(3)},13000)
+      setTimeout(function(){spawner(2)},14000)
+      setTimeout(function(){spawner(2);ending=true;},15000)
   }
-  function startgame()
-  {
-   gm.emit("game")
-    gamestate="game"
-    set.setAttribute('visible','false')
-    set.setAttribute('class','nc')
-    real.setAttribute('visible','false')
-    real.setAttribute('class','nc')
-    cas.setAttribute('visible','false')
-    cas.setAttribute('class','nc')
-    hard.setAttribute('visible','false')
-    hard.setAttribute('class','nc')
-    med.setAttribute('visible','false')
-    med.setAttribute('class','nc')
-    ez.setAttribute('visible','false')
-    ez.setAttribute('class','nc')
-    play.setAttribute('visible','false')
-    play.setAttribute('class','nc')
-    if (difficulty=="easy")
-    {
-    setTimeout(function(){spwaner(1)},1000)
-    setTimeout(function(){spwaner(1)},2000)
-    setTimeout(function(){spwaner(1)},6000)
-    setTimeout(function(){spwaner(1)},7000)
-    setTimeout(function(){spwaner(1)},8000)
-    setTimeout(function(){spwaner(1)},13000)
-    setTimeout(function(){spwaner(1)},14000)
-    setTimeout(function(){spwaner(1);ending=true;},15000)
-    }
-    if (difficulty=="medium")
-    {
-        setTimeout(function(){spwaner(1)},1000)
-        setTimeout(function(){spwaner(2)},2000)
-        setTimeout(function(){spwaner(1)},6000)
-        setTimeout(function(){spwaner(1)},7000)
-        setTimeout(function(){spwaner(2)},8000)
-        setTimeout(function(){spwaner(1)},13000)
-        setTimeout(function(){spwaner(2)},14000)
-        setTimeout(function(){spwaner(2);ending=true;},15000)
-    }
-    if (difficulty=="hard")
-    {
-        setTimeout(function(){spwaner(3)},1000)
-        setTimeout(function(){spwaner(2)},2000)
-        setTimeout(function(){spwaner(3)},6000)
-        setTimeout(function(){spwaner(3)},7000)
-        setTimeout(function(){spwaner(2)},8000)
-        setTimeout(function(){spwaner(3)},13000)
-        setTimeout(function(){spwaner(2)},14000)
-        setTimeout(function(){spwaner(2);ending=true;},15000)
-    }
-  }
+}

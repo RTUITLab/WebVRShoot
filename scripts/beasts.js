@@ -1,19 +1,11 @@
 AFRAME.registerComponent('beast',{
     schema:{
     speed:{type: 'int',default: 40},
-    zone:{type:'int', default: 4},
-    hp: {type:'int',default: 100}
+    hp: {type:'int',default: 100},
+    target:{type:'selector'}
     },
     init: function() {
-    this.state="walking";
-       this.minX=this.el.object3D.position.x-this.data.zone/2;
-       this.maxX=this.el.object3D.position.x+this.data.zone/2;
-       this.minZ=this.el.object3D.position.z-this.data.zone/2;
-       this.maxZ=this.el.object3D.position.z+this.data.zone/2;
        randomwalk(this);
-      /* this.el.addEventListener('animation-loop',function(event){ 
-        console.log(event.target.getAttribute('animation-mixer').clip)  
-       })*/
     },
     update: function(){
         if (this.el.children[0].children[0]) // Если есть полоска хп устанавливает ей размер и цвет в зависимости от хп
@@ -25,18 +17,24 @@ AFRAME.registerComponent('beast',{
         {
        this.el.children[0].children[1].setAttribute('scale',{x:this.data.hp/100+0.1, y:0.3, z:1})
         }
-        if (this.data.hp<=0) //Если закончились жихни вызывает функцию deathanim, удаляет животное и проверяет не закончились ли зайцы
+        if (this.data.hp<=0) //Если закончились жизни вызывает функцию deathanim, удаляет животное и проверяет не закончились ли зайцы
         {
+            if (this.data.target)
+            {
+            console.error(this.data.target.getAttribute('free'))
+            this.data.target.setAttribute('free','true')
+            console.error(this.data.target.getAttribute('free'))
+            }
             deathanim(this.el,"b")
             scene.removeChild(this.el)
-            var divs = document.querySelectorAll('#bunny'), i;
+            var divs = document.querySelectorAll('#Bunny'), i;
             if (divs.length==0&&ending)
             {
                 var divs = document.querySelectorAll('#carrot'), i;
                 if (divs.length>0)
-                wm.emit("win")
+                Win_mus.emit("Win")
                 else
-                lm.emit("lose")
+                Lose_mus.emit("Lose")
                 if (divs.length>1)
                textplane("Well done!!!\n You saved\n "+ divs.length+" carrots.")
                if (divs.length==1)
@@ -52,7 +50,8 @@ function randomwalk(me){
     var targ = nearestcarrot(me) //вызываем функцию nearestcarrot, которая возвращает ближайшую свободную морковку 
     if (targ) //если такая есть 
     {
-    targ.setAttribute('free','false') //делаем её занятой и добавляем анимацию движения к ней 
+    targ.setAttribute('free','false') //делаем её занятой и добавляем анимацию движения к ней
+    me.el.setAttribute('beast','target',targ)
     var walkx = targ.object3D.getWorldPosition().x 
     var walkz = targ.object3D.getWorldPosition().z
     var nowspeed=Math.random()*5+(me.data.speed-5);
@@ -77,7 +76,7 @@ function nearestcarrot(me)
     var mindist = 99999
     var dist
     var divs = document.querySelectorAll('#carrot'), i;
-    var dv = document.querySelectorAll('#bunny');
+    var dv = document.querySelectorAll('#Bunny');
     for (i = 0; i < divs.length; ++i) {
         if (divs[i].getAttribute('free')=='true'|| divs.length <= dv.length )
         {
@@ -96,73 +95,57 @@ var percentColors = [
     { pct: 0.5, color: { r: 0xff, g: 0xff, b: 0 } },
     { pct: 1.0, color: { r: 0x00, g: 0xff, b: 0 } } ];
 
-var getColorForPercentage = function(pct) {
-    for (var i = 1; i < percentColors.length - 1; i++) {
-        if (pct < percentColors[i].pct) {
-            break;
-        }
-    }
-    var lower = percentColors[i - 1];
-    var upper = percentColors[i];
-    var range = upper.pct - lower.pct;
-    var rangePct = (pct - lower.pct) / range;
-    var pctLower = 1 - rangePct;
-    var pctUpper = rangePct;
-    var color = {
-        r: Math.floor(lower.color.r * pctLower + upper.color.r * pctUpper),
-        g: Math.floor(lower.color.g * pctLower + upper.color.g * pctUpper),
-        b: Math.floor(lower.color.b * pctLower + upper.color.b * pctUpper)
-    };
-    return 'rgb(' + [color.r, color.g, color.b].join(',') + ')';
-}
-function openmenu() {
-    gamestate="menu"
-    tp.setAttribute('visible','false')
-    tp.setAttribute('class','nc')
-    set.setAttribute('visible','true')
-    set.setAttribute('class','clickable')
-    real.setAttribute('visible','true')
-    real.setAttribute('class','clickable')
-    cas.setAttribute('visible','true')
-    cas.setAttribute('class','clickable')
-    hard.setAttribute('visible','true')
-    hard.setAttribute('class','clickable')
-    med.setAttribute('visible','true')
-    med.setAttribute('class','clickable')
-    ez.setAttribute('visible','true')
-    ez.setAttribute('class','clickable')
-    play.setAttribute('visible','true')
-   play.setAttribute('class','clickable')
-}
-function getcarrot(me,targ){
-    if (me.data.hp>0)
-            { 
-                if (targ.parentEl)
-                {
-                    if (targ.getAttribute('position').y<=2)
-                    {
-                    targ.setAttribute('position',targ.getAttribute('position').x.toString()+" "+(targ.getAttribute('position').y+0.025).toString()+" "+targ.getAttribute('position').z.toString())
-                    head.emit('eat')
-                    setTimeout(function(me,targ){getcarrot(me,targ)},10,me,targ)
-                    }
-                    else
-                    {
-                    targ.parentEl.removeChild(targ);
-                    var divs = document.querySelectorAll('#carrot'), i;
-                    if (divs.length==0)
-                    {
-                        lm.emit("lose")
-                        textplane("All the carrots\n were eaten")
-                    }
-                 //   me.el.children[2].setAttribute('animation-mixer',{clip:"gather_start"});
-                    randomwalk(me);
-                    }
-                }
-                else 
-                randomwalk(me);
+    var getColorForPercentage = function(pct) {
+        for (var i = 1; i < percentColors.length - 1; i++) {
+            if (pct < percentColors[i].pct) {
+                break;
             }
-}
-function deathanim(me,id)
+        }
+        var lower = percentColors[i - 1];
+        var upper = percentColors[i];
+        var range = upper.pct - lower.pct;
+        var rangePct = (pct - lower.pct) / range;
+        var pctLower = 1 - rangePct;
+        var pctUpper = rangePct;
+        var color = {
+            r: Math.floor(lower.color.r * pctLower + upper.color.r * pctUpper),
+            g: Math.floor(lower.color.g * pctLower + upper.color.g * pctUpper),
+            b: Math.floor(lower.color.b * pctLower + upper.color.b * pctUpper)
+        };
+        return 'rgb(' + [color.r, color.g, color.b].join(',') + ')';
+    }
+
+    function getcarrot(me,targ){
+        if (me.data.hp>0)
+                { 
+                    if (targ.parentEl)
+                    {
+                        if (targ.getAttribute('position').y<=2)
+                        {
+                        me.el.children[2].setAttribute('animation-mixer',{clip:"gather_loop"})
+                        targ.setAttribute('position',targ.getAttribute('position').x.toString()+" "+(targ.getAttribute('position').y+0.025).toString()+" "+targ.getAttribute('position').z.toString())
+                        Eat_mus.emit('Eat')
+                        setTimeout(function(me,targ){getcarrot(me,targ)},10,me,targ)
+                        }
+                        else
+                        {
+                        targ.parentEl.setAttribute('carrot-holder',{carrots: targ.parentEl.getAttribute('carrot-holder').carrots-1})
+                        targ.parentEl.removeChild(targ);
+                        var divs = document.querySelectorAll('#carrot'), i;
+                        if (divs.length==0)
+                        {
+                            Lose_mus.emit("lose")
+                            textplane("All the carrots\n were eaten")
+                        }
+                        me.el.children[2].setAttribute('animation-mixer',{clip:"gather_end"});
+                        randomwalk(me);
+                        }
+                    }
+                    else 
+                    randomwalk(me);
+                }
+    }
+    function deathanim(me,id)
 {
     var bunyy = document.createElement('a-entity');
     bunyy.setAttribute('scale', "0.5 0.5 0.5");
@@ -171,7 +154,7 @@ function deathanim(me,id)
     dynamic.setAttribute('id','model')
     dynamic.setAttribute('scale','0.2 0.2 0.2')
     dynamic.setAttribute('rotation','0 180 0')
-    dynamic.setAttribute('gltf-model','#bunnygltf')
+    dynamic.setAttribute('gltf-model','#Bunny_glb')
     bunyy.appendChild(dynamic)
     bunyy.setAttribute('animation-mixer',{clip:'death_start',loop:'once'})
     dynamic = document.createElement('a-animation')
@@ -183,4 +166,4 @@ function deathanim(me,id)
     bunyy.children[0].appendChild(dynamic)
     scene.appendChild(bunyy)
     setTimeout(function(me){scene.removeChild(me)},3000,bunyy)
-}
+}  
