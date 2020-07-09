@@ -30,16 +30,18 @@ Sun.addEventListener('click', function(event)
 Casual_b.addEventListener('click',function(event)
 {
     Press_mus.emit("Press")
+    Casual_b.children[0].setAttribute('visible','true')
+    Realistic_b.children[0].setAttribute('visible','false')
     Right_hand.setAttribute('raycaster','showLine',true)
-    Casual_b.children[1].setAttribute('color','white')
-    Real_mus.children[1].setAttribute('color','black')
+    Cursor.setAttribute('visible',"true")
 })
 Realistic_b.addEventListener('click',function(event)
 {
     Press_mus.emit("Press")
+    Casual_b.children[0].setAttribute('visible','false')
+    Realistic_b.children[0].setAttribute('visible','true')
     Right_hand.setAttribute('raycaster','showLine',false)
-    Casual_b.children[1].setAttribute('color','black')
-    Realistic_b.children[1].setAttribute('color','white')
+    Cursor.setAttribute('visible',"false")
 })
 Settings_b.addEventListener('click',function(event)
 {
@@ -50,25 +52,25 @@ Easy_b.addEventListener('click',function(event)
 {
     Press_mus.emit("Press")
     difficulty = "Easy"
-    Easy_b.children[1].setAttribute('color','white')
-    Medium_b.children[1].setAttribute('color','black')
-    Hard_b.children[1].setAttribute('color','black')
+    Easy_b.children[0].setAttribute('visible','true')
+    Medium_b.children[0].setAttribute('visible','false')
+    Hard_b.children[0].setAttribute('visible','false')
 })
 Medium_b.addEventListener('click',function(event)
 {
     Press_mus.emit("Press")
     difficulty = "Medium"
-    Easy_b.children[1].setAttribute('color','black')
-    Medium_b.children[1].setAttribute('color','white')
-    Hard_b.children[1].setAttribute('color','black')
+    Easy_b.children[0].setAttribute('visible','false')
+    Medium_b.children[0].setAttribute('visible','true')
+    Hard_b.children[0].setAttribute('visible','false')
 })
 Hard_b.addEventListener('click',function(event)
 {
     Press_mus.emit("Press")
     difficulty = "Hard"
-    Easy_b.children[1].setAttribute('color','black')
-    Medium_b.children[1].setAttribute('color','black')
-    Hard_b.children[1].setAttribute('color','white')
+    Easy_b.children[0].setAttribute('visible','false')
+    Medium_b.children[0].setAttribute('visible','false')
+    Hard_b.children[0].setAttribute('visible','true')
 })
 Back_b.addEventListener('click',function(event)
 {
@@ -122,4 +124,25 @@ Master_up.addEventListener('click',function(event)
     Head.setAttribute('sound-controller','massound',Math.round((Head.getAttribute('sound-controller').massound+0.1)*10)/10)
     }
     Press_mus.emit("Press")
+})
+Exit.addEventListener('click',function(event){
+    console.log('exit')
+    Scene.emit('exit-vr')
+})
+Reset.addEventListener('click',function(event){
+   Game_mus.components.sound.stopSound();
+    Open_menu()
+  var divs = document.querySelectorAll('#Bunny'), i;
+  for (i = 0; i < divs.length; ++i)
+  divs[i].setAttribute('beast','hp',0)
+  var divs = document.querySelectorAll('#carrot'), i;
+  for (i = 0; i < divs.length; ++i)
+  {
+      divs[i].parentEl.removeChild(divs[i])
+  }
+  var divs = document.querySelectorAll('#Garden'), i;
+  for (i = 0; i < divs.length; ++i)
+  {
+  replant(divs[i].getAttribute('carrot-holder'),divs[i])
+  }
 })

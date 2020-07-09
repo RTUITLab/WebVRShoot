@@ -2,6 +2,7 @@ AFRAME.registerComponent('beast',{
     schema:{
     speed:{type: 'int',default: 40},
     hp: {type:'int',default: 100},
+    id:{type:'int', default:1},
     target:{type:'selector'}
     },
     init: function() {
@@ -21,11 +22,9 @@ AFRAME.registerComponent('beast',{
         {
             if (this.data.target)
             {
-            console.error(this.data.target.getAttribute('free'))
             this.data.target.setAttribute('free','true')
-            console.error(this.data.target.getAttribute('free'))
             }
-            deathanim(this.el,"b")
+            deathanim(this.el,this.el.getAttribute('beast').id)
             scene.removeChild(this.el)
             var divs = document.querySelectorAll('#Bunny'), i;
             if (divs.length==0&&ending)
@@ -65,11 +64,22 @@ function randomwalk(me){
     anim.setAttribute('easing', 'linear')
     anim.setAttribute('to', (walkx+Math.sin((dirto-90)/180*3.14)*0.6).toString()+" "+me.el.object3D.position.y.toString()+" "+(walkz+Math.cos((dirto-90)/180*3.14)*0.6).toString() )
     me.el.appendChild(anim);
-    setTimeout(function(me,targ){
-      {getcarrot(me,targ)}
-    } , Math.sqrt(Math.pow(walkx-me.el.object3D.position.x,2)+Math.pow(walkz-me.el.object3D.position.z,2))/nowspeed*10000, me,targ)
-        }
+    setTimeout(function(me,targ){sitdown(me,targ)}, Math.sqrt(Math.pow(walkx-me.el.object3D.position.x,2)+Math.pow(walkz-me.el.object3D.position.z,2))/nowspeed*10000, me,targ)}
 };
+function sitdown(me,targ)
+{
+    me.el.children[2].setAttribute('animation-mixer',{clip:"gather_start",loop:"once"})
+    setTimeout(function(me,targ){
+        me.el.children[2].setAttribute('animation-mixer',{clip:"gather_loop",loop:"repeat"})
+        getcarrot(me,targ)},1000,me,targ)
+}
+function standup(me)
+{
+    me.el.children[2].setAttribute('animation-mixer',{clip:"gather_end",loop:"once"})
+    setTimeout(function(me){
+        me.el.children[2].setAttribute('animation-mixer',{clip:"run",loop:"repeat"})
+        randomwalk(me)},1000,me)
+}
 function nearestcarrot(me)
 {
     var nearest = null
@@ -122,7 +132,6 @@ var percentColors = [
                     {
                         if (targ.getAttribute('position').y<=2)
                         {
-                        me.el.children[2].setAttribute('animation-mixer',{clip:"gather_loop"})
                         targ.setAttribute('position',targ.getAttribute('position').x.toString()+" "+(targ.getAttribute('position').y+0.025).toString()+" "+targ.getAttribute('position').z.toString())
                         Eat_mus.emit('Eat')
                         setTimeout(function(me,targ){getcarrot(me,targ)},10,me,targ)
@@ -137,12 +146,11 @@ var percentColors = [
                             Lose_mus.emit("lose")
                             textplane("All the carrots\n were eaten")
                         }
-                        me.el.children[2].setAttribute('animation-mixer',{clip:"gather_end"});
-                        randomwalk(me);
+                        standup(me);
                         }
                     }
                     else 
-                    randomwalk(me);
+                    standup(me);
                 }
     }
     function deathanim(me,id)
@@ -154,9 +162,14 @@ var percentColors = [
     dynamic.setAttribute('id','model')
     dynamic.setAttribute('scale','0.2 0.2 0.2')
     dynamic.setAttribute('rotation','0 180 0')
+    if (id==1)
     dynamic.setAttribute('gltf-model','#Bunny_glb')
+    if (id==2)
+    dynamic.setAttribute('gltf-model','#Bunny_fast_glb')
+    if (id==3)
+    dynamic.setAttribute('gltf-model','#Bunny_big_glb')
     bunyy.appendChild(dynamic)
-    bunyy.setAttribute('animation-mixer',{clip:'death_start',loop:'once'})
+    bunyy.setAttribute('animation-mixer',{clip:'death_start',loop:'once',clampWhenFinished:'true'})
     dynamic = document.createElement('a-animation')
     dynamic.setAttribute('attribute', 'position')
     dynamic.setAttribute('dur', '2000')

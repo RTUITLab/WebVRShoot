@@ -7,9 +7,10 @@
         <script src="scripts/CarrotHolder.js"></script>
         <script src="scripts/Healthbar.js"></script>
         <script src="scripts/Beasts.js"></script>
+        <script src="scripts/GunController.js"></script>
     </head>
     <body>
-        <a-scene id='scene'>
+        <a-scene id='scene' stats>
             <a-assets>
                 <audio id="Menu_mp3" src="sounds/Menu.mp3"></audio>
                 <audio id="Game" src="sounds/Game.mp3"></audio>
@@ -18,14 +19,25 @@
                 <audio id="Press" src="sounds/Press.mp3"></audio>
                 <audio id="Shoot" src="sounds/Shoot.mp3"></audio>
                 <audio id="Eat" src="sounds/Eating.mp3"></audio>
-                <a-asset-item id="Carrot_glb" src="models/Carrot.glb"></a-asset-item>
-                <a-asset-item id="Garden_glb" src="models/Garden.glb"></a-asset-item>
-                <a-asset-item id="RH_glb" src="models/Rabbit_hole.glb"></a-asset-item>
                 <a-asset-item id="Ter_glb" src="models/Terrain.glb"></a-asset-item>
-                <a-asset-item id="Sun_glb" src="models/Sun.glb"></a-asset-item>
-                <a-asset-item id="Moon_glb" src="models/Moon.glb"></a-asset-item>
                 <a-asset-item id="Rifle_glb" src="models/Rifle.glb"></a-asset-item>
+                <a-asset-item id="RH_glb" src="models/Rabbit_hole.glb"></a-asset-item>
+                <a-asset-item id="Sun_glb" src="models/Sun.glb"></a-asset-item>
+                <a-asset-item id="Garden_glb" src="models/Garden.glb"></a-asset-item>
+                <a-asset-item id="Carrot_glb" src="models/Carrot.glb"></a-asset-item>
+                <a-asset-item id="Counter_glb" src="models/Counter.glb"></a-asset-item>
+                <a-asset-item id="Moon_glb" src="models/Moon.glb"></a-asset-item>
                 <a-asset-item id="Bunny_glb" src="models/Bunny.glb"></a-asset-item>
+                <a-asset-item id="Bunny_fast_glb" src="models/Bunny_fast.glb"></a-asset-item>
+                <a-asset-item id="Bunny_big_glb" src="models/Bunny_big.glb"></a-asset-item>
+                <a-asset-item id="Button_02x02_glb" src="models/Button_02x02.glb"></a-asset-item>
+                <a-asset-item id="Button_03x03_glb" src="models/Button_03x03.glb"></a-asset-item>
+                <a-asset-item id="Button_1x1_glb" src="models/Button_1x1.glb"></a-asset-item>
+                <a-asset-item id="Button_1x02_glb" src="models/Button_1x02.glb"></a-asset-item>
+                <a-asset-item id="Button_2x1_glb" src="models/Button_2x1.glb"></a-asset-item>
+                <a-asset-item id="Flag_glb" src="models/Flag.glb"></a-asset-item>
+                <a-asset-item id="Exit_glb" src="models/Exit.glb"></a-asset-item>
+                <a-asset-item id="Reset_glb" src="models/Reset.glb"></a-asset-item>
             </a-assets>
             <!-- Terrain -->
             <a-sky id="Sky_box" src="models/Day_sky.png"></a-sky>
@@ -37,124 +49,163 @@
             <a-entity id="Hole" position="10.3 0.3 -12.3" rotation="0 -132 0" scale="0.3 0.3 0.3" gltf-model="#RH_glb"></a-entity>
             <a-entity id="Hole" position="3.95 0.3 -15" rotation="0 -104 0" scale="0.3 0.3 0.3" gltf-model="#RH_glb"></a-entity>
             <a-entity id="Hole" position="-12.3 -0.17 -8.6" rotation="0 -45 7" scale="0.3 0.3 0.3" gltf-model="#RH_glb"></a-entity>
-            <a-entity id="Garden" carrot-holder position="0 -0.25 -6" scale="0.2 0.2 0.2" gltf-model="#Garden_glb"></a-entity>
-            <a-entity id="Garden" carrot-holder position="5 -0.25 -5" scale="0.2 0.2 0.2" gltf-model="#Garden_glb"></a-entity>
-            <a-entity id="Garden" shadow="cast:true" carrot-holder position="-5 -0.25 -5" scale="0.2 0.2 0.2" gltf-model="#Garden_glb"></a-entity>
-
+            <a-entity id="Garden" carrot-holder position="0 -0.25 -6" scale="0.2 0.2 0.2" gltf-model="#Garden_glb">
+                <a-text scale="5 5 5" position="-8.42387 3.94576 9.25382" align="center" rotation="0 15 0"></a-text>
+            </a-entity>
+            <a-entity id="Garden" carrot-holder position="5 -0.25 -5" scale="0.2 0.2 0.2" gltf-model="#Garden_glb">
+                <a-text scale="5 5 5" position="3.84107 3.94952 9.76234" align="center" rotation="0 -30 0"></a-text>
+            </a-entity>
+            <a-entity id="Garden" shadow="cast:true" carrot-holder position="-5 -0.25 -5" scale="0.2 0.2 0.2" gltf-model="#Garden_glb">
+                <a-text scale="5 5 5" position="-7.06684 3.57966 10.7735" align="center" rotation="0 30 0"></a-text>
+            </a-entity>
+            <a-entity id="Exit" gltf-model="models/Exit.glb" class="clickable"  position="5.9 0.26 0" scale="0.5 0.5 0.5" rotation="0 -60 0">
+                <a-plane position="0 0.5 0.3" visible=false></a-plane>
+            </a-entity>
+            <a-entity id="Reset" gltf-model="models/Reset.glb" class="clickable"  position="5.25 0.28 -1" scale="0.5 0.5 0.5" rotation="0 -55 0">
+                <a-plane position="0 0.5 0.3" visible=false></a-plane>
+            </a-entity>
+            <a-entity id="Counter" gltf-model="models/Counter.glb" position="-6.4 0.17 -3.1" rotation="0 30 0" scale="0.5 0.5 0.5"></a-entity>
+            <a-entity id="Counter" gltf-model="models/Counter.glb" position="-1.6 0.24 -4.4" rotation="0 15 0" scale="0.5 0.5 0.5"></a-entity>
+            <a-entity id="Counter" gltf-model="models/Counter.glb" position="6.0082 0.24 -3.1364" rotation="0 -30 0" scale="0.5 0.5 0.5"></a-entity>
             <!--Buttons-->
-            <a-plane id="Play_b" class="clickable" position="0 2 -3" color="red">
-                <a-text color="black" value="Play" align="center"></a-text>
-                <a-plane scale="1.04 1.04 1" position="0 0 -0.01" color="black"></a-plane>
-            </a-plane>
+            <a-entity position="0 0 1.5">
+            <a-entity id="Play_b" class="clickable" position="0 2 -3">
+                <a-entity gltf-model="#Button_1x1_glb" scale="0.5 0.5 0.5"></a-entity>
+                <a-text position="0 0 0.08" value="Play" align="center"></a-text>
+                <a-plane visible=false></a-plane>
+            </a-entity>
 
-            <a-plane id="Settings_b" class="clickable" position="1.5 2.4 -3" scale="1 0.2 1" color="red">
-                <a-text color="black" scale="1 5 1" value="Settings" align="center"></a-text>
-                <a-plane scale="1.04 1.1 1" position="0 0 -0.01" color="black"></a-plane>
-            </a-plane>
+            <a-entity id="Settings_b" class="clickable" position="1.5 2.4 -3">
+                <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
+                <a-text position="0 0 0.08" value="Settings" align="center"></a-text>
+                <a-plane scale="1 0.2 1" visible=false></a-plane>
+            </a-entity>
 
-            <a-plane id="Realistic_b" class="clickable" position="1.5 2 -3" scale="1 0.2 1" color="red">
-                <a-text color="black" scale="1 5 1" value="Realistic" align="center"></a-text>
-                <a-plane scale="1.04 1.1 1" position="0 0 -0.01" color="black"></a-plane>
-            </a-plane>
+            <a-entity id="Realistic_b" class="clickable" position="1.5 2 -3">
+                <a-entity gltf-model="#Flag_glb" scale="0.5 0.5 0.5" visible=false></a-entity>
+                <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
+                <a-text position="0 0 0.08" value="Realistic" align="center"></a-text>
+                <a-plane scale="1 0.2 1" visible=false></a-plane>
+            </a-entity>
 
-            <a-plane id="Casual_b" class="clickable" position="1.5 1.6 -3" scale="1 0.2 1" color="red">
-                <a-text color="black" scale="1 5 1" value="Casual" align="center"></a-text>
-                <a-plane scale="1.04 1.1 1" position="0 0 -0.01" color="white"></a-plane>
-            </a-plane>
+            <a-entity id="Casual_b" class="clickable" position="1.5 1.6 -3">
+                <a-entity gltf-model="#Flag_glb" scale="0.5 0.5 0.5"></a-entity>
+                <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
+                <a-text position="0 0 0.08" value="Casual" align="center"></a-text>
+                <a-plane scale="1 0.2 1" visible=false></a-plane>
+            </a-entity>
 
-            <a-plane id="Easy_b" class="clickable" position="-1.5 2.4 -3" scale="1 0.2 1" color="red">
-                <a-text color="black" scale="1 5 1" value="Easy" align="center"></a-text>
-                <a-plane scale="1.04 1.2 1" position="0 0 -0.01" color="white"></a-plane>
-            </a-plane>
+            <a-entity id="Easy_b" class="clickable" position="-1.5 2.4 -3">
+                <a-entity gltf-model="#Flag_glb" scale="0.5 0.5 0.5"></a-entity>
+                <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
+                <a-text position="0 0 0.08" value="Easy" align="center"></a-text>
+                <a-plane  scale="1 0.2 1" visible=false></a-plane>
+            </a-entity>
 
-            <a-plane id="Medium_b" class="clickable" position="-1.5 2 -3" scale="1 0.2 1" color="red">
-                <a-text color="black" scale="1 5 1" value="Medium" align="center"></a-text>
-                <a-plane scale="1.04 1.2 1" position="0 0 -0.01" color="black"></a-plane>
-            </a-plane>
+            <a-entity id="Medium_b" class="clickable" position="-1.5 2 -3">
+                <a-entity gltf-model="#Flag_glb" scale="0.5 0.5 0.5" visible=false></a-entity>
+                <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
+                <a-text position="0 0 0.08" value="Medium" align="center"></a-text>
+                <a-plane scale="1 0.2 1" visible=false></a-plane>
+            </a-entity>
 
-            <a-plane id="Hard_b" class="clickable" position="-1.5 1.6 -3" scale="1 0.2 1" color="red">
-                <a-text color="black" scale="1 5 1" value="Hard" align="center"></a-text>
-                <a-plane scale="1.04 1.2 1" position="0 0 -0.01" color="black"></a-plane>
-            </a-plane>
+            <a-entity id="Hard_b" class="clickable" position="-1.5 1.6 -3">
+                <a-entity gltf-model="#Flag_glb" scale="0.5 0.5 0.5" visible=false></a-entity>
+                <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
+                <a-text position="0 0 0.08" value="Hard" align="center"></a-text>
+                <a-plane scale="1 0.2 1" visible=false></a-plane>
+            </a-entity>
 
-            <a-plane id="Text_plane" class="notclickable" position="0 2 -3" scale="2 1 1" color="red" visible="false">
-                <a-text color="black" value="text" align="center" scale='0.5 1 1'></a-text>
-                <a-plane scale="1.02 1.04 1" position="0 0 -0.01" color="black"></a-plane>
+            <a-plane id="Text_plane" class="notclickable" position="0 2 -3" visible="false">
+                <a-text position="0 0 0.09" value="text" align="center"></a-text>
+                <a-entity gltf-model="#Button_2x1_glb" scale="0.5 0.5 0.5"></a-entity>
+                <a-plane scale="2 1 1" visible=false></a-plane>
             </a-plane>
 
             <a-entity id="Master_volume" class="notclickable" position="0 2 -3" visible="false">
-                    <a-plane id="Master"  position="0 0.4 0" scale="1 0.2 1" color="red">
-                            <a-text color="black" scale="1 5 1" value="Master" align="center"></a-text>
-                            <a-plane scale="1.04 1.1 1" position="0 0 -0.01" color="black"></a-plane>
-                    </a-plane>
-                    <a-plane id="Back_b"  position="0 -0.4 0" scale="1 0.2 1" color="red">
-                            <a-text color="black" scale="1 5 1" value="Back" align="center"></a-text>
-                            <a-plane scale="1.04 1.1 1" position="0 0 -0.01" color="black"></a-plane>
-                    </a-plane>
-                    <a-plane scale="0.3 0.3 1" color="red">
-                        <a-text id="Master_text" color="black" scale="3 3 1" value="0.5" align="center"></a-text>
-                            <a-plane scale="1.1 1.1 1" position="0 0 -0.01" color="black"></a-plane>
-                    </a-plane>
-                    <a-plane id="Master_down" position="-0.4 0 0" scale="0.2 0.2 1" color="red">
-                            <a-text color="black" scale="5 5 1" value="-" align="center"></a-text>
-                            <a-plane scale="1.2 1.2 1" position="0 0 -0.01" color="black"></a-plane>
-                    </a-plane>
-                    <a-plane id="Master_up" position="0.4 0 0" scale="0.2 0.2 1" color="red">
-                            <a-text color="black" scale="5 5 1" value="+" align="center"></a-text>
-                            <a-plane scale="1.2 1.2 1" position="0 0 -0.01" color="black"></a-plane>
-                    </a-plane>
+                    <a-entity id="Master"  position="0 0.4 0">
+                            <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
+                            <a-text position="0 0 0.08" value="Master" align="center"></a-text>
+                    </a-entity>
+                    <a-entity id="Back_b"  position="0 -0.4 0">
+                            <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
+                            <a-text position="0 0 0.08" value="Back" align="center"></a-text>
+                            <a-plane scale="1 0.2 1" visible=false></a-plane>
+                    </a-entity>
+                    <a-entity>
+                            <a-entity gltf-model="#Button_03x03_glb" scale="0.5 0.5 0.5"></a-entity>
+                            <a-text position="0 0 0.09" id="Master_text" value="0.5" align="center"></a-text>
+                    </a-entity>
+                    <a-entity id="Master_down" position="-0.4 0 0">
+                        <a-entity gltf-model="#Button_02x02_glb" scale="0.5 0.5 0.5"></a-entity>
+                            <a-text position="0 0 0.05" value="-" align="center"></a-text>
+                            <a-plane scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
+                    </a-entity>
+                    <a-entity id="Master_up" position="0.4 0 0">
+                        <a-entity gltf-model="#Button_02x02_glb" scale="0.5 0.5 0.5"></a-entity>
+                            <a-text position="0 0 0.05" value="+" align="center"></a-text>
+                            <a-plane scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
+                    </a-entity>
             </a-entity>
 
             <a-entity id="Music_volume" class="notclickable" position="1.5 2 -3" visible="false">
-                <a-plane id="Music" position="0 0.4 0" scale="1 0.2 1" color="red">
-                        <a-text color="black" scale="1 5 1" value="Music" align="center"></a-text>
-                        <a-plane scale="1.04 1.1 1" position="0 0 -0.01" color="black"></a-plane>
-                </a-plane>
-                <a-plane scale="0.3 0.3 1" color="red">
-                    <a-text id="Music_text" color="black" scale="3 3 1" value="0.5" align="center"></a-text>
-                        <a-plane scale="1.1 1.1 1" position="0 0 -0.01" color="black"></a-plane>
-                </a-plane>
-                <a-plane id="Music_down" position="-0.4 0 0" scale="0.2 0.2 1" color="red">
-                        <a-text color="black" scale="5 5 1" value="-" align="center"></a-text>
-                        <a-plane scale="1.2 1.2 1" position="0 0 -0.01" color="black"></a-plane>
-                </a-plane>
-                <a-plane id="Music_up" position="0.4 0 0" scale="0.2 0.2 1" color="red">
-                        <a-text color="black" scale="5 5 1" value="+" align="center"></a-text>
-                        <a-plane scale="1.2 1.2 1" position="0 0 -0.01" color="black"></a-plane>
-                </a-plane>
+                <a-entity id="Music" position="0 0.4 0">
+                        <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
+                        <a-text position="0 0 0.08" value="Music" align="center"></a-text>
+                </a-entity>
+                <a-entity>
+                    <a-entity gltf-model="#Button_03x03_glb" scale="0.5 0.5 0.5"></a-entity>
+                    <a-text position="0 0 0.09" id="Music_text" value="0.5" align="center"></a-text>
+                </a-entity>
+                <a-entity id="Music_down" position="-0.4 0 0">
+                    <a-entity gltf-model="#Button_02x02_glb" scale="0.5 0.5 0.5"></a-entity>
+                    <a-text position="0 0 0.05" value="-" align="center"></a-text>
+                    <a-plane scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
+                </a-entity>
+                <a-entity id="Music_up" position="0.4 0 0">
+                    <a-entity gltf-model="#Button_02x02_glb" scale="0.5 0.5 0.5"></a-entity>
+                    <a-text position="0 0 0.05" value="+" align="center"></a-text>
+                    <a-plane scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
+                </a-entity>
             </a-entity>
 
             <a-entity id="Effect_volume" class="notclickable" position="-1.5 2 -3" visible="false">
-                <a-plane id="Effect" position="0 0.4 0" scale="1 0.2 1" color="red">
-                        <a-text color="black" scale="1 5 1" value="Effects" align="center"></a-text>
-                        <a-plane scale="1.04 1.1 1" position="0 0 -0.01" color="black"></a-plane>
-                </a-plane>
-                <a-plane scale="0.3 0.3 1" color="red">
-                    <a-text id="Effect_text" color="black" scale="3 3 1" value="0.5" align="center"></a-text>
-                        <a-plane scale="1.1 1.1 1" position="0 0 -0.01" color="black"></a-plane>
-                </a-plane>
-                <a-plane id="Effect_down" position="-0.4 0 0" scale="0.2 0.2 1" color="red">
-                        <a-text color="black" scale="5 5 1" value="-" align="center"></a-text>
-                        <a-plane scale="1.2 1.2 1" position="0 0 -0.01" color="black"></a-plane>
-                </a-plane>
-                <a-plane id="Effect_up" position="0.4 0 0" scale="0.2 0.2 1" color="red">
-                        <a-text color="black" scale="5 5 1" value="+" align="center"></a-text>
-                        <a-plane scale="1.2 1.2 1" position="0 0 -0.01" color="black"></a-plane>
-                </a-plane>
+                <a-entity id="Effect" position="0 0.4 0">
+                        <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
+                        <a-text position="0 0 0.08" value="Effects" align="center"></a-text>
+                </a-entity>
+                <a-entity>
+                        <a-entity gltf-model="#Button_03x03_glb" scale="0.5 0.5 0.5"></a-entity>
+                        <a-text position="0 0 0.09" id="Effect_text" value="0.5" align="center"></a-text>
+                </a-entity>
+                <a-entity id="Effect_down" position="-0.4 0 0">
+                    <a-entity gltf-model="#Button_02x02_glb" scale="0.5 0.5 0.5"></a-entity>
+                    <a-text position="0 0 0.05" value="-" align="center"></a-text>
+                    <a-plane scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
+                </a-entity>
+                <a-entity id="Effect_up" position="0.4 0 0">
+                    <a-entity gltf-model="#Button_02x02_glb" scale="0.5 0.5 0.5"></a-entity>
+                    <a-text position="0 0 0.05" value="+" align="center"></a-text>
+                    <a-plane scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
+                </a-entity>
             </a-entity>    
+        </a-entity>
             <!--Player-->
-            <a-entity id="Head" sound-controller sound="poolSize:1;src:#Menu_mp3; loop:true; on:Menu; autoplay:true" wasd-controls-enabled="true">
+            <a-entity id="Head" position="0 0 1.5" sound-controller sound="poolSize:1;src:#Menu_mp3; loop:true; on:Menu; autoplay:true" wasd-controls-enabled="true">
                 <a-camera id="Cam">
                     <a-sound id="Eat_mus" src="#Eat" poolSize="5" on="Eat"></a-sound>
                     <a-sound id="Game_mus" src="#Game" poolSize="1" on="Game"></a-sound>
                     <a-sound id="Win_mus" src="#Win" poolSize="1" on="Win"></a-sound>
                     <a-sound id="Lose_mus" src="#Lose" poolSize="1" on="Lose"></a-sound>
                     <a-sound id="Press_mus" src="#Press" poolSize="1" on="Press"></a-sound>
+                    <a-cursor raycaster="objects: .clickable;"></a-cursor>
                 </a-camera>
             </a-entity>
-            <a-entity id="Right_hand"  sound="poolSize:3;src: #Shoot; on:poof; autoplay:false" laser-controls raycaster="objects: .clickable;">
-                <a-entity gltf-model="#Rifle_glb" scale="0.1 0.1 0.1" position="0 -0.055 -0.18"></a-entity>
+            <a-entity id="Rifle_model" guncontroller raycaster="objects: .clickable;" scale="0.1 0.1 0.1">
+                <a-entity gltf-model="#Rifle_glb" position="0 -0.055 -0.18"></a-entity>
             </a-entity>
+            <a-entity id="Right_hand" ound="poolSize:3;src: #Shoot; on:poof; autoplay:false" windows-motion-controls="hand:right" visible="true"></a-entity>
+           <a-entity id="Left_hand" windows-motion-controls="hand:left"> </a-entity> 
             <script src="scripts/Gamelogic.js"></script>
             <script src="scripts/ClickListeners.js"></script>
         </a-scene>

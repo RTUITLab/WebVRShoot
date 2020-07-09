@@ -17,6 +17,7 @@ var Win_mus = document.querySelector('#Win_mus')
 var Lose_mus = document.querySelector('#Lose_mus')
 var Eat_mus = document.querySelector('#Eat_mus')
 var Right_hand = document.querySelector('#Right_hand')
+var Left_hand = document.querySelector('#Left_hand')
 var Master_text = document.querySelector("#Master_text")
 var Effect_text = document.querySelector('#Effect_text')
 var Music_text = document.querySelector('#Music_text')
@@ -31,11 +32,18 @@ var Effect_down = document.querySelector('#Effect_down')
 var Effect_volume = document.querySelector('#Effect_volume')
 var Head = document.querySelector('#Head')
 var Cam = document.querySelector('#Cam')
+var Scene = document.querySelector('a-scene');
+var Cursor = document.querySelector('a-cursor');
+var Exit = document.querySelector('#Exit');
+var Reset = document.querySelector('#Reset');
+var Rifle = document.querySelector('#Rifle_model')
 
-
+var gameid=0;
+var ending=false;
 var light =  true;
 var gamestate = "Menu";
 var difficulty = "Easy";
+var shoot_ready=true;
 
 function Open_settings()
 {
@@ -121,14 +129,23 @@ var divs = document.querySelectorAll('#Hole'), i;
     {
 divs[i].addEventListener('spawnbunny', function (event, id)
 {
-    console.warn(event)
+  id=event.detail
     var bunyy = document.createElement('a-entity');
     bunyy.setAttribute('id', "Bunny");
-    bunyy.setAttribute('beast',"")
+    bunyy.setAttribute('beast','id',id)
     bunyy.setAttribute('scale', "0.5 0.5 0.5");
     bunyy.setAttribute('position', event.currentTarget.getAttribute("position").x.toString()+" 0.25 "+event.currentTarget.getAttribute("position").z.toString());
     var hb = document.createElement('a-entity');
     hb.setAttribute('position','0 1 0')
+    if (id==1||id==2)
+    {
+    bunyy.setAttribute('beast','hp',50)
+    hb.setAttribute('visible',"false")
+    }
+    if (id==2)
+    {
+      bunyy.setAttribute('beast','speed',60)
+    }
     hb.setAttribute('healthbar',"")
     var dynamic = document.createElement('a-plane');
     dynamic.setAttribute('scale','1 0.2 1')
@@ -151,13 +168,24 @@ divs[i].addEventListener('spawnbunny', function (event, id)
     model.setAttribute('id','model')
     model.setAttribute('scale','0.2 0.2 0.2')
     model.setAttribute('rotation','0 180 0')
+    if (id==1)
     model.setAttribute('gltf-model',"#Bunny_glb")
+    if (id==2)
+    model.setAttribute('gltf-model',"#Bunny_fast_glb")
+    if (id==3)
+    {
+    model.setAttribute('gltf-model',"#Bunny_big_glb")
+    }
     model.setAttribute('animation-mixer',{clip:"run"});
     bunyy.appendChild(model)
     scene.appendChild(bunyy)
     bunyy.addEventListener('click', function (event) {
+      if (shoot_ready==true)
+      {
+        shoot_ready=false;
         var nowhp=this.getAttribute('beast').hp
         this.setAttribute('beast','hp',nowhp-50)
+      }
     });
 });
 }
@@ -204,22 +232,22 @@ Game_mus.emit("Game")
   if (difficulty=="Easy")
   {
   setTimeout(function(){spawner(1)},1000)
-  setTimeout(function(){spawner(1)},2000)
+  setTimeout(function(){spawner(2)},2000)
   setTimeout(function(){spawner(1)},6000)
-  setTimeout(function(){spawner(1)},7000)
+  setTimeout(function(){spawner(3)},7000)
   setTimeout(function(){spawner(1)},8000)
-  setTimeout(function(){spawner(1)},13000)
-  setTimeout(function(){spawner(1)},14000)
+  setTimeout(function(){spawner(3)},13000)
+  setTimeout(function(){spawner(3)},14000)
   setTimeout(function(){spawner(1);ending=true;},15000)
   }
   if (difficulty=="Medium")
   {
       setTimeout(function(){spawner(1)},1000)
       setTimeout(function(){spawner(2)},2000)
-      setTimeout(function(){spawner(1)},6000)
+      setTimeout(function(){spawner(3)},6000)
       setTimeout(function(){spawner(1)},7000)
-      setTimeout(function(){spawner(2)},8000)
-      setTimeout(function(){spawner(1)},13000)
+      setTimeout(function(){spawner(3)},8000)
+      setTimeout(function(){spawner(2)},13000)
       setTimeout(function(){spawner(2)},14000)
       setTimeout(function(){spawner(2);ending=true;},15000)
   }
@@ -235,3 +263,25 @@ Game_mus.emit("Game")
       setTimeout(function(){spawner(2);ending=true;},15000)
   }
 }
+
+Scene.addEventListener('enter-vr',function(){
+  Cursor.setAttribute('raycaster','enabled','false')
+  Cursor.setAttribute('visible','false')
+  Right_hand.setAttribute('visible','true')
+});
+Cursor.addEventListener('click',function(){
+  if (shoot_ready==true&&gamestate=="game")
+  {
+  setTimeout(function(){shoot_ready=false},0)
+  setTimeout(function(){shoot_ready=true},1000)
+  Right_hand.emit("poof")
+}})
+Right_hand.addEventListener('triggerdown',
+function(){
+  if (shoot_ready==true&&gamestate=="game")
+  {
+  setTimeout(function(){shoot_ready=false},150)
+  setTimeout(function(){shoot_ready=true},1000)
+  Right_hand.emit("poof")
+}
+  })

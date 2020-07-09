@@ -7,15 +7,10 @@ AFRAME.registerComponent('carrot-holder',{
     },
     init: function() {
     replant(this.data,this.el)
-    cr = document.createElement('a-text')
-    cr.setAttribute('align',"center")
-    cr.setAttribute('scale',"5 5 5")
-    cr.setAttribute('position','0 8 0')
-    this.el.appendChild(cr)
-    this.el.setAttribute('carrot-holder','counter',cr)
+    this.el.setAttribute('carrot-holder','counter',this.el.children[0])
     },
     update: function(){
-        this.data.counter.setAttribute('value',this.data.carrots+"/16")
+        this.data.counter.setAttribute('value',this.data.carrots)
     }
 });
 function plantcarrot(a,b,c)
