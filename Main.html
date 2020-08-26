@@ -3,22 +3,22 @@
     <head>
         <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
         <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
-        <script src="scripts/Soundcontroller.js"></script>
-        <script src="scripts/CarrotHolder.js"></script>
-        <script src="scripts/Healthbar.js"></script>
-        <script src="scripts/Beasts.js"></script>
-        <script src="scripts/GunController.js"></script>
+        <script src="scripts/soundcontroller.js"></script>
+        <script src="scripts/carrotHolder.js"></script>
+        <script src="scripts/healthbar.js"></script>
+        <script src="scripts/beasts.js"></script>
+        <script src="scripts/gunController.js"></script>
     </head>
     <body>
         <a-scene id='scene' stats>
             <a-assets>
-                <audio id="Menu_mp3" src="sounds/Menu.mp3"></audio>
-                <audio id="Game" src="sounds/Game.mp3"></audio>
-                <audio id="Win" src="sounds/Win.mp3"></audio>
-                <audio id="Lose" src="sounds/Lose.mp3"></audio>
-                <audio id="Press" src="sounds/Press.mp3"></audio>
-                <audio id="Shoot" src="sounds/Shoot.mp3"></audio>
-                <audio id="Eat" src="sounds/Eating.mp3"></audio>
+                <audio id="Menu_mp3" src="sounds/menu.mp3"></audio>
+                <audio id="Game" src="sounds/game.mp3"></audio>
+                <audio id="Win" src="sounds/win.mp3"></audio>
+                <audio id="Lose" src="sounds/lose.mp3"></audio>
+                <audio id="Press" src="sounds/press.mp3"></audio>
+                <audio id="Shoot" src="sounds/shoot.mp3"></audio>
+                <audio id="Eat" src="sounds/eating.mp3"></audio>
                 <a-asset-item id="Ter_glb" src="models/Terrain.glb"></a-asset-item>
                 <a-asset-item id="Rifle_glb" src="models/Rifle.glb"></a-asset-item>
                 <a-asset-item id="RH_glb" src="models/Rabbit_hole.glb"></a-asset-item>
@@ -219,8 +219,8 @@
             <a-box id="box1" scale="0.1 0.1 0.1"></a-box>
             <a-box id="box2" scale="0.1 0.1 0.1"></a-box>
            <a-entity id="Left_hand" windows-motion-controls="hand:left"></a-entity> 
-            <script src="scripts/Gamelogic.js"></script>
-            <script src="scripts/ClickListeners.js"></script>
+            <script src="scripts/gamelogic.js"></script>
+            <script src="scripts/clickListeners.js"></script>
         </a-scene>
     </body>
 </html>
