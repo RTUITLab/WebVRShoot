@@ -219,6 +219,7 @@ function textplane(text)
 }
 function startgame()
 {
+<<<<<<< HEAD
     console.log('called')
 Game_mus.emit("Game")
   gamestate="game"
@@ -237,6 +238,89 @@ Game_mus.emit("Game")
   Play_b.setAttribute('visible','false')
   Play_b.setAttribute('class','notclickable')
   if (difficulty=="Easy")
+=======
+    var bunyy = document.createElement('a-entity');
+    bunyy.setAttribute('id', "bunny");
+    bunyy.setAttribute('beast',"hp","150")
+    bunyy.setAttribute('scale', "0.5 0.5 0.5");
+    bunyy.setAttribute('position', event.currentTarget.getAttribute("position").x.toString()+" 0.25 "+event.currentTarget.getAttribute("position").z.toString());
+    var hb = document.createElement('a-entity');
+    hb.setAttribute('position','0 1 0')
+    hb.setAttribute('healthbar',"")
+    var dynamic = document.createElement('a-plane');
+    dynamic.setAttribute('scale','1 0.2 1')
+    dynamic.setAttribute('color','#550000')
+    hb.appendChild(dynamic)
+    var dynamic = document.createElement('a-plane');
+    dynamic.setAttribute('position','0 0 -0.05')
+    dynamic.setAttribute('scale','1.1 0.3 1')
+    dynamic.setAttribute('color','#545454')
+    hb.appendChild(dynamic)
+    bunyy.appendChild(hb)
+    var dynamic = document.createElement('a-box');
+    dynamic.setAttribute('id','bunnyhitbox')
+    dynamic.setAttribute('class','clickable')
+    dynamic.setAttribute('scale','2 2 2')
+    dynamic.setAttribute('collider-check',"")
+    dynamic.setAttribute('visible','false')
+    bunyy.appendChild(dynamic)
+    var dynamic = document.createElement('a-entity');
+    dynamic.setAttribute('id','model')
+    dynamic.setAttribute('scale','0.2 0.2 0.2')
+    dynamic.setAttribute('rotation','0 180 0')
+    dynamic.setAttribute('gltf-model',"#bunnygltf")
+    bunyy.appendChild(dynamic)
+    scene.appendChild(bunyy)
+    bunyy.addEventListener('collide', function (event) {
+        var nowhp=this.getAttribute('beast').hp
+        this.setAttribute('beast','hp',nowhp-50)
+    });
+});
+    }
+contr.addEventListener('controllerdisconnected', function () {
+    head.setAttribute('wasd-controls-enabled', "true")
+    contr.setAttribute('visible', 'false')
+});
+contr.addEventListener('controllerconnected', function () {
+    head.setAttribute('wasd-controls-enabled', "false")
+    contr.setAttribute('visible', 'true')
+});
+document.querySelector('#scene').addEventListener('click', function () {
+    if (gamestate=="menu")
+    {
+    //   aim.emit("poof")
+       aim.setAttribute('raycaster','enabled',true)
+        setTimeout(function(){aim.setAttribute('raycaster','enabled',false);},50)
+    }
+    else
+    if (shootr)
+    {
+        aim.emit("poof")
+        shootr=0;
+    aim.setAttribute('raycaster','enabled',true)
+    setTimeout(function(){aim.setAttribute('raycaster','enabled',false);},50)
+    setTimeout(function(){shootr=1},1000)
+    }
+  });
+contr.addEventListener('triggerdown', function () {
+    if (gamestate=="menu")
+    {
+    //   aim.emit("poof")
+       aim.setAttribute('raycaster','enabled',true)
+        setTimeout(function(){aim.setAttribute('raycaster','enabled',false);},50)
+    }
+    else
+    if (shootr)
+    {
+        aim.emit("poof")
+        shootr=0;
+    aim.setAttribute('raycaster','enabled',true)
+    setTimeout(function(){aim.setAttribute('raycaster','enabled',false);},50)
+    setTimeout(function(){shootr=1},1000)
+    }
+ });
+  function textplane(text)
+>>>>>>> 538066f973e90bf4a1a81cb3bbe0492edd297e8e
   {
   setTimeout(function(){spawner(1)},1000)
   setTimeout(function(){spawner(2)},2000)

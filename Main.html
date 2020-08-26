@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html>
+<<<<<<< HEAD
     <head>
         <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
         <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
@@ -224,3 +225,157 @@
         </a-scene>
     </body>
 </html>
+=======
+<head>
+<script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+<script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+<script src="scripts/beasts.js"></script>
+<script src="scripts/healthbar.js"></script>
+<script src="scripts/raycollider.js"></script>
+<script src="scripts/carrotholder.js"></script>
+<script src="scripts/soundcontroller.js"></script>
+</head>
+<body>
+<a-scene id="scene" stats>
+<a-assets>
+<audio id="shoot" src="sounds/shoot.mp3"></audio>
+<audio id="menu" src="sounds/menu.mp3"></audio>
+<audio id="eat" src="sounds/eating.mp3"></audio>
+<audio id="game" src="sounds/game.mp3"></audio>
+<audio id="win" src="sounds/win.mp3"></audio>
+<audio id="lose" src="sounds/lose.mp3"></audio>
+<audio id="press" src="sounds/press.mp3"></audio>
+<a-asset-item id="rhobj" src="models/rabbit_hole.glb"></a-asset-item>
+<a-asset-item id="cobj" src="models/carrot.glb"></a-asset-item>
+<a-asset-item id="gobj" src="models/graden.glb"></a-asset-item>
+<a-asset-item id="sunglb" src="models/sun.glb"></a-asset-item>
+<a-asset-item id="moonglb" src="models/moon.glb"></a-asset-item>
+<a-asset-item id="bunnygltf" src="models/bunny.glb"></a-asset-item>
+<a-asset-item id="testglb" src="models/test.glb"></a-asset-item>
+<a-asset-item id="gunobj" src="models/rifle.glb"></a-asset-item>
+<a-asset-item id="terobj" src="models/terrain1.glb"></a-asset-item>
+<a-asset-item id="test" src="models/untitled.glb"></a-asset-item>
+</a-assets>
+<a-sky id="mysky" src="models/day_sky.png"></a-sky>
+<a-entity id="sun" geometry collider-check class="clickable" gltf-model="#sunglb" rotation="0 90 45" position='25 25 -25'></a-entity>
+<a-entity id="hemi" position="20 20 -20" light="type: hemisphere; intensity: 4;color: #b4b4b4; groundColor:#252525"></a-entity>
+<a-entity id="direct" light="type: directional;shadowCameraVisible: false;castShadow: true; color: #ffffff; intensity: 2; groundColor: #2a2a2a" position="24 24 -24"></a-entity>
+<a-entity id="hole" position="-5.1 0.06 -14.1" rotation="0 -45 0" scale="0.3 0.3 0.3" gltf-model="#rhobj"></a-entity>
+<a-entity id="hole" position="10.3 0.06 -12.3" rotation="0 -132 0" scale="0.3 0.3 0.3" gltf-model="#rhobj"></a-entity>
+<a-entity id="hole" position="3.95 0.06 -15" rotation="0 -104 0" scale="0.3 0.3 0.3" gltf-model="#rhobj"></a-entity>
+<a-entity id="hole" position="-12.3 -0.17 -8.6" rotation="-9.4 -90 18" scale="0.3 0.3 0.3" gltf-model="#rhobj"></a-entity>
+<a-entity id="garden" cholder position="0 -0.25 -6" scale="0.2 0.2 0.2" gltf-model="#gobj"></a-entity>
+<a-entity id="garden" cholder position="5 -0.25 -5" scale="0.2 0.2 0.2" gltf-model="#gobj"></a-entity>
+<a-entity id="garden" shadow="cast:true" cholder position="-5 -0.25 -5" scale="0.2 0.2 0.2" gltf-model="#gobj"></a-entity>
+<a-entity id="terr" shadow="receive:true" gltf-model="#terobj" position="0 -0.25 0" scale="4 3 4" rotation='0 90 0'></a-entity>
+<a-entity id="MasterVolume" class="nc" position="0 2 -3" visible="false">
+<a-plane id="Master" collider-check  position="0 0.4 0" scale="1 0.2 1" color="red">
+        <a-text color="black" scale="1 5 1" value="Master" align="center"></a-text>
+        <a-plane scale="1.04 1.1 1" position="0 0 -0.01" color="black"></a-plane>
+</a-plane>
+<a-plane id="back" collider-check  position="0 -0.4 0" scale="1 0.2 1" color="red">
+        <a-text color="black" scale="1 5 1" value="Back" align="center"></a-text>
+        <a-plane scale="1.04 1.1 1" position="0 0 -0.01" color="black"></a-plane>
+</a-plane>
+<a-plane scale="0.3 0.3 1" collider-check color="red">
+    <a-text id="masvolume" color="black" scale="3 3 1" value="0.5" align="center"></a-text>
+        <a-plane scale="1.1 1.1 1" position="0 0 -0.01" color="black"></a-plane>
+</a-plane>
+<a-plane id="masvolumedown" position="-0.4 0 0" scale="0.2 0.2 1" collider-check color="red">
+        <a-text color="black" scale="5 5 1" value="-" align="center"></a-text>
+        <a-plane scale="1.2 1.2 1" position="0 0 -0.01" color="black"></a-plane>
+</a-plane>
+<a-plane id="masvolumeup" position="0.4 0 0" scale="0.2 0.2 1" collider-check color="red">
+        <a-text color="black" scale="5 5 1" value="+" align="center"></a-text>
+        <a-plane scale="1.2 1.2 1" position="0 0 -0.01" color="black"></a-plane>
+</a-plane>
+</a-entity>
+<a-entity id="MusicVolume" class="nc" position="1.5 2 -3" visible="false">
+        <a-plane id="Music" collider-check position="0 0.4 0" scale="1 0.2 1" color="red">
+                <a-text color="black" scale="1 5 1" value="Music" align="center"></a-text>
+                <a-plane scale="1.04 1.1 1" position="0 0 -0.01" color="black"></a-plane>
+        </a-plane>
+        <a-plane scale="0.3 0.3 1" collider-check color="red">
+            <a-text id="musvolume" color="black" scale="3 3 1" value="0.5" align="center"></a-text>
+                <a-plane scale="1.1 1.1 1" position="0 0 -0.01" color="black"></a-plane>
+        </a-plane>
+        <a-plane id="musvolumedown" position="-0.4 0 0" scale="0.2 0.2 1" collider-check color="red">
+                <a-text color="black" scale="5 5 1" value="-" align="center"></a-text>
+                <a-plane scale="1.2 1.2 1" position="0 0 -0.01" color="black"></a-plane>
+        </a-plane>
+        <a-plane id="musvolumeup" position="0.4 0 0" scale="0.2 0.2 1" collider-check color="red">
+                <a-text color="black" scale="5 5 1" value="+" align="center"></a-text>
+                <a-plane scale="1.2 1.2 1" position="0 0 -0.01" color="black"></a-plane>
+        </a-plane>
+</a-entity>
+<a-entity id="EffectVolume" class="nc" position="-1.5 2 -3" visible="false">
+        <a-plane id="Effect" collider-check position="0 0.4 0" scale="1 0.2 1" color="red">
+                <a-text color="black" scale="1 5 1" value="Effects" align="center"></a-text>
+                <a-plane scale="1.04 1.1 1" position="0 0 -0.01" color="black"></a-plane>
+        </a-plane>
+        <a-plane scale="0.3 0.3 1" collider-check color="red">
+            <a-text id="effvolume" color="black" scale="3 3 1" value="0.5" align="center"></a-text>
+                <a-plane scale="1.1 1.1 1" position="0 0 -0.01" color="black"></a-plane>
+        </a-plane>
+        <a-plane id="effvolumedown" position="-0.4 0 0" scale="0.2 0.2 1" collider-check color="red">
+                <a-text color="black" scale="5 5 1" value="-" align="center"></a-text>
+                <a-plane scale="1.2 1.2 1" position="0 0 -0.01" color="black"></a-plane>
+        </a-plane>
+        <a-plane id="effvolumeup" position="0.4 0 0" scale="0.2 0.2 1" collider-check color="red">
+                <a-text color="black" scale="5 5 1" value="+" align="center"></a-text>
+                <a-plane scale="1.2 1.2 1" position="0 0 -0.01" color="black"></a-plane>
+        </a-plane>
+</a-entity>       
+<a-plane id="playb" collider-check class="clickable" position="0 2 -3" color="red">
+<a-text color="black" value="Play" align="center"></a-text>
+<a-plane scale="1.04 1.04 1" position="0 0 -0.01" color="black"></a-plane>
+</a-plane>
+<a-plane id="textpl" collider-check class="nc" position="0 2 -3" scale="2 1 1" color="red" visible="false">
+<a-text color="black" value="text" align="center" scale='0.5 1 1'></a-text>
+<a-plane scale="1.02 1.04 1" position="0 0 -0.01" color="black"></a-plane>
+</a-plane>
+<a-plane id="settings" collider-check class="clickable" position="1.5 2.4 -3" scale="1 0.2 1" color="red">
+<a-text color="black" scale="1 5 1" value="Settings" align="center"></a-text>
+<a-plane scale="1.04 1.1 1" position="0 0 -0.01" color="black"></a-plane>
+</a-plane>
+<a-plane id="realistic" collider-check class="clickable" position="1.5 2 -3" scale="1 0.2 1" color="red">
+<a-text color="black" scale="1 5 1" value="Realistic" align="center"></a-text>
+<a-plane scale="1.04 1.1 1" position="0 0 -0.01" color="black"></a-plane>
+</a-plane>
+<a-plane id="casual" collider-check class="clickable" position="1.5 1.6 -3" scale="1 0.2 1" color="red">
+<a-text color="black" scale="1 5 1" value="Casual" align="center"></a-text>
+<a-plane scale="1.04 1.1 1" position="0 0 -0.01" color="white"></a-plane>
+</a-plane>
+<a-plane id="easy" collider-check class="clickable" position="-1.5 2.4 -3" scale="1 0.2 1" color="red">
+<a-text color="black" scale="1 5 1" value="Easy" align="center"></a-text>
+<a-plane scale="1.04 1.2 1" position="0 0 -0.01" color="white"></a-plane>
+</a-plane>
+<a-plane id="medium" collider-check class="clickable" position="-1.5 2 -3" scale="1 0.2 1" color="red">
+<a-text color="black" scale="1 5 1" value="Medium" align="center"></a-text>
+<a-plane scale="1.04 1.2 1" position="0 0 -0.01" color="black"></a-plane>
+</a-plane>
+<a-plane id="hard" collider-check class="clickable" position="-1.5 1.6 -3" scale="1 0.2 1" color="red">
+<a-text color="black" scale="1 5 1" value="Hard" align="center"></a-text>
+<a-plane scale="1.04 1.2 1" position="0 0 -0.01" color="black"></a-plane>
+</a-plane>
+<a-entity id="Cam" soundcontroller sound="poolSize:1;src: #menu;loop:true ;on:menu;autoplay:true" wasd-controls-enabled="true">
+<a-camera collision sound="poolSize:5;src: #eat; on:eat" id="Head">
+</a-camera>
+<a-sound id="gamemusik" src="#game" poolSize="1" on="game"></a-sound>
+<a-sound id="winmusik" src="#win" poolSize="1" on="win"></a-sound>
+<a-sound id="losemusik" src="#lose" poolSize="1" on="lose"></a-sound>
+<a-sound id="pressmusik" src="#press" poolSize="1" on="press"></a-sound>
+</a-entity>
+<!--<a-entity id="left-hand" windows-motion-controls="hand: left"></a-entity>-->
+<a-entity id="controller"windows-motion-controls="hand:right;model:false" visible="true">
+<!--<a-entity id="raycaster" laser-controls  raycaster="objects: .clickable;showLine: true;enabled: false"></a-entity>-->
+<a-entity id="raycaster" rotation="-45 0 0" position="0 -0.1 0" sound="poolSize:3;src: #shoot; on:poof" raycaster="objects: .clickable;showLine: true;enabled: false"></a-entity>
+<a-entity id="gunmodel" rotation="-45 0 0" gltf-model="#gunobj" color='red' scale="0.03 0.03 0.03"></a-entity>
+</a-entity>
+<script src="scripts/gamelogic.js"></script>
+</a-scene>
+</script>
+</body>
+</html>
+</DOCTYPE>
+>>>>>>> 538066f973e90bf4a1a81cb3bbe0492edd297e8e
