@@ -37,7 +37,14 @@ var Cursor = document.querySelector('a-cursor');
 var Exit = document.querySelector('#Exit');
 var Reset = document.querySelector('#Reset');
 var Rifle = document.querySelector('#Rifle_model')
+var Real_rifle = document.querySelector('#Real_rifle_model')
+var Rifle_text = document.querySelector('#Help_text')
+var Right_rifle = document.querySelector('#Right_rifle_model')
 
+var angle1 = 0;
+var angle2 = 0;
+var angle3 = 0;
+var distance = 0;
 var gameid=0;
 var ending=false;
 var light =  true;
@@ -113,7 +120,7 @@ function Open_menu() {
    Play_b.setAttribute('class','clickable')
 }
 
-Right_hand.setAttribute('windows-motion-controls','model','false')
+//Right_hand.setAttribute('windows-motion-controls','model','false')
 
 function spawner(id)
 {
@@ -268,6 +275,7 @@ Scene.addEventListener('enter-vr',function(){
   Cursor.setAttribute('raycaster','enabled','false')
   Cursor.setAttribute('visible','false')
   Right_hand.setAttribute('visible','true')
+  Left_hand.setAttribute('visible','true')
 });
 Cursor.addEventListener('click',function(){
   if (shoot_ready==true&&gamestate=="game")

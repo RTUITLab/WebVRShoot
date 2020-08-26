@@ -191,7 +191,7 @@
             </a-entity>    
         </a-entity>
             <!--Player-->
-            <a-entity id="Head" position="0 0 1.5" sound-controller sound="poolSize:1;src:#Menu_mp3; loop:true; on:Menu; autoplay:true" wasd-controls-enabled="true">
+            <a-entity id="Head" position="0 0 0" sound-controller sound="poolSize:1;src:#Menu_mp3; loop:true; on:Menu; autoplay:true" wasd-controls-enabled="true">
                 <a-camera id="Cam">
                     <a-sound id="Eat_mus" src="#Eat" poolSize="5" on="Eat"></a-sound>
                     <a-sound id="Game_mus" src="#Game" poolSize="1" on="Game"></a-sound>
@@ -201,11 +201,24 @@
                     <a-cursor raycaster="objects: .clickable;"></a-cursor>
                 </a-camera>
             </a-entity>
-            <a-entity id="Rifle_model" guncontroller raycaster="objects: .clickable;" scale="0.1 0.1 0.1">
-                <a-entity gltf-model="#Rifle_glb" position="0 -0.055 -0.18"></a-entity>
+            <a-entity id="Rifle_model" guncontroller scale="0.1 0.1 0.1">
+                <a-entity id="Real_rifle_model" gltf-model="#Rifle_glb" position="0 -0.055 -2">
+                    <a-entity id="Raycaster" raycaster=" showLine:false"></a-entity>
+                    <a-text id="Help_text" position="0 1 0" sclae="2 2 2" color="white" align="center" value="Use trigger to shoot"></a-text>
+                </a-entity>
             </a-entity>
-            <a-entity id="Right_hand" ound="poolSize:3;src: #Shoot; on:poof; autoplay:false" windows-motion-controls="hand:right" visible="true"></a-entity>
-           <a-entity id="Left_hand" windows-motion-controls="hand:left"> </a-entity> 
+            <a-entity id="Right_hand" sound="poolSize:3;src: #Shoot; on:poof; autoplay:false" windows-motion-controls="hand:right" visible="true">
+                <a-entity rotation="-45 0 0">
+                    <a-entity id="Right_rifle_model" gltf-model="#Rifle_glb" scale="0.1 0.1 0.1" position="0 0 -0.18" visible="false">
+                        <a-entity id="Raycaster" raycaster=" showLine:false"></a-entity>
+                        <a-text id="Help_text" position="0 1 0" sclae="2 2 2" color="white" align="center" value="Use trigger to shoot"></a-text>
+                    </a-entity>
+                </a-entity>
+        
+            </a-entity>
+            <a-box id="box1" scale="0.1 0.1 0.1"></a-box>
+            <a-box id="box2" scale="0.1 0.1 0.1"></a-box>
+           <a-entity id="Left_hand" windows-motion-controls="hand:left"></a-entity> 
             <script src="scripts/Gamelogic.js"></script>
             <script src="scripts/ClickListeners.js"></script>
         </a-scene>
