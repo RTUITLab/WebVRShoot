@@ -120,7 +120,8 @@ function Open_menu() {
    Play_b.setAttribute('class','clickable')
 }
 
-//Right_hand.setAttribute('windows-motion-controls','model','false')
+Right_hand.setAttribute('windows-motion-controls','model','false')
+Left_hand.setAttribute('windows-motion-controls','model','false')
 
 function spawner(id)
 {

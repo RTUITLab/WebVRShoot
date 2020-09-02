@@ -19,7 +19,7 @@ AFRAME.registerComponent('guncontroller', {
         // {
            // angle3=180
             angle2 = Math.atan2(Right_hand.getAttribute('position').x-Left_hand.getAttribute('position').x,Right_hand.getAttribute('position').z-Left_hand.getAttribute('position').z)/Math.PI*180
-         angle1 = Math.atan2(Math.abs(Right_hand.getAttribute('position').z-Left_hand.getAttribute('position').z),Math.abs(Right_hand.getAttribute('position').y-Left_hand.getAttribute('position').y))/Math.PI*180
+         angle1 = Math.atan2(Right_hand.getAttribute('position').y-Left_hand.getAttribute('position').y,Math.sqrt(Math.pow(Right_hand.getAttribute('position').z-Left_hand.getAttribute('position').z,2)+Math.pow(Right_hand.getAttribute('position').x-Left_hand.getAttribute('position').x,2)))/Math.PI*180
        //  }
         /* if (Right_hand.getAttribute('position').z=Left_hand.getAttribute('position').z)
          {
