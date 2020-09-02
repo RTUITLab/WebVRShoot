@@ -1,4 +1,7 @@
 # Bunny hunt VR
+
+[![Build Status](https://dev.azure.com/rtuitlab/RTU%20IT%20Lab/_apis/build/status/RTUITLab.WebVRShoot?branchName=master)](https://dev.azure.com/rtuitlab/RTU%20IT%20Lab/_build/latest?definitionId=121&branchName=master)
+
 ### Description: Web VR game, point of the game is to protect your garden from rabbits, they are fast and tricky. Check out how many carrots you can save.
 
 ## Startup guide
