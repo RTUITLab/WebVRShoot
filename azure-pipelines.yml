@@ -18,3 +18,19 @@ stages:
         tags: |
           $(Build.BuildId)
           latest
+- stage: Deploy
+  jobs:
+  - job: PullAndStart
+    condition: and(succeeded(), eq(variables['build.sourceBranch'], 'refs/heads/master'))
+    steps:
+    - task: SSH@0
+      displayName: Restart service
+      inputs:
+        sshEndpoint: 'first vm'
+        runOptions: 'inline'
+        inline: |
+          cd /home/docker/webvrshoot
+          docker-compose --no-ansi pull 2>&1
+          docker-compose --no-ansi up -d 2>&1
+        failOnStdErr: false
+        readyTimeout: '20000'
