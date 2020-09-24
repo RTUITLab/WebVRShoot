@@ -58,12 +58,7 @@ function randomwalk(me){
     me.el.children[2].setAttribute('rotation', "0 "+(dirto-90).toString()+" 0")
     me.el.removeAttribute('a-animation')
     var anim = document.createElement('a-animation')
-    anim.setAttribute('name','walker')
-    anim.setAttribute('attribute', 'position')
-    anim.setAttribute('dur', ((Math.sqrt(Math.pow(walkx-me.el.object3D.position.x,2)+Math.pow(walkz-me.el.object3D.position.z,2)))/nowspeed*10000).toString())
-    anim.setAttribute('easing', 'linear')
-    anim.setAttribute('to', (walkx+Math.sin((dirto-90)/180*3.14)*0.6).toString()+" "+me.el.object3D.position.y.toString()+" "+(walkz+Math.cos((dirto-90)/180*3.14)*0.6).toString() )
-    me.el.appendChild(anim);
+    me.el.setAttribute('animation',{name:'walker',property:'position',dur:((Math.sqrt(Math.pow(walkx-me.el.object3D.position.x,2)+Math.pow(walkz-me.el.object3D.position.z,2)))/nowspeed*10000).toString(),easing:'linear', to:(walkx+Math.sin((dirto-90)/180*3.14)*0.6).toString()+" "+me.el.object3D.position.y.toString()+" "+(walkz+Math.cos((dirto-90)/180*3.14)*0.6).toString()})
     setTimeout(function(me,targ){sitdown(me,targ)}, Math.sqrt(Math.pow(walkx-me.el.object3D.position.x,2)+Math.pow(walkz-me.el.object3D.position.z,2))/nowspeed*10000, me,targ)}
 };
 function sitdown(me,targ)
@@ -170,13 +165,7 @@ var percentColors = [
     dynamic.setAttribute('gltf-model','#Bunny_big_glb')
     bunyy.appendChild(dynamic)
     bunyy.setAttribute('animation-mixer',{clip:'death_start',loop:'once',clampWhenFinished:'true'})
-    dynamic = document.createElement('a-animation')
-    dynamic.setAttribute('attribute', 'position')
-    dynamic.setAttribute('dur', '2000')
-    dynamic.setAttribute('easing', 'linear')
-    dynamic.setAttribute('to', '0 -3 0')
-    dynamic.setAttribute('delay','1000')
-    bunyy.children[0].appendChild(dynamic)
+    bunyy.children[0].setAttribute('animation',{property:'position',dur:2000,easing:'linear', to:'0 -3 0', delay:1000})
     scene.appendChild(bunyy)
     setTimeout(function(me){scene.removeChild(me)},3000,bunyy)
 }  

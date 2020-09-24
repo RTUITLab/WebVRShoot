@@ -1,0 +1,9 @@
+diff a/scripts/beasts.js b/scripts/beasts.js	(rejected hunks)
+@@ -59,6 +59,7 @@
+     var dirto=Math.atan2(walkz-me.el.object3D.position.z,walkx-me.el.object3D.position.x)*180/3.14*(-1)
+     me.el.children[2].setAttribute('rotation', "0 "+(dirto-90).toString()+" 0")
+     me.el.removeAttribute('a-animation')
++    me.el.setAttribute('animation',{name:'walker', property:'position',dur:((Math.sqrt(Math.pow(walkx-me.el.object3D.position.x,2)+Math.pow(walkz-me.el.object3D.position.z,2)))/nowspeed*10000).toString(),easing:'linear',to: (walkx+Math.sin((dirto-90)/180*3.14)*0.6).toString()+" "+me.el.object3D.position.y.toString()+" "+(walkz+Math.cos((dirto-90)/180*3.14)*0.6).toString()})
+     setTimeout(function(me,targ){
+       {getcarrot(me,targ)}
+     } , Math.sqrt(Math.pow(walkx-me.el.object3D.position.x,2)+Math.pow(walkz-me.el.object3D.position.z,2))/nowspeed*10000, me,targ)

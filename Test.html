@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<head>
+    <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
+    <script src="scripts/gunController.js"></script>
+</head>
+<body>
+    <a-scene id='scene' stats>
+        <a-assets>
+            <audio id="Menu_mp3" src="sounds/menu.mp3"></audio>
+            <audio id="Game" src="sounds/game.mp3"></audio>
+            <audio id="Win" src="sounds/win.mp3"></audio>
+            <audio id="Lose" src="sounds/lose.mp3"></audio>
+            <audio id="Press" src="sounds/press.mp3"></audio>
+            <audio id="Shoot" src="sounds/shoot.mp3"></audio>
+            <audio id="Eat" src="sounds/eating.mp3"></audio>
+            <a-asset-item id="Moon_glb" src="models/Moon.glb"></a-asset-item>
+            <a-asset-item id="Button_1x1_glb" src="models/Button_1x1.glb"></a-asset-item>
+            <a-asset-item id="Rifle_glb" src="models/Rifle.glb"></a-asset-item>
+            <a-asset-item id="Ter_glb" src="models/Terrain.glb"></a-asset-item>
+            <a-asset-item id="Sun_glb" src="models/Sun.glb"></a-asset-item>
+            <a-asset-item id="Rifle_hands_glb" src="models/Rifle_with_hands.glb"></a-asset-item>
+            </a-assets>
+            <a-sky id="Sky_box" src="models/Day_sky.png"></a-sky>
+            <a-entity id="Direct" light="type: directional;shadowCameraVisible: false;castShadow: true; color: #ffffb3; intensity: 0.17; groundColor: #2a2a2a" position="24 24 -24"></a-entity>
+            <a-entity id="Hemi" position="20 20 -20" light="type: hemisphere; intensity: 2;color: #ffffff; groundColor:#969696"></a-entity>
+           
+            <a-entity id="Sun" geometry class="clickable" gltf-model="#Sun_glb" position='25 25 -25' rotation = '0 -80 -40'></a-entity>
+            <a-entity id="Moon" geometry class="nc" gltf-model="#Moon_glb" visible=false position='25 25 -25' rotation = '0 -80 -40'></a-entity>
+            <a-entity id="Terrain" shadow="receive:true" gltf-model="#Ter_glb" position="0 -0.25 0" scale="4 3 4" rotation='0 90 0'></a-entity>
+            <a-entity visible="true" position="0 0 1.5">
+                <a-entity position="0 2 -3">
+                    <a-entity gltf-model="#Button_1x1_glb" scale="0.5 0.5 0.5"></a-entity>
+                    <a-text position="0 0 0.08" value="Play" align="center"></a-text>
+                    <a-plane id="Play_b" animation__position="property: object3D.rotation.y; to: 360;from:0; dir: alternate; dur: 2000; upEvents:mousedown" 
+                    class="clickable" position="0 0 0.3" visible=true></a-plane>
+                </a-entity>
+            </a-entity>
+            <a-entity id="Head" position="0 0 0" sound-controller sound="poolSize:1;src:#Menu_mp3; loop:true; on:Menu; autoplay:true" wasd-controls-enabled="true">
+                <a-camera id="Cam">
+                    <a-sound id="Eat_mus" src="#Eat" poolSize="5" on="Eat"></a-sound>
+                    <a-sound id="Game_mus" src="#Game" poolSize="1" on="Game"></a-sound>
+                    <a-sound id="Win_mus" src="#Win" poolSize="1" on="Win"></a-sound>
+                    <a-sound id="Lose_mus" src="#Lose" poolSize="1" on="Lose"></a-sound>
+                    <a-sound id="Press_mus" src="#Press" poolSize="1" on="Press"></a-sound>
+                    <a-entity id="Rifle_hands" position="0 -0.17 -0.59" gltf-model="#Rifle_hands_glb" scale="0.13 0.13 0.13"></a-entity>
+                    <a-cursor raycaster="objects: .clickable;"></a-cursor>
+                </a-camera>
+            </a-entity>
+            <a-entity id="Left_hand" windows-motion-controls="hand:left" raycaster="objects: .clickable;enabled:false; showLine:false"></a-entity> 
+            <a-entity id="Right_hand" sound="poolSize:3;src: #Shoot; on:poof; autoplay:false" windows-motion-controls="hand: right" visible="true">
+                <a-entity rotation="-45 0 0">
+                    <a-entity id="Right_rifle_model" gltf-model="#Rifle_glb" scale="0.13 0.13 0.13" position="0 0 -0.18" visible="false">
+                        <a-entity id="Right_caster" position="0 0.65 0" cursor="upEvents:triggerdown" raycaster="objects: .clickable; showLine:true"></a-entity>
+                        <a-text id="Help_text1" position="0 1 0" sclae="2 2 2" color="white" align="center" value="Use trigger to shoot"></a-text>
+                    </a-entity>
+                </a-entity>
+            </a-entity>
+            <a-entity id="Rifle_model" visible="false"  guncontroller scale="0.13 0.13 0.13">
+                <a-entity id="Real_rifle_model" gltf-model="#Rifle_glb" position="0 -0.055 -2">
+                    <a-entity id="Real_caster" position="0 0.65 0" cursor="upEvents:triggerdown" raycaster="objects: .clickable; showLine:true"></a-entity>
+                    <a-text id="Help_text2" position="0 1 0" sclae="2 2 2" color="white" align="center" value="Use trigger to shoot"></a-text>
+                </a-entity>
+            </a-entity>
+            <a-box  animation__position="property: object3D.rotation.y; to: 360;from:0; dir: alternate; dur: 2000; startEvents:mouseup" class="clickable"></a-box>
+            <script src="testscripts/gamelogic.js"></script>
+            <script src="testscripts/clickListeners.js"></script>
+    </a-scene>
+</body>
+</html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="https://aframe.io/releases/0.8.2/aframe.min.js"></script>
+        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
         <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
         <script src="scripts/soundcontroller.js"></script>
         <script src="scripts/carrotHolder.js"></script>
@@ -10,7 +10,7 @@
         <script src="scripts/gunController.js"></script>
     </head>
     <body>
-        <a-scene id='scene' stats>
+        <a-scene id='scene'>
             <a-assets>
                 <audio id="Menu_mp3" src="sounds/menu.mp3"></audio>
                 <audio id="Game" src="sounds/game.mp3"></audio>
@@ -21,6 +21,7 @@
                 <audio id="Eat" src="sounds/eating.mp3"></audio>
                 <a-asset-item id="Ter_glb" src="models/Terrain.glb"></a-asset-item>
                 <a-asset-item id="Rifle_glb" src="models/Rifle.glb"></a-asset-item>
+                <a-asset-item id="Rifle_hands_glb" src="models/Rifle_with_hands.glb"></a-asset-item>
                 <a-asset-item id="RH_glb" src="models/Rabbit_hole.glb"></a-asset-item>
                 <a-asset-item id="Sun_glb" src="models/Sun.glb"></a-asset-item>
                 <a-asset-item id="Garden_glb" src="models/Garden.glb"></a-asset-item>
@@ -36,7 +37,6 @@
                 <a-asset-item id="Button_1x02_glb" src="models/Button_1x02.glb"></a-asset-item>
                 <a-asset-item id="Button_2x1_glb" src="models/Button_2x1.glb"></a-asset-item>
                 <a-asset-item id="Flag_glb" src="models/Flag.glb"></a-asset-item>
-                <a-asset-item id="Exit_glb" src="models/Exit.glb"></a-asset-item>
                 <a-asset-item id="Reset_glb" src="models/Reset.glb"></a-asset-item>
             </a-assets>
             <!-- Terrain -->
@@ -44,6 +44,7 @@
             <a-entity id="Direct" light="type: directional;shadowCameraVisible: false;castShadow: true; color: #ffffb3; intensity: 0.17; groundColor: #2a2a2a" position="24 24 -24"></a-entity>
             <a-entity id="Hemi" position="20 20 -20" light="type: hemisphere; intensity: 2;color: #ffffff; groundColor:#969696"></a-entity>
             <a-entity id="Sun" geometry class="clickable" gltf-model="#Sun_glb" position='25 25 -25' rotation = '0 -80 -40'></a-entity>
+            <a-entity id="Moon" geometry class="nc" gltf-model="#Moon_glb" visible=false position='25 25 -25' rotation = '0 -80 -40'></a-entity>
             <a-entity id="Terrain" shadow="receive:true" gltf-model="#Ter_glb" position="0 -0.25 0" scale="4 3 4" rotation='0 90 0'></a-entity>
             <a-entity id="Hole" position="-5.1 0.06 -14.1" rotation="0 -45 0" scale="0.3 0.3 0.3" gltf-model="#RH_glb"></a-entity>
             <a-entity id="Hole" position="10.3 0.3 -12.3" rotation="0 -132 0" scale="0.3 0.3 0.3" gltf-model="#RH_glb"></a-entity>
@@ -58,10 +59,7 @@
             <a-entity id="Garden" shadow="cast:true" carrot-holder position="-5 -0.25 -5" scale="0.2 0.2 0.2" gltf-model="#Garden_glb">
                 <a-text scale="5 5 5" position="-7.06684 3.57966 10.7735" align="center" rotation="0 30 0"></a-text>
             </a-entity>
-            <a-entity id="Exit" gltf-model="models/Exit.glb" class="clickable"  position="5.9 0.26 0" scale="0.5 0.5 0.5" rotation="0 -60 0">
-                <a-plane position="0 0.5 0.3" visible=false></a-plane>
-            </a-entity>
-            <a-entity id="Reset" gltf-model="models/Reset.glb" class="clickable"  position="5.25 0.28 -1" scale="0.5 0.5 0.5" rotation="0 -55 0">
+            <a-entity id="Reset" gltf-model="models/Reset.glb" class="clickable"  position="5.25 -0.17 -1" rotation="0 -55 0">
                 <a-plane position="0 0.5 0.3" visible=false></a-plane>
             </a-entity>
             <a-entity id="Counter" gltf-model="models/Counter.glb" position="-6.4 0.17 -3.1" rotation="0 30 0" scale="0.5 0.5 0.5"></a-entity>
@@ -69,60 +67,59 @@
             <a-entity id="Counter" gltf-model="models/Counter.glb" position="6.0082 0.24 -3.1364" rotation="0 -30 0" scale="0.5 0.5 0.5"></a-entity>
             <!--Buttons-->
             <a-entity position="0 0 1.5">
-            <a-entity id="Play_b" class="clickable" position="0 2 -3">
+            <a-entity id="Play_b" position="0 2 -3">
                 <a-entity gltf-model="#Button_1x1_glb" scale="0.5 0.5 0.5"></a-entity>
                 <a-text position="0 0 0.08" value="Play" align="center"></a-text>
-                <a-plane visible=false></a-plane>
+                <a-plane id="Play_click" class="clickable" visible=false></a-plane>
             </a-entity>
-
-            <a-entity id="Settings_b" class="clickable" position="1.5 2.4 -3">
+            <a-entity id="Settings_b" position="1.5 2.4 -3">
                 <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
                 <a-text position="0 0 0.08" value="Settings" align="center"></a-text>
-                <a-plane scale="1 0.2 1" visible=false></a-plane>
+                <a-plane id="Settings_click" class="clickable" scale="1 0.2 1" visible=false></a-plane>
             </a-entity>
 
-            <a-entity id="Realistic_b" class="clickable" position="1.5 2 -3">
+            <a-entity id="Realistic_b" position="1.5 2 -3">
                 <a-entity gltf-model="#Flag_glb" scale="0.5 0.5 0.5" visible=false></a-entity>
                 <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
                 <a-text position="0 0 0.08" value="Realistic" align="center"></a-text>
-                <a-plane scale="1 0.2 1" visible=false></a-plane>
+                <a-plane id="Realistic_click" class="clickable" scale="1 0.2 1" visible=false></a-plane>
             </a-entity>
 
-            <a-entity id="Casual_b" class="clickable" position="1.5 1.6 -3">
+            <a-entity id="Casual_b" position="1.5 1.6 -3">
                 <a-entity gltf-model="#Flag_glb" scale="0.5 0.5 0.5"></a-entity>
                 <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
                 <a-text position="0 0 0.08" value="Casual" align="center"></a-text>
-                <a-plane scale="1 0.2 1" visible=false></a-plane>
+                <a-plane id="Casual_click" class="clickable" scale="1 0.2 1" visible=false></a-plane>
             </a-entity>
 
-            <a-entity id="Easy_b" class="clickable" position="-1.5 2.4 -3">
+            <a-entity id="Easy_b" position="-1.5 2.4 -3">
                 <a-entity gltf-model="#Flag_glb" scale="0.5 0.5 0.5"></a-entity>
                 <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
                 <a-text position="0 0 0.08" value="Easy" align="center"></a-text>
-                <a-plane  scale="1 0.2 1" visible=false></a-plane>
+                <a-plane id="Easy_click" class="clickable" scale="1 0.2 1" visible=false></a-plane>
             </a-entity>
 
-            <a-entity id="Medium_b" class="clickable" position="-1.5 2 -3">
+            <a-entity id="Medium_b" position="-1.5 2 -3">
                 <a-entity gltf-model="#Flag_glb" scale="0.5 0.5 0.5" visible=false></a-entity>
                 <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
                 <a-text position="0 0 0.08" value="Medium" align="center"></a-text>
-                <a-plane scale="1 0.2 1" visible=false></a-plane>
+                <a-plane id="Medium_click" class="clickable" scale="1 0.2 1" visible=false></a-plane>
             </a-entity>
 
-            <a-entity id="Hard_b" class="clickable" position="-1.5 1.6 -3">
+            <a-entity id="Hard_b" position="-1.5 1.6 -3">
                 <a-entity gltf-model="#Flag_glb" scale="0.5 0.5 0.5" visible=false></a-entity>
                 <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
                 <a-text position="0 0 0.08" value="Hard" align="center"></a-text>
-                <a-plane scale="1 0.2 1" visible=false></a-plane>
+                <a-plane id="Hard_click" class="clickable" scale="1 0.2 1" visible=false></a-plane>
             </a-entity>
 
-            <a-plane id="Text_plane" class="notclickable" position="0 2 -3" visible="false">
+            <a-plane id="Text_plane" position="0 2 -3" visible="false">
                 <a-text position="0 0 0.09" value="text" align="center"></a-text>
                 <a-entity gltf-model="#Button_2x1_glb" scale="0.5 0.5 0.5"></a-entity>
-                <a-plane scale="2 1 1" visible=false></a-plane>
+                <a-plane id="Text_click" class="notclickable" scale="2 1 1" visible=false></a-plane>
             </a-plane>
 
-            <a-entity id="Master_volume" class="notclickable" position="0 2 -3" visible="false">
+            <a-entity id="Master_volume" position="0 2 -3" visible="false">
                     <a-entity id="Master"  position="0 0.4 0">
                             <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
                             <a-text position="0 0 0.08" value="Master" align="center"></a-text>
@@ -130,7 +127,7 @@
                     <a-entity id="Back_b"  position="0 -0.4 0">
                             <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
                             <a-text position="0 0 0.08" value="Back" align="center"></a-text>
-                            <a-plane scale="1 0.2 1" visible=false></a-plane>
+                            <a-plane id="Back_click" class="notclickable" scale="1 0.2 1" visible=false></a-plane>
                     </a-entity>
                     <a-entity>
                             <a-entity gltf-model="#Button_03x03_glb" scale="0.5 0.5 0.5"></a-entity>
@@ -139,16 +136,16 @@
                     <a-entity id="Master_down" position="-0.4 0 0">
                         <a-entity gltf-model="#Button_02x02_glb" scale="0.5 0.5 0.5"></a-entity>
                             <a-text position="0 0 0.05" value="-" align="center"></a-text>
-                            <a-plane scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
+                            <a-plane id="Master_down_click" class="notclickable" scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
                     </a-entity>
                     <a-entity id="Master_up" position="0.4 0 0">
                         <a-entity gltf-model="#Button_02x02_glb" scale="0.5 0.5 0.5"></a-entity>
                             <a-text position="0 0 0.05" value="+" align="center"></a-text>
-                            <a-plane scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
+                            <a-plane id="Master_up_click" class="notclickable" scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
                     </a-entity>
             </a-entity>
 
-            <a-entity id="Music_volume" class="notclickable" position="1.5 2 -3" visible="false">
+            <a-entity id="Music_volume" position="1.5 2 -3" visible="false">
                 <a-entity id="Music" position="0 0.4 0">
                         <a-entity gltf-model="#Button_1x02_glb" scale="0.5 0.5 0.5"></a-entity>
                         <a-text position="0 0 0.08" value="Music" align="center"></a-text>
@@ -160,12 +157,12 @@
                 <a-entity id="Music_down" position="-0.4 0 0">
                     <a-entity gltf-model="#Button_02x02_glb" scale="0.5 0.5 0.5"></a-entity>
                     <a-text position="0 0 0.05" value="-" align="center"></a-text>
-                    <a-plane scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
+                    <a-plane id="Music_down_click" class="notclickable" scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
                 </a-entity>
                 <a-entity id="Music_up" position="0.4 0 0">
                     <a-entity gltf-model="#Button_02x02_glb" scale="0.5 0.5 0.5"></a-entity>
                     <a-text position="0 0 0.05" value="+" align="center"></a-text>
-                    <a-plane scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
+                    <a-plane id="Music_up_click" class="notclickable" scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
                 </a-entity>
             </a-entity>
 
@@ -181,12 +178,12 @@
                 <a-entity id="Effect_down" position="-0.4 0 0">
                     <a-entity gltf-model="#Button_02x02_glb" scale="0.5 0.5 0.5"></a-entity>
                     <a-text position="0 0 0.05" value="-" align="center"></a-text>
-                    <a-plane scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
+                    <a-plane id="Effect_down_click" class="notclickable" scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
                 </a-entity>
                 <a-entity id="Effect_up" position="0.4 0 0">
                     <a-entity gltf-model="#Button_02x02_glb" scale="0.5 0.5 0.5"></a-entity>
                     <a-text position="0 0 0.05" value="+" align="center"></a-text>
-                    <a-plane scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
+                    <a-plane id="Effect_up_click" class="notclickable" scale="0.2 0.2 1" position="0 0 -0.01" color="black"></a-plane>
                 </a-entity>
             </a-entity>    
         </a-entity>
@@ -198,25 +195,26 @@
                     <a-sound id="Win_mus" src="#Win" poolSize="1" on="Win"></a-sound>
                     <a-sound id="Lose_mus" src="#Lose" poolSize="1" on="Lose"></a-sound>
                     <a-sound id="Press_mus" src="#Press" poolSize="1" on="Press"></a-sound>
+                    <a-entity id="Rifle_hands" position="0 -0.17 -0.59" gltf-model="#Rifle_hands_glb" scale="0.13 0.13 0.13"></a-entity>
                     <a-cursor raycaster="objects: .clickable;"></a-cursor>
                 </a-camera>
             </a-entity>
-            <a-entity id="Rifle_model" guncontroller scale="0.13 0.13 0.13">
+            <a-entity id="Rifle_model" visible="false"  guncontroller scale="0.13 0.13 0.13">
                 <a-entity id="Real_rifle_model" gltf-model="#Rifle_glb" position="0 -0.055 -2">
-                    <a-entity id="Raycaster" raycaster="objects:.collidable; showLine:true"></a-entity>
-                    <a-text id="Help_text" position="0 1 0" sclae="2 2 2" color="white" align="center" value="Use trigger to shoot"></a-text>
+                    <a-entity id="Real_caster" position="0 0.65 0" cursor="downEvents:triggerdown" raycaster="objects: .clickable; showLine:true"></a-entity>
+                    <a-text id="Help_text2" position="0 1 0" sclae="2 2 2" color="white" align="center" value="Use trigger to shoot"></a-text>
                 </a-entity>
             </a-entity>
-            <a-entity id="Right_hand" sound="poolSize:3;src: #Shoot; on:poof; autoplay:false" windows-motion-controls="hand:right" visible="true">
+            <a-entity id="Right_hand" sound="poolSize:3;src: #Shoot; on:poof; autoplay:false" windows-motion-controls="hand: right" visible="true">
                 <a-entity rotation="-45 0 0">
                     <a-entity id="Right_rifle_model" gltf-model="#Rifle_glb" scale="0.13 0.13 0.13" position="0 0 -0.18" visible="false">
-                        <a-entity id="Raycaster" raycaster="objects:.collidable; showLine:false"></a-entity>
-                        <a-text id="Help_text" position="0 1 0" sclae="2 2 2" color="white" align="center" value="Use trigger to shoot"></a-text>
+                        <a-entity id="Right_caster" position="0 0.65 0" cursor="downEvents:triggerdown" raycaster="objects: .clickable; showLine:true"></a-entity>
+                        <a-text id="Help_text1" position="0 1 0" sclae="2 2 2" color="white" align="center" value="Use trigger to shoot"></a-text>
                     </a-entity>
                 </a-entity>
-        
+       
             </a-entity>
-           <a-entity id="Left_hand" windows-motion-controls="hand:left"></a-entity> 
+           <a-entity id="Left_hand" windows-motion-controls="hand:left" raycaster="enabled:false; showLine:false"></a-entity> 
             <script src="scripts/gamelogic.js"></script>
             <script src="scripts/clickListeners.js"></script>
         </a-scene>

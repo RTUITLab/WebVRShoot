@@ -1,21 +1,22 @@
-Play_b.addEventListener('click',function(event){
+Play_c.addEventListener('mousedown',function(event){
     Press_mus.emit("press")
     startgame()
 })
-Text_p.addEventListener('click',function(event)
+Text_c.addEventListener('mousedown',function(event)
 {
     Open_menu()
     Press_mus.emit("Press")
 
 })
-Sun.addEventListener('click', function(event)
+Sun.addEventListener('mousedown', function(event)
 {
     if (!light)
     {
         Hemi.setAttribute("light","intensity",2)
         Direct.setAttribute("light","intensity",0.17)
         Sky_box.setAttribute("src","models/Day_sky.png")
-        Sun.setAttribute("gltf-model","#Sun_glb")
+        Sun.setAttribute("visible","true")
+        Moon.setAttribute("visible","false")
         light=!light;
     }
     else
@@ -23,11 +24,12 @@ Sun.addEventListener('click', function(event)
         Hemi.setAttribute("light","intensity",1.3)
         Direct.setAttribute("light","intensity",0.1)
         Sky_box.setAttribute("src","models/Night_sky.png")
-        Sun.setAttribute("gltf-model","#Moon_glb")
+        Sun.setAttribute("visible","false")
+        Moon.setAttribute("visible","true")
         light=!light;
     }
 })
-Casual_b.addEventListener('click',function(event)
+Casual_c.addEventListener('mousedown',function(event)
 {
     Press_mus.emit("Press")
     Casual_b.children[0].setAttribute('visible','true')
@@ -35,7 +37,7 @@ Casual_b.addEventListener('click',function(event)
     Right_hand.setAttribute('raycaster','showLine',true)
     Cursor.setAttribute('visible',"true")
 })
-Realistic_b.addEventListener('click',function(event)
+Realistic_c.addEventListener('mousedown',function(event)
 {
     Press_mus.emit("Press")
     Casual_b.children[0].setAttribute('visible','false')
@@ -43,12 +45,12 @@ Realistic_b.addEventListener('click',function(event)
     Right_hand.setAttribute('raycaster','showLine',false)
     Cursor.setAttribute('visible',"false")
 })
-Settings_b.addEventListener('click',function(event)
+Settings_c.addEventListener('mousedown',function(event)
 {
     Open_settings()
     Press_mus.emit("Press")
 })
-Easy_b.addEventListener('click',function(event)
+Easy_c.addEventListener('mousedown',function(event)
 {
     Press_mus.emit("Press")
     difficulty = "Easy"
@@ -56,7 +58,7 @@ Easy_b.addEventListener('click',function(event)
     Medium_b.children[0].setAttribute('visible','false')
     Hard_b.children[0].setAttribute('visible','false')
 })
-Medium_b.addEventListener('click',function(event)
+Medium_c.addEventListener('mousedown',function(event)
 {
     Press_mus.emit("Press")
     difficulty = "Medium"
@@ -64,7 +66,7 @@ Medium_b.addEventListener('click',function(event)
     Medium_b.children[0].setAttribute('visible','true')
     Hard_b.children[0].setAttribute('visible','false')
 })
-Hard_b.addEventListener('click',function(event)
+Hard_c.addEventListener('mousedown',function(event)
 {
     Press_mus.emit("Press")
     difficulty = "Hard"
@@ -72,12 +74,12 @@ Hard_b.addEventListener('click',function(event)
     Medium_b.children[0].setAttribute('visible','false')
     Hard_b.children[0].setAttribute('visible','true')
 })
-Back_b.addEventListener('click',function(event)
+Back_c.addEventListener('mousedown',function(event)
 {
     Close_settings()
     Press_mus.emit("Press")
 })
-Effect_down.addEventListener('click',function(event)
+Effect_down_c.addEventListener('mousedown',function(event)
 {
     if (Head.getAttribute('sound-controller').esound>0)
     {
@@ -85,7 +87,7 @@ Effect_down.addEventListener('click',function(event)
     }
     Press_mus.emit("Press")
 })
-Effect_up.addEventListener('click',function(event)
+Effect_up_c.addEventListener('mousedown',function(event)
 {
     if (Head.getAttribute('sound-controller').esound<1)
     {
@@ -93,7 +95,7 @@ Effect_up.addEventListener('click',function(event)
     }
     Press_mus.emit("Press")
 })
-Music_down.addEventListener('click',function(event)
+Music_down_c.addEventListener('mousedown',function(event)
 {
     if (Head.getAttribute('sound-controller').msound>0)
     {
@@ -101,7 +103,7 @@ Music_down.addEventListener('click',function(event)
     }
     Press_mus.emit("Press")
 })
-Music_up.addEventListener('click',function(event)
+Music_up_c.addEventListener('mousedown',function(event)
 {
     if (Head.getAttribute('sound-controller').msound<1)
     {
@@ -109,7 +111,7 @@ Music_up.addEventListener('click',function(event)
     }
     Press_mus.emit("Press")
 })
-Master_down.addEventListener('click',function(event)
+Master_down_c.addEventListener('mousedown',function(event)
 {
     if (Head.getAttribute('sound-controller').massound>0)
     {
@@ -117,7 +119,7 @@ Master_down.addEventListener('click',function(event)
     }
     Press_mus.emit("Press")
 })
-Master_up.addEventListener('click',function(event)
+Master_up_c.addEventListener('mousedown',function(event)
 {
     if (Head.getAttribute('sound-controller').massound<1)
     {
@@ -125,24 +127,6 @@ Master_up.addEventListener('click',function(event)
     }
     Press_mus.emit("Press")
 })
-Exit.addEventListener('click',function(event){
-    console.log('exit')
-    Scene.emit('exit-vr')
-})
-Reset.addEventListener('click',function(event){
-   Game_mus.components.sound.stopSound();
-    Open_menu()
-  var divs = document.querySelectorAll('#Bunny'), i;
-  for (i = 0; i < divs.length; ++i)
-  divs[i].setAttribute('beast','hp',0)
-  var divs = document.querySelectorAll('#carrot'), i;
-  for (i = 0; i < divs.length; ++i)
-  {
-      divs[i].parentEl.removeChild(divs[i])
-  }
-  var divs = document.querySelectorAll('#Garden'), i;
-  for (i = 0; i < divs.length; ++i)
-  {
-  replant(divs[i].getAttribute('carrot-holder'),divs[i])
-  }
+Reset.addEventListener('mousedown',function(event){
+  textplane("Game was restared")
 })
