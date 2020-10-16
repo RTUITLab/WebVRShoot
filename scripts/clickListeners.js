@@ -14,7 +14,7 @@ Sun.addEventListener('mousedown', function(event)
     {
         Hemi.setAttribute("light","intensity",2)
         Direct.setAttribute("light","intensity",0.17)
-        Sky_box.setAttribute("src","models/Day_sky.png")
+        Sky_box.setAttribute("src","#Day_sky_tex")
         Sun.setAttribute("visible","true")
         Moon.setAttribute("visible","false")
         light=!light;
@@ -23,7 +23,7 @@ Sun.addEventListener('mousedown', function(event)
     {
         Hemi.setAttribute("light","intensity",1.3)
         Direct.setAttribute("light","intensity",0.1)
-        Sky_box.setAttribute("src","models/Night_sky.png")
+        Sky_box.setAttribute("src","#Night_sky_tex")
         Sun.setAttribute("visible","false")
         Moon.setAttribute("visible","true")
         light=!light;
@@ -128,5 +128,5 @@ Master_up_c.addEventListener('mousedown',function(event)
     Press_mus.emit("Press")
 })
 Reset.addEventListener('mousedown',function(event){
-  textplane("Game was restared")
+    textplane("Game was restared")
 })

@@ -6,17 +6,17 @@ AFRAME.registerComponent('beast',{
     target:{type:'selector'}
     },
     init: function() {
-       randomwalk(this);
+        randomwalk(this);
     },
     update: function(){
         if (this.el.children[0].children[0]) // Если есть полоска хп устанавливает ей размер и цвет в зависимости от хп
         {
-       this.el.children[0].children[0].setAttribute('scale',{x:this.data.hp/100, y:0.2, z:1})
-       this.el.children[0].children[0].setAttribute('color',getColorForPercentage(this.data.hp/100))
+            this.el.children[0].children[0].setAttribute('scale',{x:this.data.hp/100, y:0.2, z:1})
+            this.el.children[0].children[0].setAttribute('color',getColorForPercentage(this.data.hp/100))
         }
         if (this.el.children[0].children[1]) // Если есть бортик полоски подгоняет его под хп бар 
         {
-       this.el.children[0].children[1].setAttribute('scale',{x:this.data.hp/100+0.1, y:0.3, z:1})
+            this.el.children[0].children[1].setAttribute('scale',{x:this.data.hp/100+0.1, y:0.3, z:1})
         }
         if (this.data.hp<=0) //Если закончились жизни вызывает функцию deathanim, удаляет животное и проверяет не закончились ли зайцы
         {
@@ -35,12 +35,12 @@ AFRAME.registerComponent('beast',{
                 else
                 Lose_mus.emit("Lose")
                 if (divs.length>1)
-               textplane("Well done!!!\n You saved\n "+ divs.length+" carrots.")
-               if (divs.length==1)
-               textplane("Well done!!!\n You saved\n "+ divs.length+" carrot.")
-               if (divs.length==0)
-               textplane("You lost!\nAll the carrots\n were eaten.")
-               ending=false;
+                    textplane("Well done!!!\n You saved\n "+ divs.length+" carrots.")
+                if (divs.length==1)
+                    textplane("Well done!!!\n You saved\n "+ divs.length+" carrot.")
+                if (divs.length==0)
+                    textplane("You lost!\nAll the carrots\n were eaten.")
+                ending=false;
             }
         }
     },
@@ -49,17 +49,16 @@ function randomwalk(me){
     var targ = nearestcarrot(me) //вызываем функцию nearestcarrot, которая возвращает ближайшую свободную морковку 
     if (targ) //если такая есть 
     {
-    targ.setAttribute('free','false') //делаем её занятой и добавляем анимацию движения к ней
-    me.el.setAttribute('beast','target',targ)
-    var walkx = targ.object3D.getWorldPosition().x 
-    var walkz = targ.object3D.getWorldPosition().z
-    var nowspeed=Math.random()*5+(me.data.speed-5);
-    var dirto=Math.atan2(walkz-me.el.object3D.position.z,walkx-me.el.object3D.position.x)*180/3.14*(-1)
-    me.el.children[2].setAttribute('rotation', "0 "+(dirto-90).toString()+" 0")
-    me.el.removeAttribute('a-animation')
-    var anim = document.createElement('a-animation')
-    me.el.setAttribute('animation',{name:'walker',property:'position',dur:((Math.sqrt(Math.pow(walkx-me.el.object3D.position.x,2)+Math.pow(walkz-me.el.object3D.position.z,2)))/nowspeed*10000).toString(),easing:'linear', to:(walkx+Math.sin((dirto-90)/180*3.14)*0.6).toString()+" "+me.el.object3D.position.y.toString()+" "+(walkz+Math.cos((dirto-90)/180*3.14)*0.6).toString()})
-    setTimeout(function(me,targ){sitdown(me,targ)}, Math.sqrt(Math.pow(walkx-me.el.object3D.position.x,2)+Math.pow(walkz-me.el.object3D.position.z,2))/nowspeed*10000, me,targ)}
+        targ.setAttribute('free','false') //делаем её занятой и добавляем анимацию движения к ней
+        me.el.setAttribute('beast','target',targ)
+        var walkx = targ.object3D.getWorldPosition().x 
+        var walkz = targ.object3D.getWorldPosition().z
+        var nowspeed=Math.random()*5+(me.data.speed-5);
+        var dirto=Math.atan2(walkz-me.el.object3D.position.z,walkx-me.el.object3D.position.x)*180/3.14*(-1)
+        me.el.children[2].setAttribute('rotation', "0 "+(dirto-90).toString()+" 0")
+        me.el.removeAttribute('a-animation')
+        me.el.setAttribute('animation',{name:'walker',property:'position',dur:((Math.sqrt(Math.pow(walkx-me.el.object3D.position.x,2)+Math.pow(walkz-me.el.object3D.position.z,2)))/nowspeed*10000).toString(),easing:'linear', to:(walkx+Math.sin((dirto-90)/180*3.14)*0.6).toString()+" "+me.el.object3D.position.y.toString()+" "+(walkz+Math.cos((dirto-90)/180*3.14)*0.6).toString()})
+        setTimeout(function(me,targ){sitdown(me,targ)}, Math.sqrt(Math.pow(walkx-me.el.object3D.position.x,2)+Math.pow(walkz-me.el.object3D.position.z,2))/nowspeed*10000, me,targ)}
 };
 function sitdown(me,targ)
 {
@@ -127,15 +126,15 @@ var percentColors = [
                     {
                         if (targ.getAttribute('position').y<=2)
                         {
-                        targ.setAttribute('position',targ.getAttribute('position').x.toString()+" "+(targ.getAttribute('position').y+0.025).toString()+" "+targ.getAttribute('position').z.toString())
-                        Eat_mus.emit('Eat')
-                        setTimeout(function(me,targ){getcarrot(me,targ)},10,me,targ)
+                            targ.setAttribute('position',targ.getAttribute('position').x.toString()+" "+(targ.getAttribute('position').y+0.025).toString()+" "+targ.getAttribute('position').z.toString())
+                            Eat_mus.emit('Eat')
+                            setTimeout(function(me,targ){getcarrot(me,targ)},10,me,targ)
                         }
                         else
                         {
-                        targ.parentEl.setAttribute('carrot-holder',{carrots: targ.parentEl.getAttribute('carrot-holder').carrots-1})
-                        targ.parentEl.removeChild(targ);
-                        var divs = document.querySelectorAll('#carrot'), i;
+                            targ.parentEl.setAttribute('carrot-holder',{carrots: targ.parentEl.getAttribute('carrot-holder').carrots-1})
+                            targ.parentEl.removeChild(targ);
+                            var divs = document.querySelectorAll('#carrot'), i;
                         if (divs.length==0)
                         {
                             Lose_mus.emit("lose")

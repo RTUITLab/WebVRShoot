@@ -1,8 +1,8 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
-        <script src="https://rawgit.com/donmccurdy/aframe-extras/master/dist/aframe-extras.loaders.min.js"></script>
+        <title>My A-Frame Scene</title> 
+     <script src="https://aframe.io/releases/1.0.4/aframe.min.js"></script>
         <script src="scripts/soundcontroller.js"></script>
         <script src="scripts/carrotHolder.js"></script>
         <script src="scripts/healthbar.js"></script>
@@ -11,7 +11,29 @@
     </head>
     <body>
         <a-scene id='scene'>
-            <a-assets>
+            <a-assets timeout="10000">
+                <a-asset-item id="Ter_glb" src="models/Terrain.glb" preload="true"></a-asset-item>
+                <a-asset-item id="Rifle_glb" src="models/Rifle.glb" preload="true"></a-asset-item>
+                <a-asset-item id="Rifle_hands_glb" src="models/Rifle_with_hands.glb" preload="true"></a-asset-item>
+                <a-asset-item id="RH_glb" src="models/Rabbit_hole.glb" preload="true"></a-asset-item>
+                <a-asset-item id="Sun_glb" src="models/Sun.glb" preload="true"></a-asset-item>
+                <a-asset-item id="Garden_glb" src="models/Garden.glb" preload="true"></a-asset-item>
+                <a-asset-item id="Carrot_glb" src="models/Carrot.glb" preload="true"></a-asset-item>
+                <a-asset-item id="Counter_glb" src="models/Counter.glb" preload="true"></a-asset-item>
+                <a-asset-item id="Moon_glb" src="models/Moon.glb"></a-asset-item>
+                <a-asset-item id="Bunny_glb" src="models/Bunny.glb"></a-asset-item>
+                <a-asset-item id="Bunny_fast_glb" src="models/Bunny_fast.glb"></a-asset-item>
+                <a-asset-item id="Bunny_big_glb" src="models/Bunny_big.glb"></a-asset-item>
+                <a-asset-item id="Button_02x02_glb" src="models/Button_02x02.glb" preload="true"></a-asset-item>
+                <a-asset-item id="Button_03x03_glb" src="models/Button_03x03.glb" preload="true"></a-asset-item>
+                <a-asset-item id="Button_1x1_glb" src="models/Button_1x1.glb" preload="true"></a-asset-item>
+                <a-asset-item id="Button_1x02_glb" src="models/Button_1x02.glb" preload="true"></a-asset-item>
+                <a-asset-item id="Button_2x1_glb" src="models/Button_2x1.glb" preload="true"></a-asset-item>
+                <a-asset-item id="Flag_glb" src="models/Flag.glb" preload="true"></a-asset-item>
+                <a-asset-item id="Reset_glb" src="models/Reset.glb" preload="true"></a-asset-item>
+                <a-asset-item id="Hand_glb" src="models/Hand.glb" preload="true"></a-asset-item>
+                <img id="Day_sky_tex" src="models/Day_sky.png" preload="true">
+                <img id="Night_sky_tex" src="models/Night_sky.png" preload="true">
                 <audio id="Menu_mp3" src="sounds/menu.mp3"></audio>
                 <audio id="Game" src="sounds/game.mp3"></audio>
                 <audio id="Win" src="sounds/win.mp3"></audio>
@@ -19,28 +41,9 @@
                 <audio id="Press" src="sounds/press.mp3"></audio>
                 <audio id="Shoot" src="sounds/shoot.mp3"></audio>
                 <audio id="Eat" src="sounds/eating.mp3"></audio>
-                <a-asset-item id="Ter_glb" src="models/Terrain.glb"></a-asset-item>
-                <a-asset-item id="Rifle_glb" src="models/Rifle.glb"></a-asset-item>
-                <a-asset-item id="Rifle_hands_glb" src="models/Rifle_with_hands.glb"></a-asset-item>
-                <a-asset-item id="RH_glb" src="models/Rabbit_hole.glb"></a-asset-item>
-                <a-asset-item id="Sun_glb" src="models/Sun.glb"></a-asset-item>
-                <a-asset-item id="Garden_glb" src="models/Garden.glb"></a-asset-item>
-                <a-asset-item id="Carrot_glb" src="models/Carrot.glb"></a-asset-item>
-                <a-asset-item id="Counter_glb" src="models/Counter.glb"></a-asset-item>
-                <a-asset-item id="Moon_glb" src="models/Moon.glb"></a-asset-item>
-                <a-asset-item id="Bunny_glb" src="models/Bunny.glb"></a-asset-item>
-                <a-asset-item id="Bunny_fast_glb" src="models/Bunny_fast.glb"></a-asset-item>
-                <a-asset-item id="Bunny_big_glb" src="models/Bunny_big.glb"></a-asset-item>
-                <a-asset-item id="Button_02x02_glb" src="models/Button_02x02.glb"></a-asset-item>
-                <a-asset-item id="Button_03x03_glb" src="models/Button_03x03.glb"></a-asset-item>
-                <a-asset-item id="Button_1x1_glb" src="models/Button_1x1.glb"></a-asset-item>
-                <a-asset-item id="Button_1x02_glb" src="models/Button_1x02.glb"></a-asset-item>
-                <a-asset-item id="Button_2x1_glb" src="models/Button_2x1.glb"></a-asset-item>
-                <a-asset-item id="Flag_glb" src="models/Flag.glb"></a-asset-item>
-                <a-asset-item id="Reset_glb" src="models/Reset.glb"></a-asset-item>
             </a-assets>
             <!-- Terrain -->
-            <a-sky id="Sky_box" src="models/Day_sky.png"></a-sky>
+            <a-sky id="Sky_box" src="#Day_sky_tex"></a-sky>
             <a-entity id="Direct" light="type: directional;shadowCameraVisible: false;castShadow: true; color: #ffffb3; intensity: 0.17; groundColor: #2a2a2a" position="24 24 -24"></a-entity>
             <a-entity id="Hemi" position="20 20 -20" light="type: hemisphere; intensity: 2;color: #ffffff; groundColor:#969696"></a-entity>
             <a-entity id="Sun" geometry class="clickable" gltf-model="#Sun_glb" position='25 25 -25' rotation = '0 -80 -40'></a-entity>
@@ -189,7 +192,7 @@
         </a-entity>
             <!--Player-->
             <a-entity id="Head" position="0 0 0" sound-controller sound="poolSize:1;src:#Menu_mp3; loop:true; on:Menu; autoplay:true" wasd-controls-enabled="true">
-                <a-camera id="Cam">
+                <a-camera look-controls="pointerLockEnabled: true;" id="Cam">
                     <a-sound id="Eat_mus" src="#Eat" poolSize="5" on="Eat"></a-sound>
                     <a-sound id="Game_mus" src="#Game" poolSize="1" on="Game"></a-sound>
                     <a-sound id="Win_mus" src="#Win" poolSize="1" on="Win"></a-sound>

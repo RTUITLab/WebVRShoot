@@ -144,7 +144,7 @@ function Open_menu() {
     Easy_b.setAttribute('visible','true')
     Easy_c.setAttribute('class','clickable')
     Play_b.setAttribute('visible','true')
-   Play_c.setAttribute('class','clickable')
+    Play_c.setAttribute('class','clickable')
 }
 
 Right_hand.setAttribute('windows-motion-controls','model','false')
@@ -152,9 +152,8 @@ Left_hand.setAttribute('windows-motion-controls','model','false')
 
 function spawner(id, nowid)
 {
-     if (gamestate=="game"&&gameid==nowid)
+    if (gamestate=="game"&&gameid==nowid)
     {
-      console.error(nowid)
     var divs = document.querySelectorAll('#Hole'), i;
     var rand = Math.floor(Math.random() * divs.length);
     divs[rand].emit("spawnbunny",id)
@@ -380,16 +379,4 @@ Right_hand.emit("poof")
   Real_caster.emit("triggerdown")
 Rifle_text1.setAttribute('value',"")
 Rifle_text2.setAttribute('value',"")
-  })
-  Open_settings()
-Hemi.setAttribute("light","intensity",1.3)
-Direct.setAttribute("light","intensity",0.1)
-Sky_box.setAttribute("src","models/Night_sky.png")
-Sun.setAttribute("visible","false")
-Moon.setAttribute("visible","true")
-setTimeout(function(){Hemi.setAttribute("light","intensity",2)
-Direct.setAttribute("light","intensity",0.17)
-Sky_box.setAttribute("src","models/Day_sky.png")
-Sun.setAttribute("visible","true")
-Moon.setAttribute("visible","false")
-Close_settings()},3000)
+})
