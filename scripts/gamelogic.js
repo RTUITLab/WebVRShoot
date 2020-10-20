@@ -65,7 +65,7 @@ var angle2 = 0;
 var angle3 = 0;
 var distance = 0;
 var gameid=0;
-var ending=false;
+var end=false;
 var light =  true;
 var gamestate = "Menu";
 var difficulty = "Easy";
@@ -195,7 +195,7 @@ divs[i].addEventListener('spawnbunny', function (event, id)
     var dynamic = document.createElement('a-box');
     dynamic.setAttribute('id','bunnyhitbox')
     dynamic.setAttribute('class','clickable')
-    dynamic.setAttribute('scale','2 2 2')
+    dynamic.setAttribute('scale','0.8 0.8 0.8')
     dynamic.setAttribute('collider-check',"")
     dynamic.setAttribute('visible','false')
     bunyy.appendChild(dynamic)
@@ -226,7 +226,7 @@ divs[i].addEventListener('spawnbunny', function (event, id)
 }
 function textplane(text)
 {
-  ending=false;
+  end=false;
   gameid = gameid + 1;
   Game_mus.components.sound.stopSound();
   Text_p.setAttribute('visible','true')
@@ -344,7 +344,7 @@ Game_mus.emit("Game")
       setTimeout(function(){spawner(2,nowid);ending(nowid)},60000)
   }
 }
-function ending(nowid){if(nowid==gameid){ending=true;}}
+function ending(nowid){if(nowid==gameid){end=true;}}
 Scene.addEventListener('enter-vr',function(){
   Cursor.setAttribute('raycaster','enabled','false')
   Cursor.setAttribute('visible','false')
@@ -356,7 +356,7 @@ Scene.addEventListener('enter-vr',function(){
 Scene.addEventListener('exit-vr',function(){
   Cursor.setAttribute('raycaster','enabled','true')
   Cursor.setAttribute('visible','true')
- Rifle.setAttribute('visible','false')
+  Rifle.setAttribute('visible','false')
   Right_hand.setAttribute('visible','false')
   Left_hand.setAttribute('visible','false')
   Rifle_hands.setAttribute('visible','true')
@@ -364,8 +364,11 @@ Scene.addEventListener('exit-vr',function(){
 Cursor.addEventListener('mousedown',function(){
   if (shoot_ready==true&&gamestate=="game")
   {
-  setTimeout(function(){shoot_ready=false},0)
-  setTimeout(function(){shoot_ready=true},1000)
+  setTimeout(function(){shoot_ready=false
+  Rifle_hands.setAttribute('animation-mixer',{clip:'Shot',loop:'once'})},0)
+  setTimeout(function(){shoot_ready=true
+    Rifle_hands.setAttribute('animation-mixer',{clip:'Reload_loop',loop:'once'})
+  },1000)
   Right_hand.emit("poof")
 }})
 Right_hand.addEventListener('triggerdown',

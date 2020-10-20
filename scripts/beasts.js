@@ -26,10 +26,10 @@ AFRAME.registerComponent('beast',{
             }
             deathanim(this.el,this.el.getAttribute('beast').id)
             scene.removeChild(this.el)
-            var divs = document.querySelectorAll('#Bunny'), i;
-            if (divs.length==0&&ending)
+            var divs = document.querySelectorAll('#Bunny');
+            if (divs.length==0&&end)
             {
-                var divs = document.querySelectorAll('#carrot'), i;
+                var divs = document.querySelectorAll('#carrot');
                 if (divs.length>0)
                 Win_mus.emit("Win")
                 else
@@ -134,7 +134,7 @@ var percentColors = [
                         {
                             targ.parentEl.setAttribute('carrot-holder',{carrots: targ.parentEl.getAttribute('carrot-holder').carrots-1})
                             targ.parentEl.removeChild(targ);
-                            var divs = document.querySelectorAll('#carrot'), i;
+                            var divs = document.querySelectorAll('#carrot');
                         if (divs.length==0)
                         {
                             Lose_mus.emit("lose")
