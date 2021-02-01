@@ -35,7 +35,7 @@ BunnyHuntVR - Web VR шутер
 
 ---
 # Site
-https://webvrshoot.rtuitlab.ru/
+https://webvrshoot.rtuitlab.dev/
 
 ---
 # SourceCode
