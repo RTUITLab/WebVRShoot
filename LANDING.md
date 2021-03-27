@@ -9,8 +9,8 @@ BunnyHuntVR - Web VR шутер
 ---
 
 # Images
-* ![](https://files.rtuitlab.ru/landing_src/webvrshoot/BunnyHuntVR.png)
-* ![](https://files.rtuitlab.ru/landing_src/webvrshoot/BunnyHuntVR2.png)
+* ![](LANDING/BunnyHuntVR.png)
+* ![](LANDING/BunnyHuntVR2.png)
 ---
 
 # Videos
