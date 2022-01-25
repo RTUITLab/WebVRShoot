@@ -10,6 +10,6 @@ on:
 
 jobs:
   parse-landing:
-    uses: RTUITLab/.github/.github/workflows/landing-parser.yml@v1.0.0
+    uses: RTUITLab/.github/.github/workflows/landing-parser.yml@v1.0.1
     secrets:
       token: ${{ secrets.RTUITLAB_LANDING_TOKEN }}
